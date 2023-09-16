@@ -1,19 +1,9 @@
 "use client"
 
-interface WebLN {
-  // todo
-  enable: () => Promise<void>;
-}
-
-declare global {
-  interface Window {
-    webln: WebLN;
-  }
-}
-
 import { useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { ModeToggle } from "@/components/ui/mode-toggle"
+import { GetInfoResponse, MakeInvoiceResponse } from "@webbtc/webln-types"
 
 export default function Home() {
 
@@ -24,9 +14,19 @@ export default function Home() {
   }, [])
 
   const connect = async () => {
+    if (!window.webln) return
     try {
       await window.webln.enable();
+      const info: GetInfoResponse = await window.webln.getInfo();
       console.log("Connected via WebLN")
+      console.log("GetInfoResponse", info)
+
+      const invoice: MakeInvoiceResponse = await window.webln.makeInvoice({
+        amount: 8,
+        defaultMemo: "WebLN Test",
+      });
+      console.log("Invoice", invoice)
+
     } catch (e) {
       console.log(e);
     }
