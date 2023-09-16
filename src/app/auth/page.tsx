@@ -40,10 +40,8 @@ export default function Auth() {
     }
   }, [])
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="flex flex-row justify-center space-x-6">
-        <ModeToggle />
-      </div>
-    </main>
+    <div className="h-screen w-screen flex justify-center items-center">
+      <div id="loader" className="loadergreen"></div>
+    </div>
   )
 }
