@@ -2,6 +2,7 @@
 
 interface WebLN {
   // todo
+  enable: () => Promise<void>;
 }
 
 declare global {
@@ -22,11 +23,19 @@ export default function Home() {
     }
   }, [])
 
+  const connect = async () => {
+    try {
+      await window.webln.enable();
+      console.log("Connected via WebLN")
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="flex flex-row justify-center space-x-6">
-        <Button>Click me</Button>
+        <Button onClick={connect}>Connect via WebLN</Button>
         <ModeToggle />
       </div>
     </main>
