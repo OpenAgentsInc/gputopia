@@ -1,9 +1,20 @@
 import { useEffect, useState } from "react"
 
+interface AlbyUser {
+  avatar: string | null;
+  email: string;
+  identifier: string;
+  keysend_custom_key: string
+  keysend_custom_value: string
+  keysend_pubkey: string
+  lightning_address: string
+  name: string | null
+}
+
 export function useAlby () {
   const [accessToken, setAccessToken] = useState("")
   const [authed, setAuthed] = useState(false)
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState<AlbyUser | null>(null)
   useEffect(() => {
     const accessToken = window.sessionStorage.getItem("alby_access_token");
     const expiresAt = parseInt(window.sessionStorage.getItem("alby_expires_at") || '0', 10);
@@ -36,7 +47,7 @@ export function useAlby () {
           console.error(err);
         })
       }
-  }, [authed])
+  }, [authed, user, accessToken])
 
   return { authed, user };
 }
