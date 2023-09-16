@@ -6,12 +6,12 @@ import { startAlbyOauth } from "@/lib/alby-oauth"
 import { useAlby } from "@/lib/useAlby"
 
 export default function Home() {
-  const { authed } = useAlby()
+  const { authed, user } = useAlby()
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="flex flex-row justify-center space-x-6">
+      <div className="flex flex-row justify-center items-center space-x-6">
         {authed ? (
-          <Button >Welcome</Button>
+          <p>{user?.email ?? "-"}</p>
         ) : <Button onClick={startAlbyOauth}>Log in with Alby</Button>}
         <ModeToggle />
       </div>

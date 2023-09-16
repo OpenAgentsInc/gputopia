@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react"
 
 export function useAlby () {
+  const [accessToken, setAccessToken] = useState("")
   const [authed, setAuthed] = useState(false)
+  const [user, setUser] = useState(null)
   useEffect(() => {
     const accessToken = window.sessionStorage.getItem("alby_access_token");
     const expiresAt = parseInt(window.sessionStorage.getItem("alby_expires_at") || '0', 10);
@@ -12,7 +14,29 @@ export function useAlby () {
 
     if (accessToken && expiresAt && expiresIn && refreshToken && scope && tokenType) {
       setAuthed(true);
+      setAccessToken(accessToken);
     }
   }, [])
-  return { authed };
+
+  useEffect(() => {
+    if (authed && !user && !!accessToken) {
+      fetch("https://api.getalby.com/user/me", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res)
+          setUser(res);
+        })
+        .catch((err) => {
+          setAuthed(false)
+          setUser(null)
+          console.error(err);
+        })
+      }
+  }, [authed])
+
+  return { authed, user };
 }
