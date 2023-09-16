@@ -30,7 +30,5 @@
     "tailwindcss-animate": "^1.0.7",
     "typescript": "5.2.2"
   },
-  "devDependencies": {
-    "@webbtc/webln-types": "^2.0.1"
-  }
+  "devDependencies": {}
 }
