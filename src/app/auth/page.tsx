@@ -56,11 +56,15 @@ export default function Auth() {
               headers: {
                 'Content-Type': 'application/json'
               },
-              body: JSON.stringify({ token: data.access_token })
+              body: JSON.stringify({
+                token: data.access_token,
+                refresh_token: data.refresh_token,
+              })
             });
           })
           .then(() => {
-            window.location.href = `/`;
+            console.log('skipping thing')
+            // window.location.href = `/`;
           })
           .catch((error) => {
             console.log(error);
