@@ -15,6 +15,17 @@ export const Stats = () => {
 
   const [modelLoading, setModelLoading] = useState(false)
   const [modelLoaded, setModelLoaded] = useState(false)
+  const [withdrawLoading, setWithdrawLoading] = useState(false)
+
+  const goWithdraw = async () => {
+    if (balance === 0) {
+      alert("You can't withdraw zero :(")
+      return
+    }
+    setWithdrawLoading(true)
+    await withdraw()
+    setWithdrawLoading(false)
+  }
 
   useEffect(() => {
     if (!user) return
@@ -104,7 +115,9 @@ export const Stats = () => {
         <CardContent>
           <div className="flex flex-row items-start justify-between">
             <div className="text-3xl font-bold">{balance}</div>
-            <Button className="mt-1" onClick={withdraw}>Withdraw to Alby</Button>
+            <Button disabled={withdrawLoading || balance === 0} className="mt-1 w-42" onClick={goWithdraw}>
+              {withdrawLoading ? "Withdrawing..." : "Withdraw to Alby"}
+            </Button>
           </div>
         </CardContent>
       </Card>
