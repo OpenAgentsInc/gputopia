@@ -64,7 +64,7 @@ export const Stats = () => {
         <CardContent>
           {modelLoaded ? <div className="mt-3 flex flex-row items-center">
             <div className="loader"></div>
-            <span className="pl-2 text-sm">Listening for jobs</span>
+            <span className="pl-3 text-lg font-bold">Listening for jobs...</span>
           </div>
             : (
               <div className="h-12 flex items-center">
