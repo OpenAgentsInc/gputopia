@@ -14,7 +14,7 @@ export function MainNav({
         href="/"
         className="text-sm font-medium transition-colors hover:text-primary"
       >
-        Home
+        GPUtopia Beta v2
       </Link>
       {/* <Link
         href="/payments"
