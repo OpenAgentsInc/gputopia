@@ -1,7 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { useStore } from "@/lib/store"
 import { Button } from "./ui/button"
 
 export const Stats = () => {
+  const onlineCount = useStore(state => state.onlineMembers)
   return (
     <div className="m-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       <Card>
@@ -46,7 +48,7 @@ export const Stats = () => {
         </CardHeader>
         <CardContent>
           <div className="flex flex-row items-start justify-between">
-            <div className="text-3xl font-bold">1690</div>
+            <div className="text-3xl font-bold">0</div>
             <Button className="mt-1">Withdraw</Button>
           </div>
         </CardContent>
@@ -72,7 +74,7 @@ export const Stats = () => {
 
         </CardHeader>
         <CardContent>
-          <div className="text-3xl font-bold">89103</div>
+          <div className="text-3xl font-bold">0</div>
         </CardContent>
       </Card>
 
@@ -97,7 +99,7 @@ export const Stats = () => {
           </svg>
         </CardHeader>
         <CardContent>
-          <div className="text-3xl font-bold">4</div>
+          <div className="text-3xl font-bold">{onlineCount}</div>
         </CardContent>
       </Card>
     </div>
