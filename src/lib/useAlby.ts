@@ -2,7 +2,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 
-interface AlbyUser {
+export interface AlbyUser {
   avatar: string | null;
   email: string;
   identifier: string;
@@ -36,6 +36,12 @@ export function useAlby() {
   const [authed, setAuthed] = useState(false)
   const [user, setUser] = useState<AlbyUser | null>(null)
   const [expiresAt, setExpiresAt] = useState(0)
+
+  const logout = () => {
+    wipeTokens()
+    setAuthed(false)
+    setUser(null)
+  }
 
   const refreshAccessToken = async () => {
     console.log("Attempting to refresh with refresh token:", refreshToken);
@@ -135,13 +141,11 @@ export function useAlby() {
           setUser(res);
         })
         .catch((err) => {
-          wipeTokens()
-          setAuthed(false)
-          setUser(null)
+          logout()
           console.error(err);
         })
     }
   }, [authed, user, accessToken])
 
-  return { authed, user };
+  return { authed, logout, user };
 }
