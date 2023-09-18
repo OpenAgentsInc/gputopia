@@ -7,7 +7,7 @@ export async function POST(request: NextRequest) {
   const formData = new URLSearchParams(formDataText);
   const socket_id = formData.get('socket_id') as string
 
-  const authResponse = pusher.authorizeChannel(socket_id, "presence-my-channel", {
+  const authResponse = pusher.authorizeChannel(socket_id, "presence-common_room", {
     user_id: "1",
     user_info: {
       name: "John Smith",

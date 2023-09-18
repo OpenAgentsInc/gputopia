@@ -11,11 +11,21 @@ export async function GET(request: NextRequest) {
   }
 
   // Get list of everyone online in the Pusher channel
-  const presence: any = await pusher.get({ path: '/channels/presence-my-channel/users' })
+  const presence: any = await pusher.get({ path: '/channels/presence-common_room/users' })
   const json = await presence.json()
-  const users = json.users
+  const users = json.users // [ { id: '1' } ]
 
   console.log("Users online:", users)
+
+  // Loop through each user and send a message
+  for (const user of users) {
+    const { id } = user;
+    await pusher.trigger(`user-${id}`, 'JobAssigned', {
+      job: `Write one sentence about the history of the number ${id}.`
+    });
+    console.log("Sent to user:", id);
+  }
+
 
   return NextResponse.json({ ok: true, users });
 }

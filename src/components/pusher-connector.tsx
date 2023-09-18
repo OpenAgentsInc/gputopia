@@ -10,12 +10,12 @@ export const PusherConnector = () => {
       cluster: 'mt1'
     });
 
-    var channel1 = pusher.subscribe('my-channel');
+    var channel1 = pusher.subscribe('common_room');
     channel1.bind('my-event', function (data: any) {
       console.log(data)
     });
 
-    const channel = pusher.subscribe('presence-my-channel');
+    const channel = pusher.subscribe('presence-common_room');
 
     channel.bind('pusher:subscription_succeeded', (members: PusherTypes.Members) => {
       useStore.getState().setCount(members.count);
