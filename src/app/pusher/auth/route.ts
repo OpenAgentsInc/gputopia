@@ -7,6 +7,7 @@ export async function POST(request: NextRequest) {
     const formDataText = await request.text();
     const formData = new URLSearchParams(formDataText);
     const socket_id = formData.get('socket_id') as string;
+    const channel_name = formData.get('channel_name') as string;
 
     const accessToken = request.cookies.get('accessToken');
 
@@ -33,7 +34,7 @@ export async function POST(request: NextRequest) {
 
     const userInfo = userResults[0];
 
-    const authResponse = pusher.authorizeChannel(socket_id, "presence-common_room", {
+    const authResponse = pusher.authorizeChannel(socket_id, channel_name, {
       user_id: userInfo.id.toString(),
       user_info: {
         name: userInfo.name,

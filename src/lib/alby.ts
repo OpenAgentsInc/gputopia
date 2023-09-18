@@ -8,11 +8,7 @@ export const fetchUser = async (accessToken: string) => {
 
     const data = await response.json();
 
-    console.log(data)
-
     if (response.ok) {
-      console.log("Are we here?")
-      // const data = await response.json();
       return {
         alby_id: data.identifier,
         avatar: data.avatar,
