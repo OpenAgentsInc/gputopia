@@ -94,7 +94,7 @@ export function useAlby() {
     const currentTime = Math.floor(Date.now() / 1000);
     const remainingSeconds = expiresAt - currentTime;
 
-    console.log(`Token will expire in ${remainingSeconds}s (${toHumanTime(remainingSeconds)})`);
+    // console.log(`Token will expire in ${remainingSeconds}s (${toHumanTime(remainingSeconds)})`);
 
     const refreshWhenSecondsLessThan = 600
 

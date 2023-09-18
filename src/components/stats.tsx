@@ -16,7 +16,6 @@ export const Stats = () => {
   const [modelLoaded, setModelLoaded] = useState(false)
 
   useEffect(() => {
-
     if (!user) return
 
     document.addEventListener('model-loaded', function () {
@@ -24,7 +23,6 @@ export const Stats = () => {
       setModelLoaded(true)
     });
 
-    console.log("Fetching user balance")
     fetch("/api/balance", {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
