@@ -104,7 +104,7 @@ export const Stats = () => {
         <CardContent>
           <div className="flex flex-row items-start justify-between">
             <div className="text-3xl font-bold">{balance}</div>
-            <Button className="mt-1" onClick={withdraw}>Withdraw</Button>
+            <Button className="mt-1" onClick={withdraw}>Withdraw to Alby</Button>
           </div>
         </CardContent>
       </Card>
