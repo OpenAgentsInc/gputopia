@@ -76,7 +76,7 @@ export default function Auth() {
   }, [])
   return (
     <div className="h-screen w-screen flex justify-center items-center">
-      <div id="loader" className="loadergreen"></div>
+      <div id="loader" className="loader"></div>
     </div>
   )
 }

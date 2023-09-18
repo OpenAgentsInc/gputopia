@@ -42,7 +42,11 @@ export async function POST(request: NextRequest) {
     }
 
     connection.end();
-    return NextResponse.json({ ok: true });
+    const response = NextResponse.json({ ok: true });
+    response.headers.append('Set-Cookie', `accessToken=${token}; Path=/; HttpOnly`);
+    console.log("Set cookie to:", token)
+
+    return response
 
   } catch (err) {
     console.error("Error saving token:", err);
