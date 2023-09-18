@@ -13,7 +13,6 @@ export const complete = async (completion: string) => {
   })
     .then(response => response.json())
     .then(data => {
-      console.log("Successful")
       updateBalances()
     })
     .catch(error => {

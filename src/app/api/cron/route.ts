@@ -21,7 +21,6 @@ export async function GET(request: NextRequest) {
     await pusher.trigger(`private-user-${id}`, 'JobAssigned', {
       job: `Write one sentence about the history of the number ${id}.`
     });
-    console.log("Sent to user:", id);
   }
 
   return NextResponse.json({ ok: true, users: users.length });
