@@ -63,8 +63,8 @@ export default function Auth() {
             });
           })
           .then(() => {
-            console.log('skipping thing')
-            // window.location.href = `/`;
+            // console.log('skipping thing')
+            window.location.href = `/`;
           })
           .catch((error) => {
             console.log(error);
