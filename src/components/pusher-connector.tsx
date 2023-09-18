@@ -16,8 +16,14 @@ export const PusherConnector = () => {
     presenceChannel.bind('pusher:subscription_succeeded', (members: PusherTypes.Members) => {
       useStore.getState().setCount(members.count);
     });
-    presenceChannel.bind('pusher:member_added', (member: any) => console.log('Member added:', member));
-    presenceChannel.bind('pusher:member_removed', (member: any) => console.log('Member removed:', member));
+    presenceChannel.bind('pusher:member_added', (member: any) => {
+      useStore.getState().increment()
+      // console.log('Member added:', member)
+    );
+    presenceChannel.bind('pusher:member_removed', (member: any) => {
+      // console.log('Member removed:', member)
+      useStore.getState().decrement()
+    });
 
     // Subscribe to user-specific channel if userId is available
     if (userId) {
