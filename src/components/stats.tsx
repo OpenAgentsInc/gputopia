@@ -6,6 +6,7 @@ import { Button } from "./ui/button"
 export const Stats = () => {
   const onlineCount = useStore(state => state.onlineMembers)
   const totalSatsEarned = useStore(state => state.totalSatsEarned)
+  const balance = useStore(state => state.balance)
   const user = useStore(state => state.user)
 
   useEffect(() => {
@@ -21,7 +22,7 @@ export const Stats = () => {
       }
     }).then((json) => {
       if (json.totalSatsEarned) {
-        useStore.setState({ totalSatsEarned: json.totalSatsEarned })
+        useStore.setState({ balance: json.balance, totalSatsEarned: json.totalSatsEarned })
       }
     }).catch((error) => {
       console.log(error);
@@ -72,7 +73,7 @@ export const Stats = () => {
         </CardHeader>
         <CardContent>
           <div className="flex flex-row items-start justify-between">
-            <div className="text-3xl font-bold">0</div>
+            <div className="text-3xl font-bold">{balance}</div>
             <Button className="mt-1">Withdraw</Button>
           </div>
         </CardContent>

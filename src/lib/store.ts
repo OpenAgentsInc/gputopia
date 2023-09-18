@@ -4,6 +4,7 @@ import { AlbyUser } from "./useAlby"
 type Store = {
   user: AlbyUser | null;
   onlineMembers: number;
+  balance: number;
   totalSatsEarned: number;
   increment: () => void;
   decrement: () => void;
@@ -12,6 +13,7 @@ type Store = {
 
 export const useStore = create<Store>((set) => ({
   user: null,
+  balance: 0,
   onlineMembers: 0,
   totalSatsEarned: 0,
   increment: () => set((state) => ({ onlineMembers: state.onlineMembers + 1 })),
