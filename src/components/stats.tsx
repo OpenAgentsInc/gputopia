@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useStore } from "@/lib/store"
+import { initModel } from "@/lib/webllm"
 import { Button } from "./ui/button"
 
 export const Stats = () => {
@@ -49,7 +50,8 @@ export const Stats = () => {
           </svg>
         </CardHeader>
         <CardContent>
-          <Button className="mt-1">Load model</Button>
+          <Button className="mt-1" onClick={initModel}>Load model</Button>
+          <div id="perc" className="text-3xl font-bold"></div>
         </CardContent>
       </Card>
 
