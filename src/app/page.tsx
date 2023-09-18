@@ -9,7 +9,7 @@ import { startAlbyOauth } from "@/lib/alby-oauth"
 import { useAlby } from "@/lib/useAlby"
 
 export default function Home() {
-  const { logout, user } = useAlby()
+  const { authed, logout, user } = useAlby()
   return (
     <div className="flex-col">
       <div className="border-b">
@@ -21,7 +21,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <Stats />
+      {authed && <Stats />}
     </div>
   )
 }
