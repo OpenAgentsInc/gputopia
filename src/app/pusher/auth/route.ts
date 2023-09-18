@@ -38,7 +38,6 @@ export async function POST(request: NextRequest) {
       user_id: userInfo.id.toString(),
       user_info: {
         name: userInfo.name,
-        email: userInfo.email,
         // add more user_info as needed
       },
     });
