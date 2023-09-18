@@ -1,9 +1,18 @@
-export const fetchUser = async () => {
+export const fetchUser = async (accessToken: string) => {
   try {
-    const response = await fetch('https://api.getalby.com/user/me');
+    const response = await fetch('https://api.getalby.com/user/me', {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`
+      }
+    });
+
+    const data = await response.json();
+
+    console.log(data)
 
     if (response.ok) {
-      const data = await response.json();
+      console.log("Are we here?")
+      // const data = await response.json();
       return {
         alby_id: data.identifier,
         avatar: data.avatar,
