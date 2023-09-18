@@ -15,8 +15,6 @@ export async function GET(request: NextRequest) {
   const json = await presence.json()
   const users = json.users // [ { id: '1' } ]
 
-  console.log("Users online:", users)
-
   // Loop through each user and send a message
   for (const user of users) {
     const { id } = user;
@@ -26,6 +24,5 @@ export async function GET(request: NextRequest) {
     console.log("Sent to user:", id);
   }
 
-
-  return NextResponse.json({ ok: true, users });
+  return NextResponse.json({ ok: true, users: users.length });
 }

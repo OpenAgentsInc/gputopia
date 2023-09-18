@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { fetchUser } from "@/lib/alby"
 
 export async function POST(request: NextRequest) {
+  let userId
   try {
     const body = await request.json();
     const { token, refresh_token } = body;
@@ -21,7 +22,7 @@ export async function POST(request: NextRequest) {
     const [results] = await connection.execute('SELECT * FROM users WHERE alby_id = ?', [albyUser.alby_id]);
 
     if (results.length > 0) {
-      const userId = results[0].id;
+      userId = results[0].id;
       await connection.execute(
         'INSERT INTO access_tokens (user_id, token, refresh_token, created_at, updated_at) VALUES (?, ?, ?, NOW(), NOW())',
         [userId, token, refresh_token]
@@ -33,7 +34,7 @@ export async function POST(request: NextRequest) {
       );
 
       const [insertResults] = await connection.execute('SELECT LAST_INSERT_ID() as id');
-      const userId = insertResults[0].id;
+      userId = insertResults[0].id;
 
       await connection.execute(
         'INSERT INTO access_tokens (user_id, token, refresh_token, created_at, updated_at) VALUES (?, ?, ?, NOW(), NOW())',
@@ -44,7 +45,8 @@ export async function POST(request: NextRequest) {
     connection.end();
     const response = NextResponse.json({ ok: true });
     response.headers.append('Set-Cookie', `accessToken=${token}; Path=/; HttpOnly`);
-    console.log("Set cookie to:", token)
+    response.headers.append('Set-Cookie', `userId=${userId}; Path=/; HttpOnly`);
+    console.log("Set userId cookie to:", userId);
 
     return response
 

@@ -1,6 +1,7 @@
 import Pusher, * as PusherTypes from "pusher-js"
 import { useEffect } from "react"
 import { useStore } from "@/lib/store"
+import { generate } from "@/lib/webllm"
 
 export const PusherConnector = () => {
   // const userId = useStore(state => state.userId)
@@ -28,7 +29,8 @@ export const PusherConnector = () => {
     if (userId) {
       const userChannel = pusher.subscribe(`private-user-${userId}`);
       userChannel.bind('JobAssigned', (data: any) => {
-        console.log(`Received data on user channel:`, data);
+        console.log(data);
+        generate(data.job)
       });
     }
 

@@ -1,6 +1,7 @@
 'use client'
 
 import * as webllm from "@mlc-ai/web-llm"
+import { complete } from "./complete"
 import { useStore } from "./store"
 
 // We use label to intentionally keep it simple
@@ -40,7 +41,7 @@ export async function generate(prompt: string) {
   }
 
   // Fetch POST to complete the inference
-  console.log("Fetching POST to complete inference...", reply);
+  complete(reply)
 
   return reply;
 }
