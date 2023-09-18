@@ -1,6 +1,7 @@
 "use client"
 
 import { MainNav } from "@/components/main-nav"
+import { Stats } from "@/components/stats"
 import { Button } from "@/components/ui/button"
 import { ModeToggle } from "@/components/ui/mode-toggle"
 import { UserNav } from "@/components/user-nav"
@@ -10,7 +11,7 @@ import { useAlby } from "@/lib/useAlby"
 export default function Home() {
   const { logout, user } = useAlby()
   return (
-    <div className="hidden flex-col md:flex">
+    <div className="flex-col">
       <div className="border-b">
         <div className="flex h-16 items-center px-4">
           <MainNav className="mx-6" />
@@ -20,6 +21,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <Stats />
     </div>
   )
 }
