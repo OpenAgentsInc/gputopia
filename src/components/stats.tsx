@@ -1,9 +1,30 @@
+import { useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useStore } from "@/lib/store"
 import { Button } from "./ui/button"
 
 export const Stats = () => {
   const onlineCount = useStore(state => state.onlineMembers)
+  const totalSatsEarned = useStore(state => state.totalSatsEarned)
+
+  useEffect(() => {
+    fetch("/api/balance", {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: "chris@arcadelabs.co" }),
+    }).then((res) => {
+      if (res.ok) {
+        return res.json()
+      }
+    }).then((json) => {
+      if (json.totalSatsEarned) {
+        useStore.setState({ totalSatsEarned: json.totalSatsEarned })
+      }
+    }).catch((error) => {
+      console.log(error);
+    })
+  }, [])
+
   return (
     <div className="m-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       <Card>
@@ -74,7 +95,7 @@ export const Stats = () => {
 
         </CardHeader>
         <CardContent>
-          <div className="text-3xl font-bold">0</div>
+          <div className="text-3xl font-bold">{totalSatsEarned}</div>
         </CardContent>
       </Card>
 

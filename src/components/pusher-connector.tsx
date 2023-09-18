@@ -4,9 +4,7 @@ import { useStore } from "@/lib/store"
 
 export const PusherConnector = () => {
   useEffect(() => {
-    console.log("Let's do it.")
-
-    Pusher.logToConsole = true;
+    // Pusher.logToConsole = true;
 
     var pusher = new Pusher('b05a0412d32eaefa65e5', {
       cluster: 'mt1'
@@ -20,7 +18,6 @@ export const PusherConnector = () => {
     const channel = pusher.subscribe('presence-my-channel');
 
     channel.bind('pusher:subscription_succeeded', (members: PusherTypes.Members) => {
-      console.log('Subscription succeeded:', members);
       useStore.getState().setCount(members.count);
     });
 
