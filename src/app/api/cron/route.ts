@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
   // Loop through each user and send a message
   for (const user of users) {
     const { id } = user;
-    await pusher.trigger(`user-${id}`, 'JobAssigned', {
+    await pusher.trigger(`private-user-${id}`, 'JobAssigned', {
       job: `Write one sentence about the history of the number ${id}.`
     });
     console.log("Sent to user:", id);

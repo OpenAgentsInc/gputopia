@@ -27,8 +27,8 @@ export const PusherConnector = () => {
     // Subscribe to user-specific channel if userId is available
     if (userId) {
       const userChannel = pusher.subscribe(`private-user-${userId}`);
-      userChannel.bind('my-event', (data: any) => {
-        console.log(`Received data on user channel: ${data}`);
+      userChannel.bind('JobAssigned', (data: any) => {
+        console.log(`Received data on user channel:`, data);
       });
     }
 
