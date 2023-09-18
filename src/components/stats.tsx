@@ -6,12 +6,15 @@ import { Button } from "./ui/button"
 export const Stats = () => {
   const onlineCount = useStore(state => state.onlineMembers)
   const totalSatsEarned = useStore(state => state.totalSatsEarned)
+  const user = useStore(state => state.user)
 
   useEffect(() => {
+    if (!user) return
+    console.log("Fetching user balance")
     fetch("/api/balance", {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: "chris@arcadelabs.co" }),
+      body: JSON.stringify({ email: user.email }),
     }).then((res) => {
       if (res.ok) {
         return res.json()
@@ -23,7 +26,7 @@ export const Stats = () => {
     }).catch((error) => {
       console.log(error);
     })
-  }, [])
+  }, [user?.email])
 
   return (
     <div className="m-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">

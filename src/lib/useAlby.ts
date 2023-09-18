@@ -1,6 +1,7 @@
 
 import axios from "axios"
 import { useEffect, useState } from "react"
+import { useStore } from "./store"
 
 export interface AlbyUser {
   avatar: string | null;
@@ -139,6 +140,7 @@ export function useAlby() {
         .then((res) => res.json())
         .then((res) => {
           setUser(res);
+          useStore.setState({ user: res })
         })
         .catch((err) => {
           logout()
