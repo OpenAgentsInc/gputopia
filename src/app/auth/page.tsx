@@ -12,8 +12,6 @@ export default function Auth() {
       const args = new URLSearchParams(window.location.search);
       const code = args.get("code");
 
-      console.log(window.sessionStorage.getItem("code_verifier"))
-
       if (code) {
         // @ts-ignore
         const payload = new URLSearchParams({
@@ -49,8 +47,26 @@ export default function Auth() {
             window.sessionStorage.setItem("alby_refresh_token", refresh_token);
             window.sessionStorage.setItem("alby_scope", scope);
             window.sessionStorage.setItem("alby_token_type", token_type);
+            return data
+          })
+          .then(data => {
+            // New API call to save the token
+            return fetch("/api/save-token", {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ token: data.access_token })
+            });
+          })
+          .then(() => {
             window.location.href = `/`;
-          });
+          })
+          .catch((error) => {
+            console.log(error);
+            alert("Something went wrong. Please try again.")
+          })
+
       }
     }
   }, [])

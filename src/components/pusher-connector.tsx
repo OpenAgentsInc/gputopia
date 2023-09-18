@@ -3,31 +3,36 @@ import { useEffect } from "react"
 import { useStore } from "@/lib/store"
 
 export const PusherConnector = () => {
-  useEffect(() => {
-    // Pusher.logToConsole = true;
+  // const userId = useStore(state => state.userId)
+  const userId = 1
 
-    var pusher = new Pusher('b05a0412d32eaefa65e5', {
+  useEffect(() => {
+    if (!userId) return
+    const pusher = new Pusher('b05a0412d32eaefa65e5', {
       cluster: 'mt1'
     });
 
-    var channel1 = pusher.subscribe('common_room');
-    channel1.bind('my-event', function (data: any) {
-      console.log(data)
+    const commonRoomChannel = pusher.subscribe('common_room');
+    commonRoomChannel.bind('my-event', function (data: any) {
+      console.log(data);
     });
 
-    const channel = pusher.subscribe('presence-common_room');
-
-    channel.bind('pusher:subscription_succeeded', (members: PusherTypes.Members) => {
+    const presenceChannel = pusher.subscribe('presence-common_room');
+    presenceChannel.bind('pusher:subscription_succeeded', (members: PusherTypes.Members) => {
       useStore.getState().setCount(members.count);
     });
+    presenceChannel.bind('pusher:member_added', (member: any) => console.log('Member added:', member));
+    presenceChannel.bind('pusher:member_removed', (member: any) => console.log('Member removed:', member));
 
-    channel.bind('pusher:member_added', (member: any) => {
-      console.log('Member added:', member);
-    });
+    // Subscribe to user-specific channel if userId is available
+    if (userId) {
+      const userChannel = pusher.subscribe(`private-user-${userId}`);
+      userChannel.bind('my-event', (data: any) => {
+        console.log(`Received data on user channel: ${data}`);
+      });
+    }
 
-    channel.bind('pusher:member_removed', (member: any) => {
-      console.log('Member removed:', member);
-    });
-  }, [])
+  }, [userId]); // Dependency array includes userId so that effect runs again if userId changes
+
   return null
 }
