@@ -15,11 +15,11 @@ export interface AlbyUser {
 }
 
 // Function to convert seconds to human-readable format
-const toHumanTime = (seconds: number) => {
-  const hours = Math.floor(seconds / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
-  return `${hours}h ${minutes}m`;
-};
+// const toHumanTime = (seconds: number) => {
+//   const hours = Math.floor(seconds / 3600);
+//   const minutes = Math.floor((seconds % 3600) / 60);
+//   return `${hours}h ${minutes}m`;
+// };
 
 const wipeTokens = () => {
   window.sessionStorage.removeItem("alby_access_token");

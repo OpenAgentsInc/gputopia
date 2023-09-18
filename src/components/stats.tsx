@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useStore } from "@/lib/store"
 import { initModel } from "@/lib/webllm"
+import { withdraw } from "@/lib/withdraw"
 import { Button } from "./ui/button"
 import { Progress } from "./ui/progress"
 
@@ -103,7 +104,7 @@ export const Stats = () => {
         <CardContent>
           <div className="flex flex-row items-start justify-between">
             <div className="text-3xl font-bold">{balance}</div>
-            <Button className="mt-1">Withdraw</Button>
+            <Button className="mt-1" onClick={withdraw}>Withdraw</Button>
           </div>
         </CardContent>
       </Card>
