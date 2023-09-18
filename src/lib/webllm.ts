@@ -1,6 +1,7 @@
 'use client'
 
 import * as webllm from "@mlc-ai/web-llm"
+import { useStore } from "./store"
 
 // We use label to intentionally keep it simple
 function setLabel(id: string, text: string) {
@@ -17,7 +18,9 @@ export async function initModel() {
   chat = new webllm.ChatModule();
   chat.setInitProgressCallback((report: webllm.InitProgressReport) => {
     try {
-      setLabel("perc", (report.progress * 100).toFixed(0) + "%");
+      const perc = (report.progress * 100).toFixed(0)
+      useStore.setState({ modelLoadPercentage: Number(perc) })
+      setLabel("perc", perc + "%");
     } catch (e) { }
   });
   await chat.reload("vicuna-v1-7b-q4f32_0");

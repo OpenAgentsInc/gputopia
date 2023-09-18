@@ -1,17 +1,29 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useStore } from "@/lib/store"
 import { initModel } from "@/lib/webllm"
 import { Button } from "./ui/button"
+import { Progress } from "./ui/progress"
 
 export const Stats = () => {
   const onlineCount = useStore(state => state.onlineMembers)
   const totalSatsEarned = useStore(state => state.totalSatsEarned)
+  const modelLoadPercentage = useStore(state => state.modelLoadPercentage)
   const balance = useStore(state => state.balance)
   const user = useStore(state => state.user)
 
+  const [modelLoading, setModelLoading] = useState(false)
+  const [modelLoaded, setModelLoaded] = useState(false)
+
   useEffect(() => {
+
     if (!user) return
+
+    document.addEventListener('model-loaded', function () {
+      console.log('Model loaded');
+      setModelLoaded(true)
+    });
+
     console.log("Fetching user balance")
     fetch("/api/balance", {
       method: 'POST',
@@ -50,8 +62,25 @@ export const Stats = () => {
           </svg>
         </CardHeader>
         <CardContent>
-          <Button className="mt-1" onClick={initModel}>Load model</Button>
-          <div id="perc" className="text-3xl font-bold"></div>
+          {modelLoaded ? <div className="mt-3 flex flex-row items-center">
+            <div className="loader"></div>
+            <span className="pl-2 text-sm">Listening for jobs</span>
+          </div>
+            : (
+              <div className="h-12 flex items-center">
+                {modelLoading ? (
+                  <div className="w-full flex flex-row items-center">
+                    <div id="perc" className="text-lg w-10 text-right font-mono"></div>
+                    <Progress value={modelLoadPercentage} className="mx-4 w-[60%]" />
+                  </div>
+                ) :
+                  <Button className="mt-1" onClick={() => {
+                    setModelLoading(true)
+                    initModel()
+                  }}>Load model</Button>}
+              </div>
+            )}
+
         </CardContent>
       </Card>
 

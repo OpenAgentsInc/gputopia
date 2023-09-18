@@ -6,6 +6,7 @@ type Store = {
   onlineMembers: number;
   balance: number;
   totalSatsEarned: number;
+  modelLoadPercentage: number;
   increment: () => void;
   decrement: () => void;
   setCount: (count: number) => void;
@@ -16,6 +17,7 @@ export const useStore = create<Store>((set) => ({
   balance: 0,
   onlineMembers: 0,
   totalSatsEarned: 0,
+  modelLoadPercentage: 0,
   increment: () => set((state) => ({ onlineMembers: state.onlineMembers + 1 })),
   decrement: () => set((state) => ({ onlineMembers: state.onlineMembers - 1 })),
   setCount: (count) => set(() => ({ onlineMembers: count })),
