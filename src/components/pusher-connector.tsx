@@ -1,10 +1,19 @@
 import Pusher, * as PusherTypes from "pusher-js"
 import { useEffect } from "react"
 import { useStore } from "@/lib/store"
+import { useAlby } from "@/lib/useAlby"
 import { generate } from "@/lib/webllm"
 
 export const PusherConnector = () => {
-  const userId = 1
+  const { logout } = useAlby()
+  let userIdString = window.sessionStorage.getItem("user_id");
+  let userId = 0
+  if (!userIdString) {
+    logout()
+    alert("Log out")
+  } else {
+    userId = Number(userId)
+  }
 
   useEffect(() => {
     if (!userId) return

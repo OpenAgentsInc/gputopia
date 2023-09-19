@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
     }
 
     connection.end();
-    const response = NextResponse.json({ ok: true });
+    const response = NextResponse.json({ ok: true, userIdus });
     response.headers.append('Set-Cookie', `accessToken=${token}; Path=/; HttpOnly`);
     response.headers.append('Set-Cookie', `userId=${userId}; Path=/; HttpOnly`);
     console.log("Set userId cookie to:", userId);

@@ -62,9 +62,16 @@ export default function Auth() {
               })
             });
           })
-          .then(() => {
+
+          // Convert that to JSON
+          .then(response => response.json())
+
+          .then((data) => {
+            console.log(data)
             // console.log('skipping thing')
-            window.location.href = `/`;
+            window.sessionStorage.setItem("user_id", data.userId.toString());
+
+            // window.location.href = `/`;
           })
           .catch((error) => {
             console.log(error);
