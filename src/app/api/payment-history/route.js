@@ -20,7 +20,7 @@ export async function GET(request) {
       FROM payments
       WHERE user_id = ?
       ORDER BY created_at DESC
-      LIMIT 20
+      LIMIT 25
     `;
 
     const [results] = await connection.query(query, [userId]);

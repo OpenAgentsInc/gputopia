@@ -1,23 +1,20 @@
-import { formatDistanceToNow } from "date-fns"
-import { useEffect, useState } from "react"
-import {
-    Card, CardContent, CardDescription, CardHeader, CardTitle
-} from "@/components/ui/card"
+import { useEffect } from "react"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { useStore } from "@/lib/store"
+import { updatePayments } from "@/lib/update-payments"
 
 export const PaymentHistory = () => {
-  const [paymentHistory, setPaymentHistory] = useState([]);
+  const payments = useStore(state => state.payments)
+
+  const user = useStore(state => state.user)
 
   useEffect(() => {
+    if (!user) return
     // Fetch payment history here and update the state
-    fetch("/api/payment-history")
-      .then((res) => res.json())
-      .then((data) => {
-        // console.log(data)
-        setPaymentHistory(data.payments);
-      });
-  }, []);
+    updatePayments()
+  }, [user]);
 
-  const relativeTime = (createdAt) => {
+  const relativeTime = (createdAt: string) => {
     const currentTime = new Date();
     const createdAtDate = new Date(createdAt);
     const offset = currentTime.getTimezoneOffset() * 60000;
@@ -34,15 +31,15 @@ export const PaymentHistory = () => {
   };
 
   return (
-    <Card>
+    <Card className="flex flex-col max-h-[calc(100vh-280px)]">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="mb-2 text-sm font-medium text-muted-foreground">
           Payment History
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex flex-col overflow-y-auto">
         <ul className="text-sm space-y-2">
-          {paymentHistory.map((payment: any, index) => (
+          {payments.map((payment: any, index) => (
             <li key={index} className="flex justify-between">
               <span>Withdrew {payment.amount} sats</span>
               <span className="text-muted-foreground">{relativeTime(payment.createdAt)}</span>

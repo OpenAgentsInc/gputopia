@@ -34,8 +34,6 @@ export default function Home() {
             <div className="mx-8 flex-grow grid gap-4 md:grid-cols-2 lg:grid-cols-4">
               <div className="col-span-1" />
               <PaymentHistory />
-              {/* <ChatWorkspace /> */}
-              <Trollbox />
               <div className="col-span-1" />
             </div>
           </div>

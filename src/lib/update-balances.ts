@@ -1,4 +1,5 @@
 import { useStore } from "./store"
+import { updatePayments } from "./update-payments"
 
 export const updateBalances = () => {
   const user = useStore.getState().user
@@ -16,6 +17,7 @@ export const updateBalances = () => {
     if (json.totalSatsEarned) {
       useStore.setState({ balance: json.balance, totalSatsEarned: json.totalSatsEarned })
       console.log(`Updated balance to ${json.balance} and totalSatsEarned to ${json.totalSatsEarned}`)
+      updatePayments()
     }
   }).catch((error) => {
     console.log(error);
