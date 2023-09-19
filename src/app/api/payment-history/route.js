@@ -6,7 +6,7 @@ export async function GET(request) {
   const userId = Number(userIdCookie ? userIdCookie.value : null);
 
   if (isNaN(userId) || userId <= 0) {
-    return NextResponse.badRequest("Invalid user ID");
+    return NextResponse.json({ error: "Invalid user ID" });
   }
 
   let connection;
