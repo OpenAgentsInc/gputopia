@@ -31,10 +31,10 @@ export async function POST(request) {
       updatedAt: row.updated_at,
     }));
 
-    return NextResponse.json({ payments }).setHeader("Cache-Control", "no-store, max-age=0");;
+    return NextResponse.json({ payments })
 
   } catch (err) {
-    return NextResponse.json({ error: "Database error" }).setHeader("Cache-Control", "no-store, max-age=0");;
+    return NextResponse.json({ error: "Database error" })
 
   } finally {
     if (connection) {
