@@ -5,6 +5,7 @@ import { initModel } from "@/lib/webllm"
 import { withdraw } from "@/lib/withdraw"
 import { Button } from "./ui/button"
 import { Progress } from "./ui/progress"
+import { userInfo } from "os"
 
 export const Stats = () => {
   const onlineCount = useStore(state => state.onlineMembers)
@@ -86,7 +87,7 @@ export const Stats = () => {
                 ) :
                   <Button className="mt-1" onClick={() => {
                     setModelLoading(true)
-                    initModel()
+                    initModel(user?user.lightning_address:"", user?user.identifier:"")
                   }}>Load model</Button>}
               </div>
             )}

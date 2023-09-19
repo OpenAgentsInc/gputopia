@@ -18,9 +18,28 @@ export async function GET(request: NextRequest) {
   // Loop through each user and send a message
   for (const user of users) {
     const { id } = user;
-    await pusher.trigger(`private-user-${id}`, 'JobAssigned', {
-      job: `Write one sentence about the history of the number ${id}.`
-    });
+    const response = await fetch("https://ai-spider-production.up.railway.app/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer f95038c5331fd48b380c6476469f1959",
+      },
+      body: JSON.stringify(
+        {
+        model: "vicuna-v1-7b-q4f32_0",
+        messages: [
+          {
+            "role": "system",
+            "content": "you are a terse brusque assistant"
+          },
+          {
+            "role": "user",
+            "content": `write one sentence about the number ${id}`
+          }
+        ],
+        max_tokens: 200
+      }
+    )});
   }
 
   return NextResponse.json({ ok: true, users: users.length });
