@@ -1,4 +1,3 @@
-import { utcToZonedTime } from "date-fns-tz"
 import { useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useStore } from "@/lib/store"
@@ -6,27 +5,12 @@ import { updatePayments } from "@/lib/update-payments"
 
 export const PaymentHistory = () => {
   const payments = useStore(state => state.payments)
-
   const user = useStore(state => state.user)
 
   useEffect(() => {
     if (!user) return
-    // Fetch payment history here and update the state
     updatePayments()
   }, [user]);
-
-  const relativeTime = (createdAt: string) => {
-    const currentTime = new Date();
-    const createdAtDate = new Date(createdAt);
-
-    const timeDifference = currentTime.getTime() - createdAtDate.getTime();
-    const diffSeconds = Math.floor(timeDifference / 1000);
-
-    if (diffSeconds < 60) return `${diffSeconds}s`;
-    if (diffSeconds < 3600) return `${Math.floor(diffSeconds / 60)}m`;
-    if (diffSeconds < 86400) return `${Math.floor(diffSeconds / 3600)}h`;
-    return `${Math.floor(diffSeconds / 86400)}d`;
-  };
 
   const formatTimeToLocal = (createdAt: string) => {
     const localTime = new Date(createdAt).toLocaleTimeString(undefined, {
