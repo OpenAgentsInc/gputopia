@@ -2,11 +2,11 @@ import { NextResponse } from 'next/server';
 import mysql from 'mysql2/promise';
 
 export async function GET(request) {
-  const userId = Number(request.cookies.get('userId').value);
-
-  if (isNaN(userId) || userId <= 0) {
+  const userIdCookie = request.cookies.get('userId');
+  if (!userIdCookie || isNaN(Number(userIdCookie.value))) {
     return NextResponse.json({ error: "Invalid user ID" });
   }
+  const userId = Number(userIdCookie.value);
 
   let connection;
 
