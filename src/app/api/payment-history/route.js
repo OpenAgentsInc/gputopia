@@ -2,8 +2,7 @@ import { NextResponse } from 'next/server';
 import mysql from 'mysql2/promise';
 
 export async function GET(request) {
-  const userIdCookie = request.cookies.get('userId');
-  const userId = Number(userIdCookie ? userIdCookie.value : null);
+  const userId = Number(request.cookies.get('userId').value);
 
   if (isNaN(userId) || userId <= 0) {
     return NextResponse.json({ error: "Invalid user ID" });
