@@ -1,3 +1,4 @@
+import { utcToZonedTime } from "date-fns-tz"
 import { useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useStore } from "@/lib/store"
@@ -17,17 +18,25 @@ export const PaymentHistory = () => {
   const relativeTime = (createdAt: string) => {
     const currentTime = new Date();
     const createdAtDate = new Date(createdAt);
-    const offset = currentTime.getTimezoneOffset() * 60000;
 
-    const adjustedTime = new Date(createdAtDate.getTime() - offset);
-    const timeDifference = currentTime.getTime() - adjustedTime.getTime();
-
+    const timeDifference = currentTime.getTime() - createdAtDate.getTime();
     const diffSeconds = Math.floor(timeDifference / 1000);
 
     if (diffSeconds < 60) return `${diffSeconds}s`;
     if (diffSeconds < 3600) return `${Math.floor(diffSeconds / 60)}m`;
     if (diffSeconds < 86400) return `${Math.floor(diffSeconds / 3600)}h`;
     return `${Math.floor(diffSeconds / 86400)}d`;
+  };
+
+  const formatTimeToLocal = (createdAt: string) => {
+    const localTime = new Date(createdAt).toLocaleTimeString(undefined, {
+      month: 'numeric',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true,
+    });
+    return localTime;
   };
 
   return (
@@ -43,7 +52,7 @@ export const PaymentHistory = () => {
             {payments.map((payment: any, index) => (
               <li key={index} className="flex justify-between">
                 <span>Withdrew {payment.amount} sats</span>
-                <span className="text-muted-foreground">{relativeTime(payment.createdAt)}</span>
+                <span className="text-muted-foreground">{formatTimeToLocal(payment.createdAt)}</span>
               </li>
             ))}
           </ul>
