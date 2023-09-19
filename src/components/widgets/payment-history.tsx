@@ -38,14 +38,16 @@ export const PaymentHistory = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col overflow-y-auto">
-        <ul className="text-sm space-y-2">
-          {payments.map((payment: any, index) => (
-            <li key={index} className="flex justify-between">
-              <span>Withdrew {payment.amount} sats</span>
-              <span className="text-muted-foreground">{relativeTime(payment.createdAt)}</span>
-            </li>
-          ))}
-        </ul>
+        {!!payments && payments.length > 0 && (
+          <ul className="text-sm space-y-2">
+            {payments.map((payment: any, index) => (
+              <li key={index} className="flex justify-between">
+                <span>Withdrew {payment.amount} sats</span>
+                <span className="text-muted-foreground">{relativeTime(payment.createdAt)}</span>
+              </li>
+            ))}
+          </ul>
+        )}
       </CardContent>
     </Card>
   );
