@@ -10,10 +10,20 @@ export async function POST(request) {
   const amount = json.amount;
 
   const userId = Number(request.cookies.get('userId').value);
-  console.log('sup userId', userId)
 
   // Create MySQL connection
   const connection = await mysql.createConnection(process.env.DATABASE_URL);
+
+  // Check user's current balance before making the payment
+  const [rows] = await connection.execute(
+    'SELECT balance FROM users WHERE id = ?',
+    [userId]
+  );
+  const currentBalance = rows[0]?.balance || 0;
+
+  if (currentBalance < amount) {
+    return NextResponse.json({ ok: false, error: 'Insufficient balance' });
+  }
 
   // Insert into Payments table
   await connection.execute(
