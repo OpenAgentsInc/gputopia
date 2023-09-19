@@ -1,12 +1,8 @@
 import { NextResponse } from 'next/server';
 import mysql from 'mysql2/promise';
 
-export async function GET(request) {
-  const userIdCookie = request.cookies.get('userId');
-  if (!userIdCookie || isNaN(Number(userIdCookie.value))) {
-    return NextResponse.json({ error: "Invalid user ID" });
-  }
-  const userId = Number(userIdCookie.value);
+export async function POST(request) {
+  const userId = Number(request.cookies.get('userId').value);
 
   let connection;
 
@@ -35,10 +31,10 @@ export async function GET(request) {
       updatedAt: row.updated_at,
     }));
 
-    return NextResponse.json({ payments });
+    return NextResponse.json({ payments }).setHeader("Cache-Control", "no-store, max-age=0");;
 
   } catch (err) {
-    return NextResponse.json({ error: "Database error" });
+    return NextResponse.json({ error: "Database error" }).setHeader("Cache-Control", "no-store, max-age=0");;
 
   } finally {
     if (connection) {

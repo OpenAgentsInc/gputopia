@@ -7,7 +7,10 @@ export const updatePayments = () => {
     return console.log("No user found")
   }
 
-  fetch("/api/payment-history")
+  fetch("/api/payment-history", {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+  })
     .then((res) => res.json())
     .then((json) => {
       // console.log(data)
