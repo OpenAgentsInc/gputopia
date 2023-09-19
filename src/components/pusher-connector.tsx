@@ -1,22 +1,27 @@
 import Pusher, * as PusherTypes from "pusher-js"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useStore } from "@/lib/store"
 import { useAlby } from "@/lib/useAlby"
 import { generate } from "@/lib/webllm"
 
 export const PusherConnector = () => {
   const { logout } = useAlby()
-  let userIdString = window.sessionStorage.getItem("user_id");
-  let userId = 0
-  if (!userIdString) {
-    logout()
-    alert("Log out")
-  } else {
-    userId = Number(userId)
-  }
+
+  const [userId, setUserId] = useState(0)
 
   useEffect(() => {
-    if (!userId) return
+    let userIdString = window.sessionStorage.getItem("user_id");
+    if (!userIdString) {
+      logout()
+      alert("Fixed a bug with jobs, please log in again.")
+    } else {
+      setUserId(Number(userIdString))
+    }
+  }, [])
+
+
+  useEffect(() => {
+    if (!userId || userId === 0) return
     const pusher = new Pusher('b05a0412d32eaefa65e5', {
       cluster: 'mt1'
     });
