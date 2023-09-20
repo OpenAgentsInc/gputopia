@@ -162,6 +162,9 @@ class AiWorker {
       console.log("got gen while busy, ignoring")
       return null;
     }
+    console.log("old generate hit")
+    return null
+
     this.websocket?.send(JSON.stringify({ busy: true }))
     this.busy = true;
     console.log("start larvel gen")
@@ -224,7 +227,7 @@ class AiWorker {
   
   // Usage example
   public async initMessage() :  Promise<InitMessage> {
-      return {
+    const ret = {
           "ln_url": this.config.lnURL,
           "auth_key": "uid:" + String(this.config.userId),
           "cpu_count": navigator.hardwareConcurrency || 1,
@@ -237,6 +240,7 @@ class AiWorker {
               }
           ]
       }
+    return ret
   }
 
   private connect() {

@@ -26,6 +26,7 @@ export async function GET(request: NextRequest) {
       },
       body: JSON.stringify(
         {
+        gpu_filter: {worker_id: id},
         model: "vicuna-v1-7b-q4f32_0",
         messages: [
           {

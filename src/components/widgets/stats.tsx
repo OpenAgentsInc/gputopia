@@ -18,6 +18,8 @@ export const Stats = () => {
   const [modelLoaded, setModelLoaded] = useState(false)
   const [withdrawLoading, setWithdrawLoading] = useState(false)
 
+  const userId = window.sessionStorage.getItem("user_id") as string
+
   const goWithdraw = async () => {
     if (balance === 0) {
       alert("You can't withdraw zero :(")
@@ -87,7 +89,7 @@ export const Stats = () => {
                 ) :
                   <Button className="mt-1" onClick={() => {
                     setModelLoading(true)
-                    initModel(user.lightning_address, user.identifier)
+                    initModel(user.lightning_address, userId)
                   }}>Load model</Button>}
               </div>
             )}

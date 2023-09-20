@@ -40,12 +40,18 @@ export async function generate(prompt: string) {
   if (!worker) {
     return
   }
+  
+  console.log("old gen hit")
+  return
+  
   let reply
   try {
+    // @ts-ignore
     reply = await worker.generate(prompt);
   } catch (e) {
     return
   }
+
 
   // Fetch POST to complete the inference
   complete(reply || "")
