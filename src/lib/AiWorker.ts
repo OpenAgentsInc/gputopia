@@ -32,21 +32,23 @@ class AiWorker {
   busy: boolean;
   stream: boolean;
   streamStart: number;
+  waitConnect: Promise<unknown> | null;
 
   constructor(config: AiConfig) {
     this.config = config;
     this.busy = false;
     this.stream = false;
     this.streamStart = 0;
+    this.waitConnect = null;
     this.chat = new webllm.ChatModule();
     this.chat.setInitProgressCallback((report: any)=>{
       this.callbacks.loading?.(report);
-      console.log("loading", report)
     })
     this.connect();
   }
 
   async preload(model: string) {
+    await this.waitConnect
     this.websocket?.send(JSON.stringify({ busy: true }))
     this.busy = true;
     await this.chat.reload(model, {context_free: true})
@@ -71,16 +73,16 @@ class AiWorker {
   }
 
   public async handleOpenAiReq(req: any): Promise<void> {
-    if (this.busy)
+    if (this.busy) {
+      this.websocket?.send(JSON.stringify({ error: "busy" }))
       return;
+    }
 
-    this.websocket?.send(JSON.stringify({ busy: true }))
     this.busy = true
 
     try {
       // load model
       const reply = await this.getOpenAiReply(req);
-      console.log(reply)
       if (this.stream) {
         this.websocket?.send(JSON.stringify({ model: this.model, choices: [{message: { role: "assistant", content: this.streamContent(reply)}, index: 0 }] } ))
         this.websocket?.send(JSON.stringify({ model: this.model, choices: [{message: { role: "assistant", content: ""}, finish_reason: "stop", index: 0 }] } ))
@@ -93,7 +95,6 @@ class AiWorker {
       console.log("error:", e)
     }
     
-    this.websocket?.send(JSON.stringify({ busy: false }))
     this.busy = false
   }
 
@@ -111,7 +112,7 @@ class AiWorker {
     }
 
     if (model != this.model) {
-      console.log("RELOADING MODEL", model)
+      console.log("loading model", model)
       const opts: Record<string, any> = {context_free: true}
       await this.chat.reload(model, opts);
       this.model = model;
@@ -163,20 +164,22 @@ class AiWorker {
     }
     this.websocket?.send(JSON.stringify({ busy: true }))
     this.busy = true;
+    console.log("start larvel gen")
+    let res: string | any = null
     try {
       // force model to vicuna for hack-gen
-      const res = await this.getOpenAiReply({
+      res = await this.getOpenAiReply({
         model: "vicuna-v1-7b-q4f32_0",
-        messages: { "role": "user", "content": prompt }
+        messages: [{ "role": "user", "content": prompt }]
       })
-      this.websocket?.send(JSON.stringify({ busy: false }))
       this.busy = false;
-      return res;
     } catch (e) {
       console.log("error while gen:", e)
     }
+    console.log("done larvel gen")
+    this.websocket?.send(JSON.stringify({ busy: false }))
     this.busy = false;
-    return null;
+    return res;
   }
 
   private progress(report: any, content: string ) {
@@ -204,8 +207,10 @@ class AiWorker {
       const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
     
       if (gl) {
+        // @ts-ignore
         const extension = gl.getExtension('WEBGL_debug_renderer_info');
         if (extension) {
+        // @ts-ignore
           const renderer = gl.getParameter(extension.UNMASKED_RENDERER_WEBGL);
           resolve(renderer);
         } else {
@@ -236,10 +241,13 @@ class AiWorker {
 
   private connect() {
     console.log("try connect")
+    let res: any = null
+    this.waitConnect = new Promise((resolve) => {res=resolve})
     this.websocket = new WebSocket(this.config.spiderURL);
     this.websocket.addEventListener("open", async () => {
       this.websocket?.send(JSON.stringify(await this.initMessage()));
       this.callbacks.connect?.();
+      res()
       console.log("connected to spider")
     });
 
@@ -259,6 +267,7 @@ class AiWorker {
     });
 
     this.websocket.addEventListener("close", () => {
+      res()
       this.callbacks.disconnect?.();
       this.connect();
     });
