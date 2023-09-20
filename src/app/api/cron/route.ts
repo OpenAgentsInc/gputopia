@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
   for (const user of users) {
     const { id } = user;
     await pusher.trigger(`private-user-${id}`, 'JobAssigned', {
-      job: `Write one sentence about the history of the number ${id}.`
+      job: `Write one sentence about the history of the number ${id}.`,
     });
   }
 
