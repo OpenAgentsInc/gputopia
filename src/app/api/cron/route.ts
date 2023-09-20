@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer f95038c5331fd48b380c6476469f1959",
+        "Authorization": "Bearer longrandomthingthatsignored",
       },
       body: JSON.stringify(
         {

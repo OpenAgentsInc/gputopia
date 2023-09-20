@@ -14,6 +14,11 @@ export async function POST(request) {
     [userId.value]
   );
 
+  try {
+    console.log(`User ${userId.value} has completed a job with result ${result}`)
+  } catch (e) { }
+
+
   connection.end();
 
   return NextResponse.json({ result: result });
