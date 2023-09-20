@@ -19,21 +19,21 @@ let worker: AiWorker | null = null;
 export async function initModel(lnURL: string, userId: string) {
   if (!worker) {
     worker = new AiWorker({
-      spiderURL: "wss://ai-spider-production.up.railway.app/worker",
+      spiderURL: process.env.NEXT_PUBLIC_AI_SPIDER_URL as string,
       lnURL: lnURL,
       userId: userId,
     })
+    worker.on("loading", (report: webllm.InitProgressReport) => {
+      try {
+        const perc = (report.progress * 100).toFixed(0)
+        useStore.setState({ modelLoadPercentage: Number(perc) })
+        setLabel("perc", perc + "%");
+      } catch (e) { }
+    });
+    await worker.preload(process.env.NEXT_PUBLIC_AI_PRELOAD_MODEL || "vicuna-v1-7b-q4f32_0");
+    const event = new Event('model-loaded');
+    document.dispatchEvent(event);
   }
-  worker.on("loading", (report: webllm.InitProgressReport) => {
-    try {
-      const perc = (report.progress * 100).toFixed(0)
-      useStore.setState({ modelLoadPercentage: Number(perc) })
-      setLabel("perc", perc + "%");
-    } catch (e) { }
-  });
-  await worker.preload("vicuna-v1-7b-q4f32_0");
-  const event = new Event('model-loaded');
-  document.dispatchEvent(event);
 }
 
 export async function generate(prompt: string) {
@@ -42,13 +42,13 @@ export async function generate(prompt: string) {
   }
   let reply
   try {
-    reply = await worker.generate(prompt, () => { });
+    reply = await worker.generate(prompt);
   } catch (e) {
     return
   }
 
   // Fetch POST to complete the inference
-  complete(reply)
+  complete(reply || "")
 
   return reply;
 }

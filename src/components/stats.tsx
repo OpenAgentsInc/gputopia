@@ -5,14 +5,14 @@ import { initModel } from "@/lib/webllm"
 import { withdraw } from "@/lib/withdraw"
 import { Button } from "./ui/button"
 import { Progress } from "./ui/progress"
-import { userInfo } from "os"
+import { AlbyUser } from "@/lib/useAlby"
 
 export const Stats = () => {
   const onlineCount = useStore(state => state.onlineMembers)
   const totalSatsEarned = useStore(state => state.totalSatsEarned)
   const modelLoadPercentage = useStore(state => state.modelLoadPercentage)
   const balance = useStore(state => state.balance)
-  const user = useStore(state => state.user)
+  const user = useStore(state => state.user) as AlbyUser
 
   const [modelLoading, setModelLoading] = useState(false)
   const [modelLoaded, setModelLoaded] = useState(false)
@@ -87,7 +87,7 @@ export const Stats = () => {
                 ) :
                   <Button className="mt-1" onClick={() => {
                     setModelLoading(true)
-                    initModel(user?user.lightning_address:"", user?user.identifier:"")
+                    initModel(user.lightning_address, user.identifier)
                   }}>Load model</Button>}
               </div>
             )}
