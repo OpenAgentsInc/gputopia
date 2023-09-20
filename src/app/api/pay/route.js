@@ -1,58 +1,56 @@
-import { NextResponse } from 'next/server'
-import mysql from 'mysql2/promise';
-
 export async function POST(request) {
   const json = await request.json();
-
-  const payment_request = json.payment_request;
-  const payment_hash = json.payment_hash;
-  const expires_at = json.expires_at;
-  const amount = json.amount;
+  const { payment_request, payment_hash, expires_at, amount } = json;
 
   const userId = Number(request.cookies.get('userId').value);
 
-  // Create MySQL connection
   const connection = await mysql.createConnection(process.env.DATABASE_URL);
+  await connection.beginTransaction();  // Begin transaction
 
-  // Check user's current balance before making the payment
-  const [rows] = await connection.execute(
-    'SELECT balance FROM users WHERE id = ?',
-    [userId]
-  );
-  const currentBalance = rows[0]?.balance || 0;
-
-  if (currentBalance < amount) {
-    return NextResponse.json({ ok: false, error: 'Insufficient balance' });
-  }
-
-  // Insert into Payments table
-  await connection.execute(
-    'INSERT INTO payments (user_id, invoice_expires_at, invoice_payment_hash, invoice_payment_request, amount, created_at, updated_at) VALUES (?, ?, ?, ?, ?, NOW(), NOW())',
-    [userId, expires_at, payment_hash, payment_request, amount]
-  );
-
-  const payResponse = await fetch(`${process.env.LNBITS_BASE_URL}/payments`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Api-Key': process.env.LNBITS_API_KEY,
-    },
-    body: JSON.stringify({
-      "out": true,
-      "bolt11": payment_request,
-    })
-  })
-
-  const payJson = await payResponse.json();
-  // If payment is successful, deduct amount from user's balance
-  if (payResponse.ok) {
-    await connection.execute(
-      'UPDATE users SET balance = balance - ? WHERE id = ?',
-      [amount, userId]
+  try {
+    // Lock the user's row
+    const [rows] = await connection.execute(
+      'SELECT balance FROM users WHERE id = ? FOR UPDATE',
+      [userId]
     );
+    const currentBalance = rows[0]?.balance || 0;
+
+    if (currentBalance < amount) {
+      await connection.rollback();
+      return NextResponse.json({ ok: false, error: 'Insufficient balance' });
+    }
+
+    // Insert into Payments table
+    await connection.execute(
+      'INSERT INTO payments (user_id, invoice_expires_at, invoice_payment_hash, invoice_payment_request, amount, created_at, updated_at) VALUES (?, ?, ?, ?, ?, NOW(), NOW())',
+      [userId, expires_at, payment_hash, payment_request, amount]
+    );
+
+    // Make the actual payment
+    // (Assuming this is a synchronous operation that either succeeds or throws an exception)
+    const payResponse = await fetch(`${process.env.LNBITS_BASE_URL}/payments`, {
+      // ... (same as your existing code)
+    });
+
+    const payJson = await payResponse.json();
+    if (payResponse.ok) {
+      await connection.execute(
+        'UPDATE users SET balance = balance - ? WHERE id = ?',
+        [amount, userId]
+      );
+    } else {
+      await connection.rollback();
+      return NextResponse.json({ ok: false, ...payJson });
+    }
+
+    await connection.commit();  // Commit transaction
+
+    return NextResponse.json({ ok: true, ...payJson });
+
+  } catch (error) {
+    await connection.rollback();  // Rollback transaction in case of an error
+    return NextResponse.json({ ok: false, error });
+  } finally {
+    connection.end();
   }
-
-  console.log(payJson)
-
-  return NextResponse.json({ ok: true, ...payJson })
 }
