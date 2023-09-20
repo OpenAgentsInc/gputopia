@@ -43,9 +43,7 @@ export const PusherConnector = () => {
     if (userId) {
       const userChannel = pusher.subscribe(`private-user-${userId}`);
       userChannel.bind('JobAssigned', async (data: any) => {
-        console.log("job assigned")
-        const res = "IGNORED" || await generate(data.job)
-        console.log(res)
+        return await generate(data.job)
       });
     }
 

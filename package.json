@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@mlc-ai/web-llm": "^0.2.8",
@@ -40,5 +41,7 @@
     "typescript": "5.2.2",
     "zustand": "^4.4.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "patch-package": "^8.0.0"
+  }
 }

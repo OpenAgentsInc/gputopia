@@ -47,9 +47,11 @@ class AiWorker {
   }
 
   async preload(model: string) {
+    this.websocket?.send(JSON.stringify({ busy: true }))
     this.busy = true;
-    await this.chat.reload(model)
+    await this.chat.reload(model, {context_free: true})
     this.model = model;
+    this.websocket?.send(JSON.stringify({ busy: false }))
     this.busy = false;
   }
   
@@ -69,10 +71,10 @@ class AiWorker {
   }
 
   public async handleOpenAiReq(req: any): Promise<void> {
-    console.log("GOT SPIDER REQ!!!", req)
     if (this.busy)
       return;
 
+    this.websocket?.send(JSON.stringify({ busy: true }))
     this.busy = true
 
     try {
@@ -90,6 +92,8 @@ class AiWorker {
     catch (e) {
       console.log("error:", e)
     }
+    
+    this.websocket?.send(JSON.stringify({ busy: false }))
     this.busy = false
   }
 
@@ -108,52 +112,65 @@ class AiWorker {
 
     if (model != this.model) {
       console.log("RELOADING MODEL", model)
-      await this.chat.reload(model);
+      const opts: Record<string, any> = {context_free: true}
+      await this.chat.reload(model, opts);
       this.model = model;
     }
-
     console.log("RESET CHAT", model)
+
     // clear
     await this.chat.resetChat();
 
     // @ts-ignore
-    /*    const conversation = this.chat.getPipeline().conversation;
+    const pipeline = this.chat.getPipeline();
     
-        // load whole conversation
-        conversation.getPromptArrayLastRound = conversation.getPromptArray;
-        for (let i = 0; i < req.messages.length - 1; i++) {
-          const message = req.messages[i];
-          if (message.role === "system") {
-            conversation.system = message.content;
-          }
-          let inp: string; // Assuming 'inp' is defined somewhere as a string
-          if (message.role === "user") {
-            conversation.appendMessage(conversation.config.roles[0], message.content);
-          } else {
-            conversation.appendMessage(conversation.config.roles[1], message.content);
-          }
-        }
-    */
-    console.log("HERE REQ!!!", req)
+    const conversation = pipeline.conversation;
+
+    if (req.top_p)
+      pipeline.config.top_p = req.top_p
+    
+    if (req.temperature)
+      pipeline.config.temperature = req.temperature
+
+    // load whole conversation
+    conversation.getPromptArrayLastRound = conversation.getPromptArray;
+    for (let i = 0; i < req.messages.length - 1; i++) {
+      const message = req.messages[i];
+      if (message.role === "system") {
+        conversation.config.system = message.content;
+      } else if (message.role === "user") {
+        conversation.appendMessage(conversation.config.roles[0], message.content);
+      } else {
+        conversation.appendMessage(conversation.config.roles[1], message.content);
+      }
+    }
+    
+    conversation.getPromptArray()
+    
     this.stream = req.stream
     this.streamStart = 0
-    const reply = await this.chat.generate(req.messages[req.messages.length - 1], this.progress.bind(this));
-    console.log("HERE REPLY!!!", reply)
+    const reply = await this.chat.generate(req.messages[req.messages.length - 1].content, this.progress.bind(this));
+    
+    console.log("finished generate")
     return reply;
   }
 
   public async generate(prompt: string) {
+    // hack gen... 
     if (this.busy) {
       console.log("got gen while busy, ignoring")
       return null;
     }
+    this.websocket?.send(JSON.stringify({ busy: true }))
     this.busy = true;
     try {
+      // force model to vicuna for hack-gen
       const res = await this.getOpenAiReply({
         model: "vicuna-v1-7b-q4f32_0",
         messages: { "role": "user", "content": prompt }
-      })    
-    this.busy = false;
+      })
+      this.websocket?.send(JSON.stringify({ busy: false }))
+      this.busy = false;
       return res;
     } catch (e) {
       console.log("error while gen:", e)
