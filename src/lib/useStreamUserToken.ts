@@ -14,7 +14,6 @@ export function useStreamUserToken() {
       }
     }).then((json) => {
       if (json.token) {
-        console.log("Setting token", json.token)
         setToken(json.token)
         setUserId(String(json.userId))
       }
