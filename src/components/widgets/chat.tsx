@@ -23,6 +23,9 @@ export const ChatBox = ({ user }: { user: AlbyUser }) => {
       name: 'Chat',
     });
 
+    // await channel.addMembers([userId]);
+    // console.log("added?")
+
     await channel.watch();
 
     setChannel(channel);
@@ -39,6 +42,7 @@ export const ChatBox = ({ user }: { user: AlbyUser }) => {
     const streamUser: User = {
       id: userId,
       name: userName,
+      username: userName,
       image: image,
     };
     const apiKey = process.env.NEXT_PUBLIC_STREAM_APP_KEY as string;
