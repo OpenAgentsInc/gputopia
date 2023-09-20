@@ -18,11 +18,9 @@ export const ChatBox = ({ user }: { user: AlbyUser }) => {
   const initChannel = async (chatClient: any) => {
     if (!user || !userId || !token) return
 
-    const channel = chatClient.channel('messaging', 'trollbox1b', {
-      // add as many custom fields as you'd like
+    const channel = chatClient.channel('messaging', 'trollbox1c', {
       image: 'https://pbs.twimg.com/profile_images/1695156914156392448/FTpOVV3s_400x400.jpg',
       name: 'Chat',
-      members: [],
     });
 
     await channel.watch();
