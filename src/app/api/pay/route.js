@@ -1,3 +1,6 @@
+import { NextResponse } from 'next/server'
+import mysql from 'mysql2/promise';
+
 export async function POST(request) {
   const json = await request.json();
   const { payment_request, payment_hash, expires_at, amount } = json;
@@ -26,22 +29,32 @@ export async function POST(request) {
       [userId, expires_at, payment_hash, payment_request, amount]
     );
 
-    // Make the actual payment
-    // (Assuming this is a synchronous operation that either succeeds or throws an exception)
     const payResponse = await fetch(`${process.env.LNBITS_BASE_URL}/payments`, {
-      // ... (same as your existing code)
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Api-Key': process.env.LNBITS_API_KEY,
+      },
+      body: JSON.stringify({
+        "out": true,
+        "bolt11": payment_request,
+      })
     });
 
-    const payJson = await payResponse.json();
-    if (payResponse.ok) {
-      await connection.execute(
-        'UPDATE users SET balance = balance - ? WHERE id = ?',
-        [amount, userId]
-      );
-    } else {
+    if (!payResponse.ok) {
+      const errorText = await payResponse.text();
+      console.error("Payment API returned an error:", errorText);
       await connection.rollback();
-      return NextResponse.json({ ok: false, ...payJson });
+      return NextResponse.json({ ok: false, error: 'Payment API failed' });
     }
+
+    const payJson = await payResponse.json();
+
+    // If payment is successful, deduct amount from user's balance
+    await connection.execute(
+      'UPDATE users SET balance = balance - ? WHERE id = ?',
+      [amount, userId]
+    );
 
     await connection.commit();  // Commit transaction
 
