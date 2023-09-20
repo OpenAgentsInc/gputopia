@@ -1,16 +1,15 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+'use client'
+
+import { Card } from "@/components/ui/card"
+import { useStore } from "@/lib/store"
+import { ChatBox } from "./chat"
 
 export const Trollbox = () => {
+  const user = useStore(state => state.user)
+  if (!user) return null
   return (
-    <Card className="flex flex-col max-h-[calc(100vh-280px)]">
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="mb-2 text-sm font-medium text-muted-foreground">
-          Trollbox
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p className="text-center mt-6 font-mono text-xs">coming soon :)</p>
-      </CardContent>
+    <Card className="flex flex-col max-h-[calc(100vh-280px)] overflow-hidden">
+      <ChatBox user={user} />
     </Card>
   );
 };
