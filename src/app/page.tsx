@@ -2,17 +2,20 @@
 
 import { MainNav } from "@/components/main-nav"
 import { PusherConnector } from "@/components/pusher-connector"
-import { Stats } from "@/components/stats"
 import { Button } from "@/components/ui/button"
 import { ModeToggle } from "@/components/ui/mode-toggle"
 import { UserNav } from "@/components/user-nav"
+import { ChatWorkspace } from "@/components/widgets/chat-workspace"
+import { PaymentHistory } from "@/components/widgets/payment-history"
+import { Stats } from "@/components/widgets/stats"
+import { Trollbox } from "@/components/widgets/trollbox"
 import { startAlbyOauth } from "@/lib/alby-oauth"
 import { useAlby } from "@/lib/useAlby"
 
 export default function Home() {
   const { authed, logout, user } = useAlby()
   return (
-    <div className="flex-col">
+    <div className="flex flex-col h-screen">
       {authed && <PusherConnector />}
       <div className="border-b">
         <div className="flex h-16 items-center px-4">
@@ -23,7 +26,19 @@ export default function Home() {
           </div>
         </div>
       </div>
-      {authed && <Stats />}
+
+      <div className="flex flex-col flex-grow">
+        {authed && (
+          <div className="mx-8 mb-4 flex flex-col flex-grow">
+            <Stats />
+            <div className="mx-8 flex-grow grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+              <div className="col-span-1" />
+              <PaymentHistory />
+              <div className="col-span-1" />
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   )
 }

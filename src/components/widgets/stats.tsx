@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
+import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Progress } from "@/components/ui/progress"
 import { useStore } from "@/lib/store"
 import { initModel } from "@/lib/webllm"
 import { withdraw } from "@/lib/withdraw"
-import { Button } from "./ui/button"
-import { Progress } from "./ui/progress"
 import { AlbyUser } from "@/lib/useAlby"
 
 export const Stats = () => {
@@ -54,7 +54,7 @@ export const Stats = () => {
   }, [user?.email])
 
   return (
-    <div className="m-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <div className="mx-8 my-4 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="mb-2 text-sm font-medium text-muted-foreground">Model</CardTitle>
