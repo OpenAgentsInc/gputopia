@@ -12,10 +12,18 @@ export function MainNav({
     >
       <Link
         href="/"
-        className="text-sm font-medium transition-colors hover:text-primary"
+        className="text-sm font-medium transition-colors hover:text-primary -m-1.5 p-1.5 flex flex-row items-center"
+        style={{ height: 60 }}
       >
-        GPUtopia
+        {/* <img className=" h-auto w-12" src="/images/logo.png" alt="" /> */}
+        <h1 className="ml-2 headline font-mono">GPUtopia</h1>
       </Link>
+      {/*
+      <a href="/" class="-m-1.5 p-1.5 flex flex-row items-center" style="height: 60px">
+        <img class=" h-auto w-12" src="{{ asset('logo.png') }}" alt="">
+        <h1 class="ml-2 headline">GPUTOPIA</h1>
+      </a> */}
+
       {/* <Link
         href="/payments"
         className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"

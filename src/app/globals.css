@@ -108,3 +108,10 @@
   background-color: #53CF53;
   box-shadow: 0 0 55px rgba(0, 255, 0, 0.55);
 }
+
+.headline {
+  color: white;
+  font-size: 20px;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 10px #00ff00;
+}
