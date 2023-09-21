@@ -97,3 +97,14 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+.big-green-button {
+  background-color: rgba(67, 175, 67, 1);
+  box-shadow: 0 0 35px rgba(0, 255, 0, 0.25);
+  transition: box-shadow 0.3s ease;
+}
+
+.big-green-button:hover {
+  background-color: #53CF53;
+  box-shadow: 0 0 55px rgba(0, 255, 0, 0.55);
+}
