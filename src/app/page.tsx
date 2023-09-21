@@ -25,7 +25,7 @@ export default function Home() {
 
       <div className="flex flex-col flex-grow justify-center">
         <div style={{
-          backgroundImage: "url('/images/flares.png')",
+          backgroundImage: "url('/images/flares2.png')",
           opacity: 0.5,
           position: 'absolute',
           top: 0,
@@ -35,8 +35,8 @@ export default function Home() {
           zIndex: -1,
           backgroundSize: 'cover',
           backgroundPosition: 'bottom',
-          imageRendering: 'optimizeQuality',
-          filter: 'blur(0.8px)'
+          // imageRendering: 'optimizeQuality',
+          // filter: 'blur(0.8px)'
         }}>
         </div>
         <div className="text-center">
