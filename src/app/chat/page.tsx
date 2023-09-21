@@ -4,6 +4,7 @@ import { PanelLeftIcon } from "@/components/icons/panel-left"
 import { MainNav } from "@/components/main-nav"
 import { PusherConnector } from "@/components/pusher-connector"
 import { Button } from "@/components/ui/button"
+import { Separator } from "@/components/ui/separator"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Toggle } from "@/components/ui/toggle"
 import { UserNav } from "@/components/user-nav"
@@ -47,6 +48,9 @@ export default function Home() {
         <div></div>
 
       </div>
+
+      {/* <Separator className="mt-4" /> */}
+
     </div>
   )
 }
