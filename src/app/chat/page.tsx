@@ -5,6 +5,9 @@ import { MainNav } from "@/components/main-nav"
 import { PusherConnector } from "@/components/pusher-connector"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
+import {
+    Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger
+} from "@/components/ui/sheet"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Toggle } from "@/components/ui/toggle"
 import { UserNav } from "@/components/user-nav"
@@ -28,29 +31,34 @@ export default function Home() {
             {user ? <UserNav user={user} logout={logout} /> : <Button variant="outline" onClick={startAlbyOauth}>Log in with Alby</Button>}
           </div>
         </div>
-
       </div>
 
-      <div className="flex flex-row items-center mt-4 justify-between">
+      <Sheet>
+        <div className="flex flex-row items-center mt-4 justify-between">
+          <SheetTrigger className="ml-8">
+            <PanelLeftIcon />
+          </SheetTrigger>
+          <Tabs defaultValue="account" className="w-[400px]">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="account">Vicuna 7B</TabsTrigger>
+              <TabsTrigger value="password">34B Instruct</TabsTrigger>
+              <TabsTrigger value="wizard">Wizard</TabsTrigger>
+            </TabsList>
+          </Tabs>
+          <div></div>
+        </div>
 
-        <Toggle className="ml-8">
-          <PanelLeftIcon />
-        </Toggle>
-
-        <Tabs defaultValue="account" className="w-[400px]">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="account">Vicuna 7B</TabsTrigger>
-            <TabsTrigger value="password">34B Instruct</TabsTrigger>
-            <TabsTrigger value="wizard">Wizard</TabsTrigger>
-          </TabsList>
-        </Tabs>
-
-        <div></div>
-
-      </div>
-
+        <SheetContent side="left">
+          <SheetHeader>
+            <SheetTitle>Are you sure absolutely sure?</SheetTitle>
+            <SheetDescription>
+              This action cannot be undone. This will permanently delete your account
+              and remove your data from our servers.
+            </SheetDescription>
+          </SheetHeader>
+        </SheetContent>
+      </Sheet>
       {/* <Separator className="mt-4" /> */}
-
     </div>
   )
 }
