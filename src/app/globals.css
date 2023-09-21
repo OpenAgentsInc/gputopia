@@ -111,7 +111,8 @@
 
 .headline {
   color: white;
-  font-size: 20px;
+  font-size: 16px;
+  font-weight: 700;
   letter-spacing: 1px;
-  text-shadow: 1px 1px 10px #00ff00;
+  /* text-shadow: 1px 1px 3px #00ff00; */
 }
