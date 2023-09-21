@@ -84,10 +84,9 @@ export const Stats = () => {
                     <Progress value={modelLoadPercentage} className="mx-4 w-[60%]" />
                   </div>
                 ) :
-                  <Button className="mt-1" onClick={() => {
-                    setModelLoading(true)
-                    initModel()
-                  }}>Load model</Button>}
+                  <Button disabled className="mt-1" onClick={() => {
+
+                  }}>Disabled until v3</Button>}
               </div>
             )}
 
@@ -115,9 +114,12 @@ export const Stats = () => {
         <CardContent>
           <div className="flex flex-row items-start justify-between">
             <div className="text-3xl font-bold">{balance}</div>
-            <Button disabled={withdrawLoading || balance === 0} className="mt-1 w-42" onClick={goWithdraw}>
-              {withdrawLoading ? "Withdrawing..." : "Withdraw to Alby"}
+            <Button disabled={true} className="mt-1 w-42" onClick={goWithdraw}>
+              Disabled until v3
             </Button>
+            {/* <Button disabled={withdrawLoading || balance === 0} className="mt-1 w-42" onClick={goWithdraw}>
+              {withdrawLoading ? "Withdrawing..." : "Withdraw to Alby"}
+            </Button> */}
           </div>
         </CardContent>
       </Card>
