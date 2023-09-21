@@ -8,20 +8,14 @@ export function MainNav({
   ...props
 }: React.HTMLAttributes<HTMLElement>) {
   const pathname = usePathname();
-  console.log(pathname)
-
   const isActive = (path: string) => pathname === path;
-
   return (
     <nav
       className={cn("flex items-center space-x-4 lg:space-x-6", className)}
       {...props}
     >
-      <Link href="/" className={cn("text-sm font-medium transition-colors hover:text-primary -m-1.5 p-1.5 flex flex-row items-center", {
-        "text-white": isActive("/"),
-        "text-muted-foreground": !isActive("/")
-      })} style={{ height: 60 }}>
-        GPUtopia
+      <Link href="/" className={cn("tracking-wide text-white text-lg font-bold transition-colors hover:text-primary mr-4 p-1.5 flex flex-row items-center")} style={{ height: 60 }}>
+        GPUTOPIA
       </Link>
       <Link
         href="/chat"
