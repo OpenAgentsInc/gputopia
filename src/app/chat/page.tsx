@@ -3,6 +3,7 @@
 import { MainNav } from "@/components/main-nav"
 import { PusherConnector } from "@/components/pusher-connector"
 import { Button } from "@/components/ui/button"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { UserNav } from "@/components/user-nav"
 import { startAlbyOauth } from "@/lib/alby-oauth"
 import { useAlby } from "@/lib/useAlby"
@@ -12,23 +13,29 @@ export default function Home() {
   return (
     <div className="flex flex-col h-screen">
       {authed && <PusherConnector />}
-      <div className="border-b">
-        <div className="flex h-16 items-center px-4">
+      <div className="border-b relative">
+        <div className="flex flex-row h-16 items-center px-4 justify-between">
           <MainNav className="mx-6" />
+
+          <div className="absolute left-1/2 transform -translate-x-1/2">
+
+          </div>
+
           <div className="ml-auto flex items-center space-x-4">
-            {/* <ModeToggle /> */}
             {user ? <UserNav user={user} logout={logout} /> : <Button variant="outline" onClick={startAlbyOauth}>Log in with Alby</Button>}
           </div>
         </div>
+
       </div>
 
-      <div className="flex flex-col flex-grow justify-center">
-        <div className="-mt-16 mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
-            <div className="text-center">
-            </div>
-          </div>
-        </div>
+      <div className="flex flex-col items-center mt-4">
+        <Tabs defaultValue="account" className="w-[400px]">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="account">Vicuna 7B</TabsTrigger>
+            <TabsTrigger value="password">34B Instruct</TabsTrigger>
+            <TabsTrigger value="wizard">Wizard</TabsTrigger>
+          </TabsList>
+        </Tabs>
       </div>
     </div>
   )
