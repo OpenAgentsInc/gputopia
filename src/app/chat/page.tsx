@@ -49,13 +49,9 @@ export default function Home() {
         </div>
 
         <SheetContent side="left">
-          <SheetHeader>
-            <SheetTitle>Are you sure absolutely sure?</SheetTitle>
-            <SheetDescription>
-              This action cannot be undone. This will permanently delete your account
-              and remove your data from our servers.
-            </SheetDescription>
-          </SheetHeader>
+          <div className="w-full flex justify-center items-center">
+            <Button variant="outline" size="lg" className="w-[75%]">New Chat</Button>
+          </div>
         </SheetContent>
       </Sheet>
       {/* <Separator className="mt-4" /> */}
