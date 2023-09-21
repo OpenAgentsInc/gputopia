@@ -1,9 +1,11 @@
 "use client"
 
+import { PanelLeftIcon } from "@/components/icons/panel-left"
 import { MainNav } from "@/components/main-nav"
 import { PusherConnector } from "@/components/pusher-connector"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Toggle } from "@/components/ui/toggle"
 import { UserNav } from "@/components/user-nav"
 import { startAlbyOauth } from "@/lib/alby-oauth"
 import { useAlby } from "@/lib/useAlby"
@@ -28,7 +30,12 @@ export default function Home() {
 
       </div>
 
-      <div className="flex flex-col items-center mt-4">
+      <div className="flex flex-row items-center mt-4 justify-between">
+
+        <Toggle className="ml-8">
+          <PanelLeftIcon />
+        </Toggle>
+
         <Tabs defaultValue="account" className="w-[400px]">
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="account">Vicuna 7B</TabsTrigger>
@@ -36,6 +43,9 @@ export default function Home() {
             <TabsTrigger value="wizard">Wizard</TabsTrigger>
           </TabsList>
         </Tabs>
+
+        <div></div>
+
       </div>
     </div>
   )
