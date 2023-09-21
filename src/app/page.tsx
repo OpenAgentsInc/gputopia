@@ -8,6 +8,7 @@ import { UserNav } from "@/components/user-nav"
 import { ChatWorkspace } from "@/components/widgets/chat-workspace"
 import { PaymentHistory } from "@/components/widgets/payment-history"
 import { Stats } from "@/components/widgets/stats"
+import { System } from "@/components/widgets/system"
 import { Trollbox } from "@/components/widgets/trollbox"
 import { startAlbyOauth } from "@/lib/alby-oauth"
 import { useAlby } from "@/lib/useAlby"
@@ -32,7 +33,7 @@ export default function Home() {
           <div className="mx-8 mb-4 flex flex-col flex-grow">
             <Stats />
             <div className="mx-8 flex-grow grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-              <div className="col-span-1" />
+              <System />
               <PaymentHistory />
               <Trollbox />
               <div className="col-span-1" />
