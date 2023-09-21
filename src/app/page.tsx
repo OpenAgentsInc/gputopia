@@ -28,15 +28,13 @@ export default function Home() {
           backgroundImage: "url('/images/flares2.png')",
           opacity: 0.5,
           position: 'absolute',
-          top: 0,
+          top: 65,
           right: 0,
           bottom: 0,
           left: 0,
           zIndex: -1,
           backgroundSize: 'cover',
-          backgroundPosition: 'bottom',
-          // imageRendering: 'optimizeQuality',
-          // filter: 'blur(0.8px)'
+          backgroundPosition: 'top',
         }}>
         </div>
         <div className="-mt-16 mx-auto max-w-7xl px-6 lg:px-8">
