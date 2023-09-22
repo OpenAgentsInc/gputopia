@@ -14,12 +14,14 @@ export interface AlbyUser {
   name: string | null
 }
 
+const refreshWhenSecondsLessThan = 3700
+
 // Function to convert seconds to human-readable format
-// const toHumanTime = (seconds: number) => {
-//   const hours = Math.floor(seconds / 3600);
-//   const minutes = Math.floor((seconds % 3600) / 60);
-//   return `${hours}h ${minutes}m`;
-// };
+const toHumanTime = (seconds: number) => {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  return `${hours}h ${minutes}m`;
+};
 
 const wipeTokens = () => {
   window.sessionStorage.removeItem("alby_access_token");
@@ -37,6 +39,7 @@ export function useAlby() {
   const [authed, setAuthed] = useState(false)
   const [user, setUser] = useState<AlbyUser | null>(null)
   const [expiresAt, setExpiresAt] = useState(0)
+  const [refreshing, setRefreshing] = useState(false);
 
   const logout = () => {
     wipeTokens()
@@ -45,7 +48,7 @@ export function useAlby() {
   }
 
   const refreshAccessToken = async () => {
-    console.log("Attempting to refresh with refresh token:", refreshToken);
+    console.log("Attempting to refresh Alby access token");
     const clientId = process.env.NEXT_PUBLIC_ALBY_CLIENT_ID;
     const clientSecret = process.env.NEXT_PUBLIC_ALBY_CLIENT_SECRET;
     if (!clientId || !clientSecret) throw new Error('Missing client ID or secret');
@@ -63,12 +66,11 @@ export function useAlby() {
         }
       });
 
-      console.log("Refresh token response:", response.data);
+      // console.log("Refresh token response:", response.data);
 
       const { access_token, expires_in, refresh_token, scope, token_type } = response.data;
       const expiresAt = Math.floor(Date.now() / 1000) + expires_in;
 
-      // Update state variables if needed
       setAccessToken(access_token);
       setRefreshToken(refresh_token);
       setExpiresAt(expiresAt);
@@ -81,36 +83,51 @@ export function useAlby() {
       window.sessionStorage.setItem("alby_scope", scope);
       window.sessionStorage.setItem("alby_token_type", token_type);
 
-      console.log("Updated tokens successfully")
+      console.log("Updated access token successfully")
+
+      // Calculate remainingSeconds here and decide whether to continue refreshing
+      const currentTime = Math.floor(Date.now() / 1000);
+      const remainingSeconds = expiresAt - currentTime;
+      if (remainingSeconds > refreshWhenSecondsLessThan) {
+        setRefreshing(false);  // Turn off refreshing if there's ample time before token expires
+      }
     } catch (error) {
       console.error("Failed to refresh token:", error);
     }
   };
 
-  // Log when token expires
   useEffect(() => {
-    if (expiresAt === 0) return;
+    if (expiresAt === 0 || refreshing) return;
 
     const currentTime = Math.floor(Date.now() / 1000);
     const remainingSeconds = expiresAt - currentTime;
 
-    // console.log(`Token will expire in ${remainingSeconds}s (${toHumanTime(remainingSeconds)})`);
+    // if (remainingSeconds <= refreshWhenSecondsLessThan) {
+    //   console.log("Refreshing token.")
+    //   setRefreshing(true);
+    //   refreshAccessToken().finally(() => setRefreshing(false));
+    //   return;
+    // }
 
-    const refreshWhenSecondsLessThan = 600
-
-    if (remainingSeconds <= refreshWhenSecondsLessThan) {
-      refreshAccessToken();
-      return;
-    }
+    // const timerId = setTimeout(() => {
+    //   setRefreshing(true);
+    //   refreshAccessToken().finally(() => setRefreshing(false));
+    // }, (remainingSeconds - refreshWhenSecondsLessThan) * 1000);
 
     const timerId = setTimeout(() => {
-      refreshAccessToken();
+      setRefreshing(true);
+      refreshAccessToken()
+        .then(() => {
+          setRefreshing(false);
+        })
+        .catch((err) => {
+          console.error("Failed to refresh token:", err);
+          setRefreshing(false);
+        });
     }, (remainingSeconds - refreshWhenSecondsLessThan) * 1000);
 
     return () => clearTimeout(timerId);
-  }, [expiresAt]);
-
-
+  }, [expiresAt, refreshing]);
 
   // Ensure we have all valid Alby token data in session storage
   useEffect(() => {

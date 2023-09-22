@@ -15,7 +15,7 @@ import { startAlbyOauth } from "@/lib/alby-oauth"
 import { useAlby } from "@/lib/useAlby"
 
 export default function Home() {
-  const { authed, logout, user } = useAlby()
+  const { logout, user } = useAlby()
   return (
     <div className="flex flex-col h-screen">
       {/* {authed && <PusherConnector />} */}

@@ -5,14 +5,15 @@ import { useAlby } from "@/lib/useAlby"
 import { generate } from "@/lib/webllm"
 
 export const PusherConnector = () => {
-  const { logout } = useAlby()
+  // const { logout } = useAlby()
 
   const [userId, setUserId] = useState(0)
 
   useEffect(() => {
     let userIdString = window.sessionStorage.getItem("user_id");
     if (!userIdString) {
-      logout()
+      // logout()
+      alert("Error. Please log in again.")
     } else {
       setUserId(Number(userIdString))
     }
