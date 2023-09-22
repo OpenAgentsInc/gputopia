@@ -12,8 +12,8 @@ export const OnlineUsers = () => {
       <Tooltip>
         <TooltipTrigger>
           <span className="flex flex-row items-center text-muted-foreground">
-            <PersonIcon className="h-4 w-4 text-sm" />
-            <p className="text-sm mx-1">{onlineMembers}</p>
+            <PersonIcon className="mr-1 h-4 w-4 text-sm" />
+            <p className="text-sm w-8 text-left font-mono">{onlineMembers}</p>
           </span>
         </TooltipTrigger>
         <TooltipContent>
