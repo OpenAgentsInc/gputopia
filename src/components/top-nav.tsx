@@ -12,7 +12,7 @@ export const TopNav = () => {
   return (
     <>
       {/* {authed && <PusherConnector />} */}
-      <div className="border-b">
+      <div className="border-b fixed top-0 left-0 right-0 z-50 backdrop-blur bg-background/80">
         <div className="flex h-16 items-center px-4">
           <MainNav className="mx-6" />
           <div className="ml-auto flex items-center space-x-4">
