@@ -14,7 +14,7 @@ export default function Beta() {
       <div className="flex flex-col flex-grow justify-center">
         <BackgroundImage />
 
-        <div className="relative isolate overflow-hidden pb-16 pt-32 sm:pb-20 min-h-screen flex flex-col">
+        <div className="relative isolate overflow-hidden pb-16 pt-28 sm:pb-20 min-h-screen flex flex-col">
           <div className="mx-auto max-w-2xl p-4 sm:p-0">
 
             <Alert>
@@ -75,7 +75,7 @@ export default function Beta() {
             </P>
 
             <P>
-              It takes about 2 minutes to create an Alby wallet if you don&apos;t already have one &mdash; then you&apos;ll be ready to start earning bitcoin. Learn more about Alby on their <ExternalLink href="https://getalby.com">website</ExternalLink><span className="-ml-1">.</span>
+              It takes about 2 minutes to create an Alby wallet if you don&apos;t already have one &mdash; then you&apos;ll be ready to start earning bitcoin. Learn more about Alby on their <ExternalLink href="https://getalby.com">website</ExternalLink>.
             </P>
 
             <h2 className="mt-12 font-bold text-xl">Any questions?</h2>
@@ -83,12 +83,6 @@ export default function Beta() {
             <P>
               Tweet at us <ExternalLink href="https://twitter.com/gputopia">@GPUtopia</ExternalLink> or email us at info@gputopia.ai.
             </P>
-
-            {/* <div className="flex flex-col justify-center items-center my-12">
-              <a href="/beta" className="tracking-wider font-medium big-green-button rounded-xl px-5 py-4 text-lg text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400">
-                Join the Beta
-
-            </div> */}
 
           </div>
         </div>
