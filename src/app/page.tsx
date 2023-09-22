@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect } from "react"
 import { MainNav } from "@/components/main-nav"
 import { PusherConnector } from "@/components/pusher-connector"
 import { Button } from "@/components/ui/button"
@@ -15,6 +16,12 @@ import { useAlby } from "@/lib/useAlby"
 
 export default function Home() {
   const { authed, logout, user } = useAlby()
+  useEffect(() => {
+    window.location.href = "https://gputopia.ai"
+  }, [])
+  return (<div className="h-screen w-screen flex justify-center items-center">
+    <div id="loader" className="loader"></div>
+  </div>)
   return (
     <div className="flex flex-col h-screen">
       {authed && <PusherConnector />}
