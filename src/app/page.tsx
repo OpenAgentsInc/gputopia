@@ -17,7 +17,7 @@ export default function Home() {
         <div className="flex h-16 items-center px-4">
           <MainNav className="mx-6" />
           <div className="ml-auto flex items-center space-x-4">
-            {/* <ModeToggle /> */}
+            <ModeToggle />
             {user ? <UserNav user={user} logout={logout} /> : <Button variant="outline" onClick={startAlbyOauth}>Log in with Alby</Button>}
           </div>
         </div>

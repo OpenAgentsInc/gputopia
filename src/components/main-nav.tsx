@@ -1,7 +1,8 @@
 import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
-import { Button } from "./ui/button"
+
+const linkClasses = "text-sm font-medium transition-colors hover:text-primary"
 
 export function MainNav({
   className,
@@ -19,12 +20,21 @@ export function MainNav({
       </Link>
       <Link
         href="/chat"
-        className={cn("text-sm font-medium transition-colors hover:text-primary", {
+        className={cn(linkClasses, {
           "text-white": isActive("/chat"),
           "text-muted-foreground": !isActive("/chat")
         })}
       >
-        AI Chat
+        <span className="mx-2">AI Chat</span>
+      </Link>
+      <Link
+        href="/intro"
+        className={cn(linkClasses, {
+          "text-white": isActive("/intro"),
+          "text-muted-foreground": !isActive("/intro")
+        })}
+      >
+        <span className="mx-2">Blog</span>
       </Link>
     </nav>
   )
