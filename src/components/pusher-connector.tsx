@@ -13,7 +13,6 @@ export const PusherConnector = () => {
     let userIdString = window.sessionStorage.getItem("user_id");
     if (!userIdString) {
       logout()
-      alert("Fixed a bug with jobs, please log in again.")
     } else {
       setUserId(Number(userIdString))
     }
@@ -22,7 +21,7 @@ export const PusherConnector = () => {
 
   useEffect(() => {
     if (!userId || userId === 0) return
-    const pusher = new Pusher('b05a0412d32eaefa65e5', {
+    const pusher = new Pusher('e12c6b8ab6c32132e3bf', {
       cluster: 'mt1'
     });
 

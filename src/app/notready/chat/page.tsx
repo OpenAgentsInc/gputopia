@@ -18,7 +18,7 @@ export default function Home() {
   const { authed, logout, user } = useAlby()
   return (
     <div className="flex flex-col h-screen">
-      {authed && <PusherConnector />}
+      {/* {authed && <PusherConnector />} */}
       <div className="border-b relative">
         <div className="flex flex-row h-16 items-center px-4 justify-between">
           <MainNav className="mx-6" />
