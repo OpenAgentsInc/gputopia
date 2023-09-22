@@ -10,6 +10,7 @@ import {
     TypographyP as P
 } from "@/components/ui/typography"
 import { PaymentHistory } from "@/components/widgets/payment-history"
+import { useStore } from "@/lib/store"
 import { useBalance } from "@/lib/useBalance"
 import { withdraw } from "@/lib/withdraw"
 import { RocketIcon } from "@radix-ui/react-icons"
@@ -17,6 +18,7 @@ import { RocketIcon } from "@radix-ui/react-icons"
 export default function Balance() {
   const balance = useBalance()
   const [withdrawLoading, setWithdrawLoading] = useState(false)
+  const totalSatsEarned = useStore(state => state.totalSatsEarned)
   const goWithdraw = async () => {
     if (balance === 0) {
       alert("You can't withdraw zero :(")
@@ -35,8 +37,8 @@ export default function Balance() {
           <div className="mx-auto max-w-2xl p-4 sm:p-0">
 
             <Card className="bg-background w-96 mb-8">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="mb-2 text-sm font-medium text-muted-foreground flex flex-row items-center">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 px-6 pb-4">
+                <CardTitle className="text-sm font-medium text-muted-foreground flex flex-row items-center justify-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -52,8 +54,27 @@ export default function Balance() {
                   Sats Balance
                 </CardTitle>
                 <div className="text-3xl font-bold">{balance}</div>
-
               </CardHeader>
+
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 px-6 pt-2 pb-4">
+                <CardTitle className="text-sm font-medium text-muted-foreground flex flex-row items-center justify-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    className="h-4 w-4 text-muted-foreground mr-1"
+                  >
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                  </svg>
+                  Total Sats Earned
+                </CardTitle>
+                <div className="text-3xl font-bold">{totalSatsEarned}</div>
+              </CardHeader>
+
               <CardContent className="flex flex-col justify-center items-center">
                 <Button
                   // disabled={true}
