@@ -9,7 +9,7 @@ export const TopNav = () => {
   const { authed, logout, user } = useAlby()
   return (
     <>
-      {authed && <PusherConnector />}
+      {/* {authed && <PusherConnector />} */}
       <div className="border-b">
         <div className="flex h-16 items-center px-4">
           <MainNav className="mx-6" />
