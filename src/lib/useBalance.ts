@@ -5,7 +5,7 @@ export function useBalance() {
   const balance = useStore((state) => state.balance)
   const user = useStore((state) => state.user)
   useEffect(() => {
-    if (!user) return
+    if (!user || balance > 0) return
 
     fetch("/api/balance", {
       method: 'POST',
@@ -22,6 +22,6 @@ export function useBalance() {
     }).catch((error) => {
       console.log(error);
     })
-  }, [user?.email])
+  }, [user?.email, balance])
   return balance
 }
