@@ -1,4 +1,5 @@
 import "./globals.css"
+import { AxiomWebVitals } from "next-axiom"
 import { Inter } from "next/font/google"
 import Fathom from "@/components/fathom"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -18,11 +19,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
 
-
-
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
+        <AxiomWebVitals />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <TopNav />
           {children}

@@ -1,5 +1,7 @@
+const { withAxiom } = require('next-axiom');
+
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig = withAxiom({
   // https://github.com/mlc-ai/web-llm/issues/126#issuecomment-1617021764
   // Fixes npm packages that depend on `fs` module
   webpack: (config, { isServer }) => {
@@ -22,6 +24,6 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   }
-}
+})
 
 module.exports = nextConfig
