@@ -20,7 +20,6 @@ export default function Beta() {
         <div className="relative isolate overflow-hidden pb-16 pt-12 sm:pb-20 min-h-screen flex flex-col">
           <div className="mx-auto max-w-2xl p-4 sm:p-0">
 
-
             <Alert>
               <RocketIcon className="h-8 w-8" />
               <AlertTitle className="ml-4 text-lg">22 Sept Update</AlertTitle>
