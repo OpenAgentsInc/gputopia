@@ -2,10 +2,12 @@
 
 import { BackgroundImage } from "@/components/background-image"
 import { TopNav } from "@/components/top-nav"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import {
     ExternalLink, TypographyH1 as H1, TypographyH2 as H2, TypographyH3 as H3,
     TypographyP as P
 } from "@/components/ui/typography"
+import { RocketIcon } from "@radix-ui/react-icons"
 
 export default function Beta() {
   return (
@@ -18,7 +20,16 @@ export default function Beta() {
         <div className="relative isolate overflow-hidden pb-16 pt-12 sm:pb-20 min-h-screen flex flex-col">
           <div className="mx-auto max-w-2xl p-4 sm:p-0">
 
-            <H2 className="my-8">Welcome to the GPUtopia Beta</H2>
+
+            <Alert>
+              <RocketIcon className="h-8 w-8" />
+              <AlertTitle className="ml-4 text-lg">22 Sept Update</AlertTitle>
+              <AlertDescription className="ml-4 text-muted-foreground">
+                We are close to rolling out version 3 of our beta with the first buyer+seller experience. This page will be updated with details soon. You can prepare by creating your Alby account using the 'Log in with Alby' link above.
+              </AlertDescription>
+            </Alert>
+
+            <H2 className="pt-4 my-8">Welcome to the GPUtopia Beta</H2>
 
             <P className="mt-12">
               <strong className="text-white text-lg text-center italic">Sell us your GPU capacity for bitcoin!</strong>
