@@ -25,7 +25,7 @@ export default function Beta() {
               <RocketIcon className="h-8 w-8" />
               <AlertTitle className="ml-4 text-lg">22 Sept Update</AlertTitle>
               <AlertDescription className="ml-4 text-muted-foreground">
-                We are close to rolling out version 3 of our beta with the first buyer+seller experience. This page will be updated with details soon. You can prepare by creating your Alby account using the 'Log in with Alby' link above.
+                We are close to rolling out version 3 of our beta with the first buyer+seller experience. This page will be updated with details soon. You can prepare by creating your Alby account using the &apos;Log in with Alby&apos; button above.
               </AlertDescription>
             </Alert>
 
