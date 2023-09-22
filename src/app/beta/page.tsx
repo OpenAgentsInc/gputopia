@@ -33,7 +33,7 @@ export default function Beta() {
             <h2 className="mt-12 font-bold text-xl">Why are we doing this?</h2>
 
             <P>
-              We're building a marketplace for GPU compute.
+              We&apos;re building a marketplace for GPU compute.
             </P>
 
             <ul className="tracking-wide leading-loose ml-4" style={{ color: "#a1a1aa" }}>
@@ -46,21 +46,21 @@ export default function Beta() {
             </P>
 
             <P>
-              For now GPUtopia is the buyer of your compute. Soon we'll open this up to other buyers.
+              For now GPUtopia is the buyer of your compute. Soon we&apos;ll open this up to other buyers.
             </P>
 
             <h2 className="mt-12 font-bold text-xl">How does it work?</h2>
 
             <P>
-              GPUtopia uses a portion of your computer's GPU via <ExternalLink href="https://www.w3.org/TR/webgpu/">WebGPU</ExternalLink><span className="-ml-1">,</span> a new web standard that was <ExternalLink href="https://developer.chrome.com/blog/webgpu-release/">recently added</ExternalLink> to newer versions of Chrome.
+              GPUtopia uses a portion of your computer&apos;s GPU via <ExternalLink href="https://www.w3.org/TR/webgpu/">WebGPU</ExternalLink><span className="-ml-1">,</span> a new web standard that was <ExternalLink href="https://developer.chrome.com/blog/webgpu-release/">recently added</ExternalLink> to newer versions of Chrome.
             </P>
 
             <P>
-              First your browser needs to download a language model. This is a ~4GB file that will be stored in your browser's cache. This will take a few minutes to download, then ~20 seconds to load from cache on future visits. You can see how this works in the <ExternalLink href="https://github.com/mlc-ai/web-llm">MLC WebLLM repo</ExternalLink><span className="-ml-1">.</span>
+              First your browser needs to download a language model. This is a ~4GB file that will be stored in your browser&apos;s cache. This will take a few minutes to download, then ~20 seconds to load from cache on future visits. You can see how this works in the <ExternalLink href="https://github.com/mlc-ai/web-llm">MLC WebLLM repo</ExternalLink><span className="-ml-1">.</span>
             </P>
 
             <P>
-              Once you've got the model loaded, our system marks you available to receive inference jobs. Currently we send a demo inference job to all connected users every 15 seconds. This job may take ~5-30 seconds to complete depending on your GPU and the size of the job.
+              Once you&apos;ve got the model loaded, our system marks you available to receive inference jobs. Currently we send a demo inference job to all connected users every 15 seconds. This job may take ~5-30 seconds to complete depending on your GPU and the size of the job.
             </P>
 
             <P>
@@ -68,7 +68,7 @@ export default function Beta() {
             </P>
 
             <P>
-              It takes about 2 minutes to create an Alby wallet if you don't already have one &mdash; then you'll be ready to start earning bitcoin. Learn more about Alby on their <ExternalLink href="https://getalby.com">website</ExternalLink><span className="-ml-1">.</span>
+              It takes about 2 minutes to create an Alby wallet if you don&apos;t already have one &mdash; then you&apos;ll be ready to start earning bitcoin. Learn more about Alby on their <ExternalLink href="https://getalby.com">website</ExternalLink><span className="-ml-1">.</span>
             </P>
 
             <h2 className="mt-12 font-bold text-xl">Any questions?</h2>
