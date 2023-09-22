@@ -6,7 +6,6 @@ import { TopNav } from "@/components/top-nav"
 export default function Home() {
   return (
     <div className="flex flex-col h-screen">
-      <TopNav />
       <div className="flex flex-col flex-grow justify-center">
         <BackgroundImage />
         <div className="-mt-16 mx-auto max-w-7xl px-6 lg:px-8">

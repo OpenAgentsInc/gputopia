@@ -1,3 +1,5 @@
+"use client"
+
 import { MainNav } from "@/components/main-nav"
 import { PusherConnector } from "@/components/pusher-connector"
 import { Button } from "@/components/ui/button"

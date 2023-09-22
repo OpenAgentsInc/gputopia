@@ -1,7 +1,6 @@
 "use client"
 
 import { BackgroundImage } from "@/components/background-image"
-import { TopNav } from "@/components/top-nav"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import {
     ExternalLink, TypographyH1 as H1, TypographyH2 as H2, TypographyH3 as H3,
@@ -12,8 +11,6 @@ import { RocketIcon } from "@radix-ui/react-icons"
 export default function Beta() {
   return (
     <div className="flex flex-col h-screen">
-      <TopNav />
-
       <div className="flex flex-col flex-grow justify-center">
         <BackgroundImage />
 
