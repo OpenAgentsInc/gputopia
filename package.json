@@ -33,6 +33,7 @@
     "fathom-client": "^3.5.0",
     "mysql2": "^3.6.1",
     "next": "13.4.19",
+    "next-axiom": "^1.0.0",
     "next-themes": "^0.2.1",
     "postcss": "8.4.29",
     "pusher": "^5.1.3",
