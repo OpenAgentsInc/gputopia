@@ -1,5 +1,6 @@
 "use client"
 
+import { BackgroundImage } from "@/components/background-image"
 import { TopNav } from "@/components/top-nav"
 import {
     ExternalLink, TypographyH1 as H1, TypographyH2 as H2, TypographyH3 as H3,
@@ -7,26 +8,12 @@ import {
 } from "@/components/ui/typography"
 
 export default function Intro() {
-
   return (
     <div className="flex flex-col h-screen">
       <TopNav />
 
       <div className="flex flex-col flex-grow justify-center">
-        <div style={{
-          backgroundImage: "url('/images/flares2.png')",
-          opacity: 0.5,
-          top: 65,
-          right: 0,
-          bottom: 0,
-          left: 0,
-          zIndex: -1,
-          backgroundSize: 'cover',
-          backgroundPosition: 'top',
-        }}
-          className="fixed inset-0 -z-20 h-screen w-screen object-cover"
-        >
-        </div>
+        <BackgroundImage />
 
         <div className="relative isolate overflow-hidden pb-16 pt-16 sm:pb-20 min-h-screen flex flex-col justify-center">
           <div className="mx-auto max-w-2xl p-4 sm:p-0">
@@ -119,6 +106,13 @@ export default function Intro() {
             <P>
               <strong className="italic">See you in GPUtopia!</strong>
             </P>
+
+            <div className="flex flex-col justify-center items-center my-12">
+              <a href="/beta" className="tracking-wider font-medium big-green-button rounded-xl px-5 py-4 text-lg text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400">
+                Join the Beta
+              </a>
+            </div>
+
           </div></div>
       </div>
     </div>

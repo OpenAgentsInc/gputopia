@@ -18,7 +18,7 @@ export function MainNav({
       <Link href="/" className={cn("tracking-wide text-white text-lg font-bold transition-colors hover:text-primary mr-4 p-1.5 flex flex-row items-center")} style={{ height: 60 }}>
         GPUTOPIA
       </Link>
-      <Link
+      {/* <Link
         href="/chat"
         className={cn(linkClasses, {
           "text-white": isActive("/chat"),
@@ -26,7 +26,7 @@ export function MainNav({
         })}
       >
         <span className="mx-2">AI Chat</span>
-      </Link>
+      </Link> */}
       <Link
         href="/intro"
         className={cn(linkClasses, {
@@ -35,6 +35,15 @@ export function MainNav({
         })}
       >
         <span className="mx-2">Blog</span>
+      </Link>
+      <Link
+        href="/beta"
+        className={cn(linkClasses, {
+          "text-white": isActive("/beta"),
+          "text-muted-foreground": !isActive("/beta")
+        })}
+      >
+        <span className="mx-2">Beta</span>
       </Link>
     </nav>
   )

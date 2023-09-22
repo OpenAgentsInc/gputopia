@@ -1,27 +1,14 @@
 "use client"
 
+import { BackgroundImage } from "@/components/background-image"
 import { TopNav } from "@/components/top-nav"
-import { useAlby } from "@/lib/useAlby"
 
 export default function Home() {
   return (
     <div className="flex flex-col h-screen">
       <TopNav />
-
       <div className="flex flex-col flex-grow justify-center">
-        <div style={{
-          backgroundImage: "url('/images/flares2.png')",
-          opacity: 0.5,
-          position: 'absolute',
-          top: 65,
-          right: 0,
-          bottom: 0,
-          left: 0,
-          zIndex: -1,
-          backgroundSize: 'cover',
-          backgroundPosition: 'top',
-        }}>
-        </div>
+        <BackgroundImage />
         <div className="-mt-16 mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
             <div className="-mt-24 sm:-mt-6 mb-8 flex justify-center">
