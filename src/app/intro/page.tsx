@@ -35,7 +35,7 @@ export default function Intro() {
               <span className="ml-3">September 12, 2023</span>
             </time>
 
-            <H1 className="mt-8">Toward an Open GPU Mesh</H1>
+            <H1 className="my-8">Toward an Open GPU Mesh</H1>
 
             <P><strong className="italic">The
               GPU arms race has begun.</strong>
@@ -43,15 +43,15 @@ export default function Intro() {
 
             <P>
               Companies large and small are <ExternalLink href="https://gpus.llm-utils.org/nvidia-h100-gpus-supply-and-demand/">scrambling
-              </ExternalLink> to hoard GPUs, which are now "considerably harder to get than drugs." [<ExternalLink href="https://youtu.be/nxbZVH9kLao?t=30">Elon</ExternalLink>]
+              </ExternalLink> to hoard GPUs, which are now &quot;considerably harder to get than drugs.&quot; [<ExternalLink href="https://youtu.be/nxbZVH9kLao?t=30">Elon</ExternalLink>]
             </P>
 
             <P>Some large companies are not only stockpiling GPUs, they are actively <ExternalLink href="https://twitter.com/JosephJacks_/status/1698139860383780924">lobbying</ExternalLink> governments to
-              establish "safety" regulations, creating barriers for smaller players.
+              establish &quot;safety&quot; regulations, creating barriers for smaller players.
             </P>
 
             <P>
-              It's the familiar pattern of <ExternalLink href="https://wiki.mises.org/wiki/Regulatory_capture">regulatory capture</ExternalLink> dressed in sheep's clothing, a blatant
+              It&apos;s the familiar pattern of <ExternalLink href="https://wiki.mises.org/wiki/Regulatory_capture">regulatory capture</ExternalLink> dressed in sheep&apos;s clothing, a blatant
               power play to stifle competition.
             </P>
 
@@ -83,7 +83,7 @@ export default function Intro() {
             </P>
 
             <P>
-              This is not a new idea. There are a handful of existing projects with the same goal, some of which have <ExternalLink href="https://decrypt.co/144068/gensyn-ai-secures-43m-for-decentralized-machine-learning-led-by-a16z">raised</ExternalLink> millions of dollars, but they all seem to have some garbage crypto token or convoluted crypto "governance" mechanism. Hilarious and unnecessary.
+              This is not a new idea. There are a handful of existing projects with the same goal, some of which have <ExternalLink href="https://decrypt.co/144068/gensyn-ai-secures-43m-for-decentralized-machine-learning-led-by-a16z">raised</ExternalLink> millions of dollars, but they all seem to have some garbage crypto token or convoluted crypto &quot;governance&quot; mechanism. Hilarious and unnecessary.
             </P>
 
             <P>
@@ -99,7 +99,7 @@ export default function Intro() {
             </P>
 
             <P>
-              That's what we're building. Now we'd love your help to test what we've built so far.
+              That&apos;s what we&apos;re building. Now we&apos;d love your help to test what we&apos;ve built so far.
             </P>
 
             <H2 className="mt-10">Join us</H2>
@@ -109,11 +109,11 @@ export default function Intro() {
             </P>
 
             <P>
-              Later this month we'll launch the buyer experience, enabling anyone to easily purchase that compute for a variety of AI/ML workloads.
+              Later this month we&apos;ll launch the buyer experience, enabling anyone to easily purchase that compute for a variety of AI/ML workloads.
             </P>
 
             <P>
-              Over the coming weeks and months, we will rapidly add support for more devices and more workloads. We'll prioritize new features according to the feedback of our active users, so please get involved and tell us what you'd love to see.
+              Over the coming weeks and months, we will rapidly add support for more devices and more workloads. We&apos;ll prioritize new features according to the feedback of our active users, so please get involved and tell us what you&apos;d love to see.
             </P>
 
             <P>
