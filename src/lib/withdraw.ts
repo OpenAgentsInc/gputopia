@@ -22,7 +22,7 @@ export const withdraw = async () => {
     const data = await response.json();
 
     if (response.ok) {
-      console.log(data)
+      // console.log(data)
 
       const payResponse = await fetch('/api/pay', {
         method: 'POST',
@@ -33,7 +33,7 @@ export const withdraw = async () => {
       });
 
       const payData = await payResponse.json();
-      console.log(payData)
+      // console.log(payData)
 
       updateBalances()
 

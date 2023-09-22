@@ -9,6 +9,7 @@ import {
     ExternalLink, TypographyH1 as H1, TypographyH2 as H2, TypographyH3 as H3,
     TypographyP as P
 } from "@/components/ui/typography"
+import { PaymentHistory } from "@/components/widgets/payment-history"
 import { useBalance } from "@/lib/useBalance"
 import { withdraw } from "@/lib/withdraw"
 import { RocketIcon } from "@radix-ui/react-icons"
@@ -33,7 +34,7 @@ export default function Balance() {
         <div className="relative isolate overflow-hidden pb-16 pt-24 sm:pb-20 min-h-screen flex flex-col">
           <div className="mx-auto max-w-2xl p-4 sm:p-0">
 
-            <Card className="bg-background w-72">
+            <Card className="bg-background w-96 mb-8">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="mb-2 text-sm font-medium text-muted-foreground flex flex-row items-center">
                   <svg
@@ -62,6 +63,8 @@ export default function Balance() {
                 </Button>
               </CardContent>
             </Card>
+
+            <PaymentHistory />
 
             {/* <Alert>
               <RocketIcon className="h-8 w-8" />

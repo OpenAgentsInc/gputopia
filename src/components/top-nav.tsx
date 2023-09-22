@@ -9,6 +9,7 @@ import { startAlbyOauth } from "@/lib/alby-oauth"
 import { useAlby } from "@/lib/useAlby"
 import { OnlineUsers } from "./online-users"
 import { SatsBalance } from "./sats-balance"
+import { ModeToggle } from "./ui/mode-toggle"
 
 export const TopNav = () => {
   const { authed, logout, user } = useAlby()
@@ -19,6 +20,7 @@ export const TopNav = () => {
       <div className="border-b fixed top-0 left-0 right-0 z-50 backdrop-blur bg-background/80">
         <div className="flex h-16 items-center px-4">
           <MainNav className="mx-6" />
+          {/* <ModeToggle /> */}
           <div className="ml-auto flex items-center space-x-4">
             {authed && <OnlineUsers />}
             {authed && <SatsBalance />}
