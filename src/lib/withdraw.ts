@@ -46,3 +46,25 @@ export const withdraw = async () => {
     return null;
   }
 }
+
+
+export const withdrawInvoice = async (bolt11: string) => {
+  try {
+    console.log(bolt11)
+    const payResponse = await fetch('/api/pay-invoice', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ payment_request: bolt11 })
+    });
+
+    const payData = await payResponse.json();
+    console.log(payData)
+
+    updateBalances()
+  } catch (error) {
+    console.error("An error occurred: ", error);
+    return null;
+  }
+}

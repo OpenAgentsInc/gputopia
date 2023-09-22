@@ -12,8 +12,7 @@ import {
 import { PaymentHistory } from "@/components/widgets/payment-history"
 import { useStore } from "@/lib/store"
 import { useBalance } from "@/lib/useBalance"
-import { withdraw } from "@/lib/withdraw"
-import { RocketIcon } from "@radix-ui/react-icons"
+import { withdraw, withdrawInvoice } from "@/lib/withdraw"
 
 export default function Balance() {
   const balance = useBalance()
@@ -26,6 +25,15 @@ export default function Balance() {
     }
     setWithdrawLoading(true)
     await withdraw()
+    setWithdrawLoading(false)
+  }
+  const goWithdrawInvoice = async () => {
+    if (balance === 0) {
+      alert("You can't withdraw zero :(")
+      return
+    }
+    setWithdrawLoading(true)
+    await withdrawInvoice("lnbc90n1pjsu83tpp58p9aqqd4yae7g6evq5uusv3sulp7lv63y68jjw8ujefn57ykw04qdq5g9kxy7fqd9h8vmmfvdjscqzzsxqyz5vqsp5ynj48848e6mlpktqxt0hpgar99zdpwdz69qnpng9lrwdxx9q78cs9qyyssqvqfveprk02s4m7s4697k3vpcelsp45htnsgn2a4gdvncsvuhpaey6yf79xcz4dqyej28y4kwfe0u6yf50rue0yrpjnqznzm43k6xf0cpl62pee")
     setWithdrawLoading(false)
   }
   return (
@@ -77,10 +85,15 @@ export default function Balance() {
 
               <CardContent className="flex flex-col justify-center items-center">
                 <Button
-                  // disabled={true}
                   disabled={withdrawLoading || balance === 0}
                   className="mt-3 w-42" onClick={goWithdraw} variant="outline" size="lg">
                   {withdrawLoading ? "Withdrawing..." : "Withdraw to Alby"}
+                </Button>
+
+                <Button
+                  disabled={withdrawLoading || balance === 0}
+                  className="mt-3 w-42" onClick={goWithdrawInvoice} variant="outline" size="lg">
+                  {withdrawLoading ? "Withdrawing..." : "Withdraw via invoice"}
                 </Button>
               </CardContent>
             </Card>
