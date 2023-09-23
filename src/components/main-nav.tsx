@@ -37,7 +37,7 @@ export function MainNav({
           "text-muted-foreground": !isActive("/beta")
         })}
       >
-        <span className="mx-2">Beta</span>
+        <span className="mx-2 mr-6">Beta</span>
       </Link>
       {!!user && <SellMenu />}
     </nav>
