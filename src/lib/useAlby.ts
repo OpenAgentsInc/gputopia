@@ -1,5 +1,5 @@
 
-import axios from "axios"
+import axios, { AxiosError } from "axios"
 import { useEffect, useState } from "react"
 import { useStore } from "./store"
 
@@ -84,9 +84,16 @@ export function useAlby() {
       if (remainingSeconds > refreshWhenSecondsLessThan) {
         setRefreshing(false);  // Turn off refreshing if there's ample time before token expires
       }
-    } catch (error) {
+    } catch (error: unknown) {
+      const axiosError = error as AxiosError;
       console.error("Failed to refresh token:", error);
+
+      if (axiosError.response && axiosError.response.status === 401) {
+        logout();
+        window.location.href = '/'; // Redirect to homepage
+      }
     }
+
   };
 
   useEffect(() => {
