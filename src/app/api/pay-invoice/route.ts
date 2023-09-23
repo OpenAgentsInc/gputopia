@@ -18,9 +18,11 @@ export async function POST(request: NextRequest) {
 
   const payment_hash = albyData.payment_hash;
   const expires_at = albyData.created_at + albyData.expiry;
-  console.log(albyData)
   const amount = albyData.amount;
-  console.log(amount)
+
+  if (!albyResponse.ok) {
+    return NextResponse.json({ ok: false, message: "Invalid invoice" });
+  }
 
   // Create MySQL connection
   const connection = await mysql.createConnection(process.env.DATABASE_URL as string);

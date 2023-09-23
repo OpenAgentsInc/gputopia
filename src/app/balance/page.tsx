@@ -6,6 +6,13 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {
+    Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader,
+    DialogTitle, DialogTrigger
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+import {
     ExternalLink, TypographyH1 as H1, TypographyH2 as H2, TypographyH3 as H3,
     TypographyP as P
 } from "@/components/ui/typography"
@@ -16,8 +23,11 @@ import { withdraw, withdrawInvoice } from "@/lib/withdraw"
 
 export default function Balance() {
   const balance = useBalance()
+  const [open, setOpen] = useState(false);
   const [withdrawLoading, setWithdrawLoading] = useState(false)
+  const [withdrawInvoiceLoading, setWithdrawInvoiceLoading] = useState(false)
   const totalSatsEarned = useStore(state => state.totalSatsEarned)
+  const [invoice, setInvoice] = useState("")
   const goWithdraw = async () => {
     if (balance === 0) {
       alert("You can't withdraw zero :(")
@@ -29,12 +39,21 @@ export default function Balance() {
   }
   const goWithdrawInvoice = async () => {
     if (balance === 0) {
-      alert("You can't withdraw zero :(")
+      alert("Zero balance can't withdraw")
       return
     }
-    setWithdrawLoading(true)
-    await withdrawInvoice("lnbc90n1pjsu83tpp58p9aqqd4yae7g6evq5uusv3sulp7lv63y68jjw8ujefn57ykw04qdq5g9kxy7fqd9h8vmmfvdjscqzzsxqyz5vqsp5ynj48848e6mlpktqxt0hpgar99zdpwdz69qnpng9lrwdxx9q78cs9qyyssqvqfveprk02s4m7s4697k3vpcelsp45htnsgn2a4gdvncsvuhpaey6yf79xcz4dqyej28y4kwfe0u6yf50rue0yrpjnqznzm43k6xf0cpl62pee")
-    setWithdrawLoading(false)
+
+    // If invoice doesn't start in lnbc, return
+    if (!invoice.startsWith("lnbc")) {
+      alert("Invalid invoice")
+      return
+    }
+
+    setOpen(false)
+    setWithdrawInvoiceLoading(true)
+    await withdrawInvoice(invoice)
+    setInvoice("")
+    setWithdrawInvoiceLoading(false)
   }
   return (
     <div className="flex flex-col h-screen">
@@ -84,17 +103,36 @@ export default function Balance() {
               </CardHeader>
 
               <CardContent className="flex flex-col justify-center items-center">
+
                 <Button
-                  disabled={withdrawLoading || balance === 0}
+                  disabled={withdrawLoading || withdrawInvoiceLoading || balance === 0}
                   className="mt-3 w-42" onClick={goWithdraw} variant="outline" size="lg">
                   {withdrawLoading ? "Withdrawing..." : "Withdraw to Alby"}
                 </Button>
 
-                <Button
-                  disabled={withdrawLoading || balance === 0}
-                  className="mt-3 w-42" onClick={goWithdrawInvoice} variant="outline" size="lg">
-                  {withdrawLoading ? "Withdrawing..." : "Withdraw via invoice"}
-                </Button>
+                <Dialog open={open} onOpenChange={setOpen}>
+                  <DialogTrigger asChild>
+                    <Button
+                      disabled={withdrawLoading || withdrawInvoiceLoading || balance === 0}
+                      className="mt-3 w-42" variant="outline" size="lg">
+                      {withdrawInvoiceLoading ? "Withdrawing..." : "Withdraw via invoice"}
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                      <DialogTitle>Withdraw via Lightning invoice</DialogTitle>
+                      <DialogDescription>
+                        Paste a Lightning invoice to withdraw your balance
+                      </DialogDescription>
+                    </DialogHeader>
+                    <Textarea placeholder="lnbc..." id="message" rows={7} onChange={(e) => setInvoice(e.target.value)} />
+                    <DialogFooter>
+                      <Button onClick={goWithdrawInvoice}>Submit</Button>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+
+
               </CardContent>
             </Card>
 

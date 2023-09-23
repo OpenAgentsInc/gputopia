@@ -61,6 +61,9 @@ export const withdrawInvoice = async (bolt11: string) => {
 
     const payData = await payResponse.json();
     console.log(payData)
+    if (payData.ok === false) {
+      alert(payData.message)
+    }
 
     updateBalances()
   } catch (error) {
