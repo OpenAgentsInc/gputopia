@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
   // })
 
   // return new StreamingTextResponse(stream)
-  return NextResponse.json("Works")
+  return NextResponse.json("Hi")
   // return NextResponse.json({
   //   // messages: [
   //   //   ...messages,
