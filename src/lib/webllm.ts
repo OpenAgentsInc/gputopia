@@ -1,6 +1,7 @@
 'use client'
 
 import * as webllm from "@mlc-ai/web-llm"
+import appConfig from "./app-config"
 import { complete } from "./complete"
 import { useStore } from "./store"
 
@@ -15,7 +16,8 @@ function setLabel(id: string, text: string) {
 
 let chat: webllm.ChatModule;
 
-export async function initModel() {
+export async function initModel(model = "vicuna-v1-7b-q4f32_0") {
+  console.log("Loading model: " + model)
   chat = new webllm.ChatModule();
   chat.setInitProgressCallback((report: webllm.InitProgressReport) => {
     try {
@@ -24,9 +26,14 @@ export async function initModel() {
       setLabel("perc", perc + "%");
     } catch (e) { }
   });
-  await chat.reload("vicuna-v1-7b-q4f32_0");
+  await chat.reload(model, {}, appConfig);
   const event = new Event('model-loaded');
   document.dispatchEvent(event);
+}
+
+export async function unloadModel() {
+  await chat.unload()
+  console.log("Unloaded")
 }
 
 export async function generate(prompt: string) {
@@ -34,14 +41,20 @@ export async function generate(prompt: string) {
     return
   }
   let reply
+
+  const generateProgressCallback = (_step: number, message: string) => {
+    console.log(message)
+  };
+
   try {
-    reply = await chat.generate(prompt, () => { });
+    reply = await chat.generate(prompt, generateProgressCallback);
+    console.log(reply)
   } catch (e) {
     return
   }
 
   // Fetch POST to complete the inference
-  complete(reply)
+  // complete(reply)
 
   return reply;
 }
