@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server"
 // import { auth } from '@/auth'
 import { nanoid } from "@/lib/utils"
 
-export const runtime = 'edge'
+// export const runtime = 'edge'
 
 export async function POST(req: NextRequest) {
   const json = await req.json()
