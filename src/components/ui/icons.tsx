@@ -87,6 +87,13 @@ function IconNextChat({
   )
 }
 
+
+function IconGPUtopia({ className, ...props }: React.ComponentProps<any>) {
+  return (
+    <img src="/images/logo.png" alt="GPUtopia logo" className={cn('h-full w-full rounded', className)} {...props} />
+  )
+}
+
 function IconOpenAI({ className, ...props }: React.ComponentProps<'svg'>) {
   return (
     <svg
@@ -502,5 +509,6 @@ export {
   IconShare,
   IconUsers,
   IconExternalLink,
-  IconChevronUpDown
+  IconChevronUpDown,
+  IconGPUtopia
 }
