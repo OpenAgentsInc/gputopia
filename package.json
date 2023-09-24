@@ -71,6 +71,7 @@
     "typescript": "5.2.2"
   },
   "browser": {
-    "perf_hooks": false
+    "perf_hooks": false,
+    "url": false
   }
 }
