@@ -1,4 +1,4 @@
-'use client'
+// 'use client'
 
 import * as webllm from "@mlc-ai/web-llm"
 import appConfig from "./app-config"
