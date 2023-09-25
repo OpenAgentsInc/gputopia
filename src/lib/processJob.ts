@@ -12,11 +12,11 @@ export const processJob = async (job: Job) => {
   // If not ready, return
   // If this user was the sender, return (or nah?)
 
-  console.log("got a jerrrrbb", job)
+  // console.log("got a jerrrrbb", job)
 
   // console.log("Processing")
   // console.log("channel?", window.jobChannel)
   const response = await generateAndStream(job, window.jobChannel)
-  console.log(response)
+  // console.log(response)
   return response
 }

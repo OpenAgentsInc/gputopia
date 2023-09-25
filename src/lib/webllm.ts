@@ -66,7 +66,7 @@ let queuedMessage: string | null = null;
 
 export async function generateAndStream(job: Job, channel: Channel) {
   if (!channel || !chat) {
-    console.log('returning cuz . . .')
+    console.log('Returning because no channel or chat')
     return;
   }
 
@@ -76,14 +76,14 @@ export async function generateAndStream(job: Job, channel: Channel) {
 
     if (timeDiff >= 250) {
       try {
-        console.log('sending...')
+        // console.log('sending...')
         channel.trigger(`client-job-${job.userId}`, { message });
         lastSentTime = currentTime;
       } catch (e) {
         console.error(e);
       }
     } else {
-      console.log('queee')
+      // console.log('queee')
       queuedMessage = message;
     }
   };
