@@ -49,10 +49,10 @@ export function SellMenu() {
             <MenubarItem onClick={() => router.push('/chat')}>
               AI Chat
             </MenubarItem>
-            <MenubarSeparator />
+            {/* <MenubarSeparator />
             <MenubarItem disabled>
               Reserve capacity...
-            </MenubarItem>
+            </MenubarItem> */}
           </MenubarContent>
         </MenubarMenu>
 
@@ -71,8 +71,8 @@ export function SellMenu() {
               <MenubarSubContent>
                 <MenubarRadioGroup value={selectedModel}>
                   <MenubarRadioItem value={ModelType.vicuna} onClick={() => changeModel(ModelType.vicuna)}>Vicuna 7B</MenubarRadioItem>
-                  <MenubarRadioItem value={ModelType["llama2-7b"]} onClick={() => changeModel(ModelType["llama2-7b"])}>Llama2 7B</MenubarRadioItem>
-                  <MenubarRadioItem value={ModelType["llama2-13b"]} onClick={() => changeModel(ModelType["llama2-13b"])}>Llama2 13B</MenubarRadioItem>
+                  <MenubarRadioItem disabled value={ModelType["llama2-7b"]} onClick={() => changeModel(ModelType["llama2-7b"])}>Llama2 7B</MenubarRadioItem>
+                  <MenubarRadioItem disabled value={ModelType["llama2-13b"]} onClick={() => changeModel(ModelType["llama2-13b"])}>Llama2 13B</MenubarRadioItem>
                 </MenubarRadioGroup>
               </MenubarSubContent>
             </MenubarSub>
@@ -83,15 +83,15 @@ export function SellMenu() {
             }}>
               Unload model
             </MenubarItem>
-            <MenubarItem disabled={!modelLoaded} onClick={async () => {
+            {/* <MenubarItem disabled={!modelLoaded} onClick={async () => {
               generate("Say hello to my little friend")
             }}>
               Test generate
-            </MenubarItem>
-            <MenubarSeparator />
+            </MenubarItem> */}
+            {/* <MenubarSeparator />
             <MenubarItem disabled>
               Connect workerbee...
-            </MenubarItem>
+            </MenubarItem> */}
           </MenubarContent>
         </MenubarMenu>
       </Menubar>
@@ -104,7 +104,8 @@ export function SellMenu() {
         ) :
           <></>}
         {modelLoaded && !modelLoading ? (
-          <p className="ml-4 text-xs text-muted-foreground">Loaded {selectedModel}</p>
+          <p className="ml-4 text-xs text-muted-foreground">Model loaded</p>
+          // <p className="ml-4 text-xs text-muted-foreground">Loaded {selectedModel}</p>
         ) : <></>}
       </div>
     </>

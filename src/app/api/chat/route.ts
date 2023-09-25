@@ -14,19 +14,19 @@ export async function POST(req: NextRequest) {
   const userId = Number(userIdString.value);
   console.log("Chat from userId:", userId)
 
-  const { messages, id } = json;
+  const { messages } = json;
 
   // Last message sent by the user
   const lastUserMessage = messages.reverse().find((msg: any) => msg.role === 'user');
 
   if (lastUserMessage) {
     // Check user balance (replace this with actual SQL code)
-    const userBalance = await checkUserBalance(id); // Placeholder function
+    const userBalance = await checkUserBalance(userId); // Placeholder function
     console.log(userBalance + " balance")
 
     if (userBalance >= 7) {
       // Create a job and add it to the Vercel KV queue
-      const jobObject = { userId: id, message: lastUserMessage.content, model: 'Vicuna' }
+      const jobObject = { userId, message: lastUserMessage.content, model: 'Vicuna' }
       const job = JSON.stringify(jobObject);
       await kv.rpush('job_queue', job);
 
@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
       console.log("SENT PUSHER EVENT")
 
       // Deduct balance (replace this with actual SQL code)
-      await deductUserBalance(id, 7); // Placeholder function
+      await deductUserBalance(userId, 7); // Placeholder function
     } else {
       return NextResponse.json({ error: 'Insufficient balance' });
     }
