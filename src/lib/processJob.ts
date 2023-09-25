@@ -50,14 +50,14 @@ export const processJob = async (job: Job) => {
       return res.json()
     }
   }).then(async (json) => {
-    console.log(`Locking job ${job.jobId} with key ${lockKey}`)
+    // console.log(`Locking job ${job.jobId} with key ${lockKey}`)
     if (json.lockSet === 1) {
       const response = await generateAndStream(job, window.jobChannel)
       if (response === "error" || !response) {
         console.log("Error generating inference")
         return
       }
-      console.log(response)
+      // console.log(response)
       complete(response, job.jobId)
     } else {
       console.log("Job already locked, skipping")

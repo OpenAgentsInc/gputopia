@@ -71,20 +71,17 @@ export async function generateAndStream(job: Job, channel: Channel) {
   }
 
   const generateProgressCallback = (_step: number, message: string) => {
-    console.log(message)
     const currentTime = Date.now();
     const timeDiff = currentTime - lastSentTime;
 
     if (timeDiff >= 250) {
       try {
-        // console.log('sending...')
         channel.trigger(`client-job-${job.userId}`, { message });
         lastSentTime = currentTime;
       } catch (e) {
         console.error(e);
       }
     } else {
-      // console.log('queee')
       queuedMessage = message;
     }
   };

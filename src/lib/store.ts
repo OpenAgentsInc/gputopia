@@ -12,6 +12,7 @@ type Store = {
   increment: () => void;
   decrement: () => void;
   setCount: (count: number) => void;
+  showWebgpuWarning: boolean;
 };
 
 export const useStore = create<Store>((set) => ({
@@ -22,6 +23,7 @@ export const useStore = create<Store>((set) => ({
   totalSatsEarned: 0,
   modelLoadPercentage: 0,
   lastMessage: "",
+  showWebgpuWarning: false,
   increment: () => set((state) => ({ onlineMembers: state.onlineMembers + 1 })),
   decrement: () => set((state) => ({ onlineMembers: state.onlineMembers - 1 })),
   setCount: (count) => set(() => ({ onlineMembers: count })),

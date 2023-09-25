@@ -6,6 +6,7 @@ import {
     MenubarSub, MenubarSubContent, MenubarSubTrigger, MenubarTrigger
 } from "@/components/ui/menubar"
 import { useStore } from "@/lib/store"
+import { useWebgpuSupported } from "@/lib/webgpuSupported"
 import { generate, initModel, unloadModel } from "@/lib/webllm"
 import { Button } from "./ui/button"
 import { Progress } from "./ui/progress"
@@ -21,6 +22,8 @@ export function SellMenu() {
   const [modelLoading, setModelLoading] = useState(false)
   const [modelLoaded, setModelLoaded] = useState(false)
   const modelLoadPercentage = useStore(state => state.modelLoadPercentage)
+
+  const supported = useWebgpuSupported()
 
   const [selectedModel, setSelectedModel] = useState<ModelType>(ModelType.vicuna)
 
@@ -60,6 +63,11 @@ export function SellMenu() {
           <MenubarTrigger>Sell</MenubarTrigger>
           <MenubarContent>
             <MenubarItem disabled={modelLoading || modelLoaded} onClick={() => {
+              if (supported === false) {
+                useStore.setState({ showWebgpuWarning: true })
+                return
+              }
+
               useStore.setState({ modelLoadPercentage: 0 })
               setModelLoading(true)
               initModel(selectedModel)
