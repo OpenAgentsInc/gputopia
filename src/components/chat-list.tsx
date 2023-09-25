@@ -1,4 +1,5 @@
 import { Message } from "ai"
+import { useEffect, useState } from "react"
 import { ChatMessage } from "@/components/chat-message"
 import { Separator } from "@/components/ui/separator"
 import { useStore } from "@/lib/store"
@@ -12,25 +13,36 @@ export function ChatList({ messages }: ChatList) {
     return null
   }
 
-  const storeLastMessage = useStore(s => s.lastMessage)
-  const updatedMessages = [...messages];
+  const [updatedContents, setUpdatedContents] = useState<Record<number, string>>({});
+  const storeLastMessage = useStore(s => s.lastMessage);
 
-  const lastMessageIndex = messages.findIndex((msg, idx) => msg.role === 'assistant' && idx === messages.length - 1);
+  useEffect(() => {
+    const lastMessage = messages[messages.length - 1];
+    const lastIndex = messages.length - 1;
 
-  if (lastMessageIndex !== -1) {
-    updatedMessages[lastMessageIndex] = { ...updatedMessages[lastMessageIndex], content: storeLastMessage };
-  }
+    if (lastMessage.role === 'assistant') {
+      setUpdatedContents(prev => ({
+        ...prev,
+        [lastIndex]: storeLastMessage,
+      }));
+    }
+  }, [messages, storeLastMessage]);
 
   return (
     <div className="relative mx-auto max-w-2xl px-4">
-      {updatedMessages.map((message, index) => (
-        <div key={index}>
-          <ChatMessage message={message} />
-          {index < messages.length - 1 && (
-            <Separator className="my-4 md:my-8" />
-          )}
-        </div>
-      ))}
+      {messages.map((message, index) => {
+        const updatedContent = updatedContents[index];
+        const displayContent = updatedContent ?? message.content;
+
+        return (
+          <div key={index}>
+            <ChatMessage message={{ ...message, content: displayContent }} />
+            {index < messages.length - 1 && (
+              <Separator className="my-4 md:my-8" />
+            )}
+          </div>
+        );
+      })}
     </div>
   )
 }
