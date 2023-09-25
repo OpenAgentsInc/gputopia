@@ -1,8 +1,10 @@
 // 'use client'
 
+import { Channel } from "pusher-js"
 import * as webllm from "@mlc-ai/web-llm"
 import appConfig from "./app-config"
 import { complete } from "./complete"
+import { Job } from "./processJob"
 import { useStore } from "./store"
 
 // We use label to intentionally keep it simple
@@ -57,4 +59,45 @@ export async function generate(prompt: string) {
   // complete(reply)
 
   return reply;
+}
+
+let lastSentTime = 0;
+let queuedMessage: string | null = null;
+
+export async function generateAndStream(job: Job, channel: Channel) {
+  if (!channel || !chat) {
+    console.log('returning cuz . . .')
+    return;
+  }
+
+  const generateProgressCallback = (_step: number, message: string) => {
+    const currentTime = Date.now();
+    const timeDiff = currentTime - lastSentTime;
+
+    if (timeDiff >= 250) {
+      try {
+        console.log('sending...')
+        channel.trigger(`client-job-${job.userId}`, { message });
+        lastSentTime = currentTime;
+      } catch (e) {
+        console.error(e);
+      }
+    } else {
+      console.log('queee')
+      queuedMessage = message;
+    }
+  };
+
+  try {
+    const reply = await chat.generate(job.message, generateProgressCallback);
+
+    // Send any remaining queued message
+    if (queuedMessage) {
+      channel.trigger(`client-job-${job.userId}`, { message: queuedMessage });
+      queuedMessage = null;
+    }
+    return reply;
+  } catch (e) {
+    return;
+  }
 }

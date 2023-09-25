@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
       await kv.rpush('job_queue', job);
 
       // Trigger a "new job" event via Pusher to alert model providers
-      pusher.trigger('v3job', 'new-job', jobObject);
+      pusher.trigger('private-v3jobs', 'new-job', jobObject);
       console.log("SENT PUSHER EVENT")
 
       // Deduct balance (replace this with actual SQL code)
