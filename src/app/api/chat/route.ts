@@ -12,9 +12,10 @@ export async function POST(req: NextRequest) {
     throw new Error("Missing user ID cookie");
   }
   const userId = Number(userIdString.value);
-  console.log("Chat from userId:", userId)
+  // console.log("Chat from userId:", userId)
 
-  const { messages } = json;
+  const { messages, id } = json;
+  // console.log(json)
 
   // Last message sent by the user
   const lastUserMessage = messages.reverse().find((msg: any) => msg.role === 'user');
@@ -26,13 +27,13 @@ export async function POST(req: NextRequest) {
 
     if (userBalance >= 7) {
       // Create a job and add it to the Vercel KV queue
-      const jobObject = { userId, message: lastUserMessage.content, model: 'Vicuna' }
+      const jobObject = { jobId: id, userId, message: lastUserMessage.content, model: 'Vicuna' }
       const job = JSON.stringify(jobObject);
       await kv.rpush('job_queue', job);
 
       // Trigger a "new job" event via Pusher to alert model providers
       pusher.trigger('private-v3jobs', 'new-job', jobObject);
-      console.log("SENT PUSHER EVENT")
+      // console.log("SENT PUSHER EVENT")
 
       // Deduct balance (replace this with actual SQL code)
       await deductUserBalance(userId, 7); // Placeholder function
