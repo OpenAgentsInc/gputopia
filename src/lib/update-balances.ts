@@ -14,7 +14,7 @@ export const updateBalances = () => {
       return res.json()
     }
   }).then((json) => {
-    if (json.totalSatsEarned) {
+    if (json.totalSatsEarned || json.totalSatsEarned === 0) {
       useStore.setState({ balance: json.balance, totalSatsEarned: json.totalSatsEarned })
       console.log(`Updated balance to ${json.balance} and totalSatsEarned to ${json.totalSatsEarned}`)
       updatePayments()

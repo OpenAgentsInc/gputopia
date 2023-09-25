@@ -8,9 +8,11 @@ type Store = {
   payments: any[];
   totalSatsEarned: number;
   modelLoadPercentage: number;
+  lastMessage: string;
   increment: () => void;
   decrement: () => void;
   setCount: (count: number) => void;
+  showWebgpuWarning: boolean;
 };
 
 export const useStore = create<Store>((set) => ({
@@ -20,6 +22,8 @@ export const useStore = create<Store>((set) => ({
   onlineMembers: 0,
   totalSatsEarned: 0,
   modelLoadPercentage: 0,
+  lastMessage: "",
+  showWebgpuWarning: false,
   increment: () => set((state) => ({ onlineMembers: state.onlineMembers + 1 })),
   decrement: () => set((state) => ({ onlineMembers: state.onlineMembers - 1 })),
   setCount: (count) => set(() => ({ onlineMembers: count })),

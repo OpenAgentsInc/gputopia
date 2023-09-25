@@ -16,7 +16,7 @@ export function useBalance() {
         return res.json()
       }
     }).then((json) => {
-      if (json.totalSatsEarned) {
+      if (json.totalSatsEarned || json.totalSatsEarned === 0) {
         useStore.setState({ balance: json.balance, totalSatsEarned: json.totalSatsEarned })
       }
     }).catch((error) => {

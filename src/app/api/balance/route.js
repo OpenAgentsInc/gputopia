@@ -14,6 +14,9 @@ export async function POST(request) {
         resolve(NextResponse.json({ error: "Database error" }));
         return;
       }
+
+      console.log(results)
+
       resolve(NextResponse.json({
         balance: results[0].balance ?? null,
         totalSatsEarned: results[0].total_sats_earned ?? null

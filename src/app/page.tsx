@@ -1,7 +1,6 @@
 "use client"
 
 import { BackgroundImage } from "@/components/background-image"
-import { TopNav } from "@/components/top-nav"
 
 export default function Home() {
   return (

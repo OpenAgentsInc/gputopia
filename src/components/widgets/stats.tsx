@@ -30,10 +30,10 @@ export const Stats = () => {
   useEffect(() => {
     if (!user) return
 
-    document.addEventListener('model-loaded', function () {
-      console.log('Model loaded');
-      setModelLoaded(true)
-    });
+    // document.addEventListener('model-loaded', function () {
+    //   console.log('Model loaded');
+    //   setModelLoaded(true)
+    // });
 
     fetch("/api/balance", {
       method: 'POST',

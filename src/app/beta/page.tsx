@@ -19,9 +19,9 @@ export default function Beta() {
 
             <Alert>
               <RocketIcon className="h-8 w-8" />
-              <AlertTitle className="ml-4 text-lg">22 Sept Update</AlertTitle>
+              <AlertTitle className="ml-4 text-lg">25 Sept Update</AlertTitle>
               <AlertDescription className="ml-4 text-muted-foreground">
-                We are close to rolling out version 3 of our beta with the first buyer+seller experience. This page will be updated with details soon. You can prepare by creating your Alby account using the &apos;Log in with Alby&apos; button above.
+                We have begun rolling out version 3 of our beta with the first buyer+seller experience. The first buyer interface is an AI chat experience. Try it: login and click the Buy menu, then AI Chat.
               </AlertDescription>
             </Alert>
 

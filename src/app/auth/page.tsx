@@ -64,7 +64,9 @@ export default function Auth() {
           })
           .then(response => response.json())
           .then((data) => {
+            // horrible
             window.sessionStorage.setItem("user_id", data.userId.toString());
+            window.sessionStorage.setItem("userId", data.userId.toString());
             window.location.href = `/`;
           })
           .catch((error) => {

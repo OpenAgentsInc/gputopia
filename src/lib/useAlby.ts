@@ -38,6 +38,7 @@ export function useAlby() {
     wipeTokens()
     setAuthed(false)
     setUser(null)
+    useStore.setState({ user: null })
   }
 
   const refreshAccessToken = async () => {

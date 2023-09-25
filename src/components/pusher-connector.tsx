@@ -1,8 +1,10 @@
 import Pusher, * as PusherTypes from "pusher-js"
 import { useEffect, useState } from "react"
+import { processJob } from "@/lib/processJob"
 import { useStore } from "@/lib/store"
 import { useAlby } from "@/lib/useAlby"
 import { generate } from "@/lib/webllm"
+import { kv } from "@vercel/kv"
 
 export const PusherConnector = () => {
   // const { logout } = useAlby()
@@ -46,6 +48,15 @@ export const PusherConnector = () => {
         generate(data.job)
       });
     }
+
+    // Listen for "new job" event
+    window.jobChannel = pusher.subscribe("private-v3jobs")
+    window.jobChannel.bind("new-job", processJob);
+
+    window.jobChannel.bind(`client-job-${userId}`, (data) => {
+      // console.log(data.message);
+      useStore.setState({ lastMessage: data.message })
+    });
 
   }, [userId]);
 

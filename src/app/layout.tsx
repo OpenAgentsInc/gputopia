@@ -4,6 +4,7 @@ import { Inter } from "next/font/google"
 import Fathom from "@/components/fathom"
 import { ThemeProvider } from "@/components/theme-provider"
 import { TopNav } from "@/components/top-nav"
+import { WebgpuChecker } from "@/components/webgpu-checker"
 
 import type { Metadata } from 'next'
 const inter = Inter({ subsets: ['latin'] })
@@ -23,6 +24,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <AxiomWebVitals />
+        <WebgpuChecker />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <TopNav />
           {children}
