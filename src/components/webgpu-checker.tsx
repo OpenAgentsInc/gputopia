@@ -15,7 +15,7 @@ export const WebgpuChecker = () => {
         <DialogHeader>
           <DialogTitle>Browser not supported</DialogTitle>
           <DialogDescription>
-            Your browser does not support WebGPU, so you won't be able to sell GPU compute here. Please try Chrome on a desktop or laptop.
+            Your browser does not support WebGPU, so you won&apos;t be able to sell GPU compute here. Please try Chrome on a desktop or laptop.
           </DialogDescription>
         </DialogHeader>
       </DialogContent>
