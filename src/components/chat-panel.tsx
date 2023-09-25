@@ -4,6 +4,7 @@ import { FooterText } from "@/components/footer"
 import { PromptForm } from "@/components/prompt-form"
 import { Button } from "@/components/ui/button"
 import { IconRefresh, IconStop } from "@/components/ui/icons"
+import { updateBalances } from "@/lib/update-balances"
 
 export interface ChatPanelProps
   extends Pick<
@@ -64,12 +65,13 @@ export function ChatPanel({
                 content: value,
                 role: 'user'
               })
+              updateBalances()
             }}
             input={input}
             setInput={setInput}
             isLoading={isLoading}
           />
-          {/* <FooterText className="hidden sm:block" /> */}
+          <FooterText className="hidden sm:block" />
         </div>
       </div>
     </div>

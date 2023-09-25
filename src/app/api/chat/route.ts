@@ -67,7 +67,43 @@ async function checkUserBalance(userId: number): Promise<number> {
 }
 
 
-async function deductUserBalance(userId: number, amount: number) {
-  // Deduct user balance in SQL database
-  console.log(`Placeholder: Deducted ${amount} from user ${userId}`)
+// async function deductUserBalance(userId: number, amount: number) {
+//   // Deduct user balance in SQL database
+//   console.log(`Placeholder: Deducted ${amount} from user ${userId}`)
+// }
+
+
+export async function deductUserBalance(userId: number, amount: number): Promise<void> {
+  // Create MySQL connection
+  const connection = await mysql.createConnection(process.env.DATABASE_URL as string);
+
+  await connection.beginTransaction();
+  try {
+    // Lock the row for the current transaction and check balance
+    const [rows] = await connection.execute(
+      'SELECT balance FROM users WHERE id = ? FOR UPDATE',
+      [userId]
+    ) as any;
+
+    const currentBalance = rows[0]?.balance || 0;
+
+    if (currentBalance < amount) {
+      throw new Error('Insufficient balance');
+    }
+
+    // Deduct balance
+    await connection.execute(
+      'UPDATE users SET balance = balance - ? WHERE id = ?',
+      [amount, userId]
+    );
+
+    // Commit the transaction
+    await connection.commit();
+  } catch (err: any) {
+    // Rollback in case of an error
+    await connection.rollback();
+    throw new Error('Error deducting balance: ' + err.message);
+  } finally {
+    await connection.end(); // Close the connection
+  }
 }

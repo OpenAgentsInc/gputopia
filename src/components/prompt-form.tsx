@@ -8,6 +8,7 @@ import {
     Tooltip, TooltipContent, TooltipProvider, TooltipTrigger
 } from "@/components/ui/tooltip"
 import { useEnterSubmit } from "@/lib/hooks/use-enter-submit"
+import { useStore } from "@/lib/store"
 import { cn } from "@/lib/utils"
 
 export interface PromptProps
@@ -31,6 +32,9 @@ export function PromptForm({
       inputRef.current.focus()
     }
   }, [])
+
+  const balance = useStore(state => state.balance)
+  const insufficientBalance = balance < 7
 
   return (
     <form
@@ -84,7 +88,7 @@ export function PromptForm({
                 <Button
                   type="submit"
                   size="icon"
-                  disabled={isLoading || input === ''}
+                  disabled={isLoading || input === '' || insufficientBalance}
                 >
                   <IconArrowElbow />
                   <span className="sr-only">Send message</span>

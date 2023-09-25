@@ -11,7 +11,7 @@ export function FooterText({ className, ...props }: React.ComponentProps<'p'>) {
       )}
       {...props}
     >
-      This will get pretty fucking interesting.
+      For now all inferences use Vicuna and cost 7 sats.
     </p>
   )
 }
