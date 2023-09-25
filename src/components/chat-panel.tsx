@@ -30,6 +30,7 @@ export function ChatPanel({
   setInput,
   messages
 }: ChatPanelProps) {
+  const enoughMessages = messages?.length >= 2
   return (
     <div className="fixed inset-x-0 bottom-0 bg-gradient-to-b from-muted/10 from-10% to-muted/30 to-50%">
       <ButtonScrollToBottom />
@@ -70,6 +71,7 @@ export function ChatPanel({
             input={input}
             setInput={setInput}
             isLoading={isLoading}
+            enoughMessages={enoughMessages}
           />
           <FooterText className="hidden sm:block" />
         </div>

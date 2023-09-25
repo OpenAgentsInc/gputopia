@@ -71,6 +71,7 @@ export async function generateAndStream(job: Job, channel: Channel) {
   }
 
   const generateProgressCallback = (_step: number, message: string) => {
+    console.log(message)
     const currentTime = Date.now();
     const timeDiff = currentTime - lastSentTime;
 

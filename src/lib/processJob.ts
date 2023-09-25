@@ -25,7 +25,7 @@ export const processJob = async (job: Job) => {
     return
   }
 
-  console.log(userId, job.userId)
+  // console.log(userId, job.userId)
   if (userId === job.userId) {
     console.log("Received job from self, skipping")
     return
