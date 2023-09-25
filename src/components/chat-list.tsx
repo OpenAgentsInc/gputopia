@@ -13,18 +13,17 @@ export function ChatList({ messages }: ChatList) {
   }
 
   const storeLastMessage = useStore(s => s.lastMessage)
-  console.log(messages)
+  const updatedMessages = [...messages];
 
-  const lastMessage = messages[messages.length - 1];
+  const lastMessageIndex = messages.findIndex((msg, idx) => msg.role === 'assistant' && idx === messages.length - 1);
 
-  // Update the 'content' prop only if the role is 'assistant'
-  if (lastMessage.role === 'assistant') {
-    lastMessage.content = storeLastMessage;
+  if (lastMessageIndex !== -1) {
+    updatedMessages[lastMessageIndex] = { ...updatedMessages[lastMessageIndex], content: storeLastMessage };
   }
 
   return (
     <div className="relative mx-auto max-w-2xl px-4">
-      {messages.map((message, index) => (
+      {updatedMessages.map((message, index) => (
         <div key={index}>
           <ChatMessage message={message} />
           {index < messages.length - 1 && (
