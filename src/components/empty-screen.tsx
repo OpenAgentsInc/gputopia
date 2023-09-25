@@ -12,7 +12,7 @@ export function EmptyScreen() {
           Inferences are paid in sats, for now 7 sats per Vicuna inference. GPUtopia takes a 1-sat platform fee and the rest goes to the provider of the GPU compute that processes the inference.
         </p>
         <p className="mb-3 leading-normal text-muted-foreground">
-          Conversations are not saved. Your messages are not shared, but also not private. Don't share sensitive information.
+          Conversations are not saved. Your messages are not shared, but also not private. Don&apos;t share sensitive information.
         </p>
       </div>
     </div>
