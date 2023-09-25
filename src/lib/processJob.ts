@@ -1,4 +1,5 @@
-import { kv } from "@vercel/kv"
+import { Channel } from "pusher-js"
+import { complete } from "./complete"
 import { generateAndStream } from "./webllm"
 
 export interface Job {
@@ -8,11 +9,29 @@ export interface Job {
   model: string
 }
 
+
+// For now assume Vicuna
 export const processJob = async (job: Job) => {
 
-  // For now assume Vicuna
   // If not ready, return
-  // If this user was the sender, return (or nah?)
+
+
+  // If this user was the sender, return
+  const myUserId = window.sessionStorage.getItem("userId")
+  const userId = Number(myUserId)
+
+  if (userId === 0 || !userId) {
+    alert("No user ID found, please log in")
+    return
+  }
+
+  console.log(userId, job.userId)
+  if (userId === job.userId) {
+    console.log("Received job from self, skipping")
+    return
+  }
+
+
 
   // console.log("Received job")
   // console.log("got a jerrrrbb", job)
@@ -32,11 +51,14 @@ export const processJob = async (job: Job) => {
     }
   }).then(async (json) => {
     console.log(`Locking job ${job.jobId} with key ${lockKey}`)
-    const lockSet = await kv.setnx(lockKey, 'locked');
-    if (lockSet === 1) {
-      console.log("Won job, completing...")
-      const response = generateAndStream(job, window.jobChannel)
+    if (json.lockSet === 1) {
+      const response = await generateAndStream(job, window.jobChannel)
+      if (response === "error" || !response) {
+        console.log("Error generating inference")
+        return
+      }
       console.log(response)
+      complete(response, job.jobId)
     } else {
       console.log("Job already locked, skipping")
     }
