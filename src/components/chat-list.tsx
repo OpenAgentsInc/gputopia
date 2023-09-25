@@ -9,30 +9,39 @@ export interface ChatList {
 }
 
 export function ChatList({ messages }: ChatList) {
-  if (!messages.length) {
-    return null
-  }
-
   const [updatedContents, setUpdatedContents] = useState<Record<number, string>>({});
+  const [latestUpdatingIndex, setLatestUpdatingIndex] = useState<number | null>(null);
   const storeLastMessage = useStore(s => s.lastMessage);
 
   useEffect(() => {
-    const lastMessage = messages[messages.length - 1];
     const lastIndex = messages.length - 1;
+    const lastMessage = messages[lastIndex];
+    const thirdToLastIndex = lastIndex - 2;
+    const thirdToLastMessage = messages[thirdToLastIndex];
 
     if (lastMessage.role === 'assistant') {
-      setUpdatedContents(prev => ({
-        ...prev,
-        [lastIndex]: storeLastMessage,
-      }));
+      if (thirdToLastMessage?.content !== storeLastMessage) {
+        setUpdatedContents(prev => ({ ...prev, [lastIndex]: storeLastMessage }));
+      }
+      setLatestUpdatingIndex(null);
+    } else if (lastMessage.role === 'user') {
+      setLatestUpdatingIndex(lastIndex + 1);
+      useStore.setState({ lastMessage: "..." });  // Set lastMessage to "Loading"
     }
   }, [messages, storeLastMessage]);
+
 
   return (
     <div className="relative mx-auto max-w-2xl px-4">
       {messages.map((message, index) => {
-        const updatedContent = updatedContents[index];
-        const displayContent = updatedContent ?? message.content;
+        let displayContent;
+
+        // console.log({ index, latestUpdatingIndex, updatedContents })
+        if (index === latestUpdatingIndex) {
+          displayContent = "..."; // Loading indicator
+        } else {
+          displayContent = updatedContents[index] ?? message.content;
+        }
 
         return (
           <div key={index}>

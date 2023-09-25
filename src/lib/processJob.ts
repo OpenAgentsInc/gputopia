@@ -12,6 +12,7 @@ export const processJob = async (job: Job) => {
   // If not ready, return
   // If this user was the sender, return (or nah?)
 
+  console.log("Received job")
   // console.log("got a jerrrrbb", job)
 
   // console.log("Processing")

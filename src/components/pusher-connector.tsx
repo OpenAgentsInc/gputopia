@@ -54,7 +54,7 @@ export const PusherConnector = () => {
     window.jobChannel.bind("new-job", processJob);
 
     window.jobChannel.bind(`client-job-${userId}`, (data) => {
-      console.log(data.message);
+      // console.log(data.message);
       useStore.setState({ lastMessage: data.message })
     });
 

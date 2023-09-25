@@ -66,7 +66,7 @@ let queuedMessage: string | null = null;
 
 export async function generateAndStream(job: Job, channel: Channel) {
   if (!channel || !chat) {
-    console.log('Returning because no channel or chat')
+    // console.log('Returning because no channel or chat')
     return;
   }
 
