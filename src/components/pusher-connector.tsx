@@ -58,6 +58,8 @@ export const PusherConnector = () => {
       useStore.setState({ lastMessage: data.message })
     });
 
+    window.pusher = pusher
+
   }, [userId]);
 
   return null

@@ -41,6 +41,7 @@ export function SellMenu() {
       console.log('Model loaded');
       setModelLoading(false)
       setModelLoaded(true)
+      window.pusher?.subscribe(`presence-serving-vicuna`);
     });
   }, [])
   return (
