@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
   const { jobId } = json;
 
   const lockKey = `lock:${jobId}`;
-  console.log("Attempting to lock job")
+  console.log(`Attempting to lock job ${jobId}`)
 
   // Try to acquire lock
   const lockSet = await kv.setnx(lockKey, 'locked');
