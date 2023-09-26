@@ -41,7 +41,11 @@ export function SellMenu() {
       console.log('Model loaded');
       setModelLoading(false)
       setModelLoaded(true)
-      window.pusher?.subscribe(`presence-serving-vicuna`);
+      try {
+        window.pusher?.subscribe(`presence-serving-vicuna`);
+      } catch (e) {
+        console.log("Couldnt join vicuna serving presence")
+      }
     });
   }, [])
   return (
