@@ -15,7 +15,10 @@ export async function POST(req: NextRequest) {
   // console.log("Chat from userId:", userId)
 
   const { messages, id } = json;
-  // console.log(json)
+
+  const randomNumberBetweenOneAndTenThousand = Math.floor(Math.random() * 10000) + 1;
+
+  const longerJobId = id + "-" + randomNumberBetweenOneAndTenThousand.toString()
 
   // Last message sent by the user
   const lastUserMessage = messages.reverse().find((msg: any) => msg.role === 'user');
@@ -27,7 +30,7 @@ export async function POST(req: NextRequest) {
 
     if (userBalance >= 7) {
       // Create a job and add it to the Vercel KV queue
-      const jobObject = { jobId: id, userId, message: lastUserMessage.content, model: 'Vicuna' }
+      const jobObject = { jobId: longerJobId, userId, message: lastUserMessage.content, model: 'Vicuna' }
       const job = JSON.stringify(jobObject);
       await kv.rpush('job_queue', job);
 
