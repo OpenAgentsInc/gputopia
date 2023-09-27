@@ -1,5 +1,6 @@
 import mysql from "mysql2/promise"
 import { NextRequest, NextResponse } from "next/server"
+import { pusher } from "@/lib/pusher"
 
 export async function POST(request: NextRequest) {
   const json = await request.json();
@@ -18,6 +19,15 @@ export async function POST(request: NextRequest) {
   );
 
   connection.end();
+
+  // Award availability reward to losing sellers
+
+  // Grab a list of userIds in the Pusher channel `presence-serving-vicuna`
+  const res = await pusher.get({
+    path: '/channels/presence-serving-vicuna/users',
+  })
+  const resJson = await res.json();
+  console.log("In complete we have resJson:", resJson);
 
   return NextResponse.json({ result: result });
 }
