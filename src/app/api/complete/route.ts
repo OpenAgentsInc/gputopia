@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
     // Update balance for all users in the list
     const query = 'UPDATE users SET balance = balance + 1 WHERE id IN (?)';
     await connection.query(query, [userIdsArray]);
-    console.log(`Updated balance for ${userIdsArray.length} users`);
+    console.log(`completeroute: Updated balance for ${userIdsArray.length} users`);
   } catch (e) {
     console.log("completeroute: Error fetching users:", e);
   }
