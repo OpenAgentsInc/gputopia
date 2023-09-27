@@ -12,9 +12,11 @@ export async function POST(req: NextRequest) {
   }
   const userId = Number(userIdString.value);
 
-  if (!updated) {
+  if (updated !== true) {
     console.log(`Forcing update for user ${userId} on job ${jobId}`)
     throw new Error("Outdated client code, please refresh")
+  } else {
+    console.log("Update is true, continuing...")
   }
 
   const lockKey = `lock:${jobId}`;
