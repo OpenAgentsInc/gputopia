@@ -29,6 +29,7 @@ export async function POST(request: NextRequest) {
     })
     const resJson = await res.json();
     console.log("completeroute: In complete we have resJson:", resJson);
+    console.log(JSON.stringify(resJson));
   } catch (e) {
     console.log("completeroute: Error fetching users:", e);
   }
