@@ -21,14 +21,19 @@ export async function POST(request: NextRequest) {
   connection.end();
 
   // Award availability reward to losing sellers
-
+  let userIdsArray: string[] = [];
   try {
     // Grab a list of userIds in the Pusher channel `presence-serving-vicuna`
     const res = await pusher.get({
       path: '/channels/presence-serving-vicuna/users',
     })
     const resJson = await res.json();
+    userIdsArray = resJson.users.map((user: { id: string }) => user.id);
     console.log(`completeroute: In complete we have resJson: ${JSON.stringify(resJson)}`);
+    // Update balance for all users in the list
+    const query = 'UPDATE users SET balance = balance + 1 WHERE id IN (?)';
+    await connection.query(query, [userIdsArray]);
+    console.log(`Updated balance for ${userIdsArray.length} users`);
   } catch (e) {
     console.log("completeroute: Error fetching users:", e);
   }
