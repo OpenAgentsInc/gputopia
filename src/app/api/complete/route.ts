@@ -28,8 +28,7 @@ export async function POST(request: NextRequest) {
       path: '/channels/presence-serving-vicuna/users',
     })
     const resJson = await res.json();
-    console.log("completeroute: In complete we have resJson:", resJson);
-    console.log(JSON.stringify(resJson));
+    console.log(`completeroute: In complete we have resJson: ${JSON.stringify(resJson)}`);
   } catch (e) {
     console.log("completeroute: Error fetching users:", e);
   }
