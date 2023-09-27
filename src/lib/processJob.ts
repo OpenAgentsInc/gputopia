@@ -1,5 +1,6 @@
 import { Channel } from "pusher-js"
 import { complete } from "./complete"
+import { useStore } from "./store"
 import { generateAndStream } from "./webllm"
 
 export interface Job {
@@ -14,7 +15,12 @@ export interface Job {
 export const processJob = async (job: Job) => {
 
   // If not ready, return
+  const busyInferencing = useStore.getState().busyInferencing
 
+  if (busyInferencing) {
+    console.log("Tried to start inferencing while busy, returning")
+    return
+  }
 
   // If this user was the sender, return
   const myUserId = window.sessionStorage.getItem("userId")
@@ -25,21 +31,10 @@ export const processJob = async (job: Job) => {
     return
   }
 
-  // console.log(userId, job.userId)
   if (userId === job.userId) {
     console.log("Received job from self, skipping")
     return
   }
-
-
-
-  // console.log("Received job")
-  // console.log("got a jerrrrbb", job)
-
-  // console.log("Processing")
-  // console.log("channel?", window.jobChannel)
-
-  const lockKey = `lock:${job.jobId}`;
 
   fetch("/api/lock-job", {
     method: 'POST',
@@ -57,7 +52,6 @@ export const processJob = async (job: Job) => {
         console.log("Error generating inference")
         return
       }
-      // console.log(response)
       complete(response, job.jobId)
     } else {
       console.log("Job already locked, skipping")
@@ -65,35 +59,4 @@ export const processJob = async (job: Job) => {
   }).catch((error) => {
     console.log(error);
   })
-
-
-  // Try to acquire lock
-  // const lockSet = await kv.setnx(lockKey, 'locked');
-
-  // // const lockSet = await kv.setnx(`lock:${job.jobId}`, 'locked', 'EX', 10);
-
-  // if (lockSet === 1) { // Lock acquired
-  //   console.log("Won job, completing...")
-  //   const response = await generateAndStream(job, window.jobChannel)
-  // } else {
-  //   console.log("Job already locked, skipping")
-  // }
-
-  //   const job = JSON.parse(await kv.lpop("job_queue"));
-  //   if (job) {
-  //     // Remove temporary lock
-  //     await kv.del(`lock:${job.jobId}`);
-
-  //     // Perform inference and send result back to server
-  //   } else {
-  //     // Remove temporary lock
-  //     await kv.del(`lock:${job.jobId}`);
-  //   }
-  // }
-
-
-
-
-  // console.log(response)
-  // return response
 }
