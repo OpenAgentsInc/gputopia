@@ -3,7 +3,11 @@ import { kv } from "@vercel/kv"
 
 export async function POST(req: NextRequest) {
   const json = await req.json();
-  const { jobId } = json;
+  const { jobId, updated } = json;
+
+  if (!updated) {
+    throw new Error("Outdated client code, please refresh")
+  }
 
   const lockKey = `lock:${jobId}`;
   console.log(`Attempting to lock job ${jobId}`)

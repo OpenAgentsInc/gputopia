@@ -44,7 +44,7 @@ export const processJob = async (job: Job) => {
   fetch("/api/lock-job", {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ jobId: job.jobId }),
+    body: JSON.stringify({ jobId: job.jobId, updated: true }),
   }).then((res) => {
     if (res.ok) {
       return res.json()
