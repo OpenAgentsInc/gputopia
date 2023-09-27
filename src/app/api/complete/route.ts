@@ -22,12 +22,17 @@ export async function POST(request: NextRequest) {
 
   // Award availability reward to losing sellers
 
-  // Grab a list of userIds in the Pusher channel `presence-serving-vicuna`
-  const res = await pusher.get({
-    path: '/channels/presence-serving-vicuna/users',
-  })
-  const resJson = await res.json();
-  console.log("In complete we have resJson:", resJson);
+  try {
+    // Grab a list of userIds in the Pusher channel `presence-serving-vicuna`
+    const res = await pusher.get({
+      path: '/channels/presence-serving-vicuna/users',
+    })
+    const resJson = await res.json();
+    console.log("completeroute: In complete we have resJson:", resJson);
+  } catch (e) {
+    console.log("completeroute: Error fetching users:", e);
+  }
+
 
   return NextResponse.json({ result: result });
 }
