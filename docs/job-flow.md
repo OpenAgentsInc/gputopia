@@ -15,7 +15,7 @@
     - _Verify this user is who locked this job_
     - _Update Job in database with result_
     - Award job reward to seller
-    - _Award availability reward to all other sellers_
-      - **Grab a list of userIds in the channel**
+    - Award availability reward to all other sellers
+      - Grab a list of userIds in the channel
       - _Ensure under the max of 25 sats per minute_
-      - _Update their balance by 1_
+      - Update their balance by 1
