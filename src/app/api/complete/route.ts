@@ -18,8 +18,6 @@ export async function POST(request: NextRequest) {
     [userId.value]
   );
 
-  connection.end();
-
   // Award availability reward to losing sellers
   let userIdsArray: string[] = [];
   try {
@@ -38,6 +36,7 @@ export async function POST(request: NextRequest) {
     console.log("completeroute: Error fetching users:", e);
   }
 
+  connection.end();
 
   return NextResponse.json({ result: result });
 }
