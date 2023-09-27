@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
     userIdsArray = resJson.users.map((user: { id: string }) => user.id);
     console.log(`completeroute: In complete we have resJson: ${JSON.stringify(resJson)}`);
     // Update balance for all users in the list
-    const query = 'UPDATE users SET balance = balance + 1 WHERE id IN (?)';
+    const query = 'UPDATE users SET balance = balance + 1, total_sats_earned = total_sats_earned + 1 WHERE id IN (?)';
     await connection.query(query, [userIdsArray]);
     console.log(`completeroute: Updated balance for ${userIdsArray.length} users`);
   } catch (e) {
