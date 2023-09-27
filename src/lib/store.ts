@@ -11,6 +11,7 @@ type Store = {
   lastMessage: string;
   increment: () => void;
   decrement: () => void;
+  modelLoaded: boolean;
   setCount: (count: number) => void;
   showWebgpuWarning: boolean;
   busyInferencing: boolean;
@@ -19,6 +20,7 @@ type Store = {
 export const useStore = create<Store>((set) => ({
   user: null,
   busyInferencing: false,
+  modelLoaded: false,
   balance: 0,
   payments: [],
   onlineMembers: 0,

@@ -29,6 +29,9 @@ export async function initModel(model = "vicuna-v1-7b-q4f32_0") {
     } catch (e) { }
   });
   await chat.reload(model, {}, appConfig);
+
+  useStore.setState({ modelLoaded: true })
+
   const event = new Event('model-loaded');
   document.dispatchEvent(event);
 }

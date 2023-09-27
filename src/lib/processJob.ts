@@ -13,6 +13,11 @@ export interface Job {
 
 // For now assume Vicuna
 export const processJob = async (job: Job) => {
+  const modelLoaded = useStore.getState().modelLoaded
+  if (!modelLoaded) {
+    console.log("Received job but model not loaded, returning")
+    return
+  }
 
   // If not ready, return
   const busyInferencing = useStore.getState().busyInferencing
