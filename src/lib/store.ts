@@ -13,10 +13,12 @@ type Store = {
   decrement: () => void;
   setCount: (count: number) => void;
   showWebgpuWarning: boolean;
+  busyInferencing: boolean;
 };
 
 export const useStore = create<Store>((set) => ({
   user: null,
+  busyInferencing: false,
   balance: 0,
   payments: [],
   onlineMembers: 0,

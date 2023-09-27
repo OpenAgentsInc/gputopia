@@ -39,6 +39,13 @@ export async function unloadModel() {
 }
 
 export async function generate(prompt: string) {
+  const busyInferencing = useStore.getState().busyInferencing
+
+  if (busyInferencing) {
+    console.log("Tried to start inferencing while busy, returning")
+    return
+  }
+
   if (!chat) {
     return
   }
@@ -49,14 +56,15 @@ export async function generate(prompt: string) {
   };
 
   try {
+    useStore.setState({ busyInferencing: true })
     reply = await chat.generate(prompt, generateProgressCallback);
     console.log(reply)
   } catch (e) {
+    useStore.setState({ busyInferencing: false })
     return
   }
 
-  // Fetch POST to complete the inference
-  // complete(reply)
+  useStore.setState({ busyInferencing: false })
 
   return reply;
 }
