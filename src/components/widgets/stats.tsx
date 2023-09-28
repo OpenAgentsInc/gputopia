@@ -33,10 +33,10 @@ export const Stats = () => {
   useEffect(() => {
     if (!user) return
 
-    document.addEventListener('model-loaded', function () {
-      console.log('Model loaded');
-      setModelLoaded(true)
-    });
+    // document.addEventListener('model-loaded', function () {
+    //   console.log('Model loaded');
+    //   setModelLoaded(true)
+    // });
 
     fetch("/api/balance", {
       method: 'POST',
@@ -118,9 +118,12 @@ export const Stats = () => {
         <CardContent>
           <div className="flex flex-row items-start justify-between">
             <div className="text-3xl font-bold">{balance}</div>
-            <Button disabled={withdrawLoading || balance === 0} className="mt-1 w-42" onClick={goWithdraw}>
-              {withdrawLoading ? "Withdrawing..." : "Withdraw to Alby"}
+            <Button disabled={true} className="mt-1 w-42" onClick={goWithdraw}>
+              Disabled until v3
             </Button>
+            {/* <Button disabled={withdrawLoading || balance === 0} className="mt-1 w-42" onClick={goWithdraw}>
+              {withdrawLoading ? "Withdrawing..." : "Withdraw to Alby"}
+            </Button> */}
           </div>
         </CardContent>
       </Card>

@@ -1,19 +1,21 @@
 import Pusher, * as PusherTypes from "pusher-js"
 import { useEffect, useState } from "react"
+import { processJob } from "@/lib/processJob"
 import { useStore } from "@/lib/store"
 import { useAlby } from "@/lib/useAlby"
 import { generate } from "@/lib/webllm"
+import { kv } from "@vercel/kv"
 
 export const PusherConnector = () => {
-  const { logout } = useAlby()
+  // const { logout } = useAlby()
 
   const [userId, setUserId] = useState(0)
 
   useEffect(() => {
     let userIdString = window.sessionStorage.getItem("user_id");
     if (!userIdString) {
-      logout()
-      alert("Fixed a bug with jobs, please log in again.")
+      // logout()
+      alert("Error. Please log in again.")
     } else {
       setUserId(Number(userIdString))
     }
@@ -22,7 +24,7 @@ export const PusherConnector = () => {
 
   useEffect(() => {
     if (!userId || userId === 0) return
-    const pusher = new Pusher('b05a0412d32eaefa65e5', {
+    const pusher = new Pusher('e12c6b8ab6c32132e3bf', {
       cluster: 'mt1'
     });
 
@@ -46,6 +48,17 @@ export const PusherConnector = () => {
         return await generate(data.job)
       });
     }
+
+    // Listen for "new job" event
+    window.jobChannel = pusher.subscribe("private-v3jobs")
+    window.jobChannel.bind("new-job", processJob);
+
+    window.jobChannel.bind(`client-job-${userId}`, (data) => {
+      // console.log(data.message);
+      useStore.setState({ lastMessage: data.message })
+    });
+
+    window.pusher = pusher
 
   }, [userId]);
 

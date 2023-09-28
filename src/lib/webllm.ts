@@ -1,8 +1,11 @@
-'use client'
+// 'use client'
 
 import AiWorker from "./AiWorker"
+import { Channel } from "pusher-js"
 import * as webllm from "@mlc-ai/web-llm"
+import appConfig from "./app-config"
 import { complete } from "./complete"
+import { Job } from "./processJob"
 import { useStore } from "./store"
 
 // We use label to intentionally keep it simple
@@ -36,25 +39,87 @@ export async function initModel(lnURL: string, userId: string) {
   }
 }
 
+export async function unloadModel() {
+  await worker.unload()
+  worker = null
+  console.log("Unloaded")
+}
+
 export async function generate(prompt: string) {
+  const busyInferencing = useStore.getState().busyInferencing
+
+  if (busyInferencing) {
+    console.log("Tried to start inferencing while busy, returning")
+    return
+  }
+
   if (!worker) {
     return
   }
   
-  console.log("old gen hit")
+  console.log("old gen hit, ignored")
   return
   
   let reply
+
+  const generateProgressCallback = (_step: number, message: string) => {
+    console.log(message)
+  };
+
   try {
     // @ts-ignore
+    useStore.setState({ busyInferencing: true })
     reply = await worker.generate(prompt);
+    console.log(reply)
   } catch (e) {
+    useStore.setState({ busyInferencing: false })
     return
   }
 
-
   // Fetch POST to complete the inference
   complete(reply || "")
+  
+  useStore.setState({ busyInferencing: false })
+
 
   return reply;
+}
+
+let lastSentTime = 0;
+let queuedMessage: string | null = null;
+
+export async function generateAndStream(job: Job, channel: Channel) {
+  if (!channel || !worker) {
+    // console.log('Returning because no channel or worker')
+    return;
+  }
+
+  const generateProgressCallback = (_step: number, message: string) => {
+    const currentTime = Date.now();
+    const timeDiff = currentTime - lastSentTime;
+
+    if (timeDiff >= 250) {
+      try {
+        channel.trigger(`client-job-${job.userId}`, { message });
+        lastSentTime = currentTime;
+      } catch (e) {
+        console.error(e);
+      }
+    } else {
+      queuedMessage = message;
+    }
+  };
+
+  try {
+    const reply = await worker.generate(job.message, generateProgressCallback);
+
+    // Send any remaining queued message
+    if (queuedMessage) {
+      channel.trigger(`client-job-${job.userId}`, { message: queuedMessage });
+      queuedMessage = null;
+    }
+    return reply;
+  } catch (e) {
+    return;
+  }
 }

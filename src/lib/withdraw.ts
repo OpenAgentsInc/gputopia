@@ -22,7 +22,7 @@ export const withdraw = async () => {
     const data = await response.json();
 
     if (response.ok) {
-      console.log(data)
+      // console.log(data)
 
       const payResponse = await fetch('/api/pay', {
         method: 'POST',
@@ -33,7 +33,7 @@ export const withdraw = async () => {
       });
 
       const payData = await payResponse.json();
-      console.log(payData)
+      // console.log(payData)
 
       updateBalances()
 
@@ -41,6 +41,31 @@ export const withdraw = async () => {
       console.error("Error: ", response.statusText);
       return null;
     }
+  } catch (error) {
+    console.error("An error occurred: ", error);
+    return null;
+  }
+}
+
+
+export const withdrawInvoice = async (bolt11: string) => {
+  try {
+    console.log(bolt11)
+    const payResponse = await fetch('/api/pay-invoice', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ payment_request: bolt11 })
+    });
+
+    const payData = await payResponse.json();
+    console.log(payData)
+    if (payData.ok === false) {
+      alert(payData.message)
+    }
+
+    updateBalances()
   } catch (error) {
     console.error("An error occurred: ", error);
     return null;

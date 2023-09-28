@@ -1,6 +1,6 @@
 import { updateBalances } from "./update-balances"
 
-export const complete = async (completion: string) => {
+export const complete = async (completion: string, jobId: string) => {
   // Fetch POST to complete the inference
   fetch('/api/complete', {
     method: 'POST',
@@ -9,7 +9,7 @@ export const complete = async (completion: string) => {
       'Content-Type': 'application/json',
       // @ts-ignore
     },
-    body: JSON.stringify({ result: completion })
+    body: JSON.stringify({ result: completion, jobId })
   })
     .then(response => response.json())
     .then(data => {
