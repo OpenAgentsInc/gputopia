@@ -44,12 +44,16 @@ export async function POST(request) {
 
   if (command == "check") {
     // todo: use the real billing numbers from the spider
-    let ok = 0;
+    let ok = false;
+    let user_id = null;
     if (json.bill_to_token) {
-        const [results] = await connection.query('SELECT balance FROM users WHERE auth_token = ? and balance > 5', [json.bill_to_token]);
-        ok = results.length > 0; 
+        const [results] = await connection.query('SELECT id FROM users WHERE auth_token = ? and balance > 5', [json.bill_to_token]);
+        if (results.length > 0) {
+            user_id = results[0].id;
+            ok = true;
+        }
     }
-    return NextResponse.json({ok})
+    return NextResponse.json({ok, user_id})
   }
 
   connection.end();
