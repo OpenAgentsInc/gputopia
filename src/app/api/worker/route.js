@@ -47,7 +47,7 @@ export async function POST(request) {
     if (json.bill_to_token) {
       await new Promise((resolve, reject) => {
         connection.query(
-          'UPDATE users SET balance = balance - 8 WHERE auth_token = ?',
+          'UPDATE users SET balance = balance - 8 WHERE access_token = ?',
           [json.bill_to_token], function (err, results) {
             resolve()
           });
@@ -60,7 +60,7 @@ export async function POST(request) {
     let ok = false;
     let user_id = null;
     if (json.bill_to_token) {
-        const [results] = await connection.query('SELECT id FROM users WHERE auth_token = ? and balance > 5', [json.bill_to_token]);
+        const [results] = await connection.query('SELECT id FROM users WHERE access_token = ? and balance > 5', [json.bill_to_token]);
         if (results.length > 0) {
             user_id = results[0].id;
             ok = true;
