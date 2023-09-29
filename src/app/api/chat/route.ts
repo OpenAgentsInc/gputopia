@@ -32,22 +32,20 @@ export async function POST(req: NextRequest) {
     if (userBalance >= 7) {
       // Create a job and add it to the Vercel KV queue
 
-      try {
-        const openai = new OpenAI({ apiKey: `testkey${1}`, baseURL: "https://queenbee.gputopia.ai/v1" });
-        // Post to queenbee
-        const response = await openai.chat.completions.create({
-          model: 'vicuna-v1-7b-q4f32_0',
-          stream: true,
-          messages
-        })
 
-
-        console.log('response?', response)
-        return response
-      } catch (err: any) {
+      const openai = new OpenAI({ apiKey: `testkey${1}`, baseURL: "https://queenbee.gputopia.ai/v1" });
+      // Post to queenbee
+      const response = await openai.chat.completions.create({
+        model: 'vicuna-v1-7b-q4f32_0',
+        stream: true,
+        messages
+      }).catch((err: any) => {
         console.error("OpenAI API error:", err.message);
         return NextResponse.json({ error: 'queenbee API call failed', message: err.message });
-      }
+      });
+
+
+      return response
 
 
       // const jobObject = { jobId: longerJobId, userId, message: lastUserMessage.content, model: 'Vicuna' }
