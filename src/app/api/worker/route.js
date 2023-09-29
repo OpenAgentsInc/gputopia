@@ -23,14 +23,27 @@ export async function POST(request) {
   if (command == "complete") {
     // todo: use the real billing numbers from the spider
     if (json.pay_to_lnurl) {
-      await new Promise((resolve, reject) => {
+      let found = await new Promise((resolve, reject) => {
         connection.query(
           'UPDATE users SET balance = balance + 6, total_sats_earned = total_sats_earned + 6 WHERE lightning_address = ?',
+          [json.pay_to_lnurl], function (err, results) {
+            resolve(1);
+          });
+      });
+
+      if (!found) {
+        await new Promise((resolve, reject) => {
+        connection.query(
+          'INSERT INTO users (balance, total_sats_earned, lightning_address) VALUES (6, 6, ?)',
           [json.pay_to_lnurl], function (err, results) {
             resolve()
           });
       });
+     
+      }
+
     }
+
     if (json.bill_to_token) {
       await new Promise((resolve, reject) => {
         connection.query(
