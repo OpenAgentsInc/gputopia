@@ -1,5 +1,6 @@
 import mysql from "mysql2/promise"
 import { NextRequest, NextResponse } from "next/server"
+import OpenAI from "openai"
 import { pusher } from "@/lib/pusher"
 import { kv } from "@vercel/kv"
 
@@ -30,16 +31,29 @@ export async function POST(req: NextRequest) {
 
     if (userBalance >= 7) {
       // Create a job and add it to the Vercel KV queue
-      const jobObject = { jobId: longerJobId, userId, message: lastUserMessage.content, model: 'Vicuna' }
-      const job = JSON.stringify(jobObject);
-      await kv.rpush('job_queue', job);
 
-      // Trigger a "new job" event via Pusher to alert model providers
-      pusher.trigger('private-v3jobs', 'new-job', jobObject);
-      // console.log("SENT PUSHER EVENT")
+      const openai = new OpenAI({ apiKey: `testkey${1}`, baseURL: "https://queenbee.gputopia.ai/v1" });
+      // Post to queenbee
+      const response = await openai.chat.completions.create({
+        model: 'vicuna-v1-7b-q4f32_0',
+        stream: true,
+        messages
+      })
 
-      // Deduct balance (replace this with actual SQL code)
-      await deductUserBalance(userId, 7); // Placeholder function
+
+      console.log('response?', response)
+      return response
+
+      // const jobObject = { jobId: longerJobId, userId, message: lastUserMessage.content, model: 'Vicuna' }
+      // const job = JSON.stringify(jobObject);
+      // await kv.rpush('job_queue', job);
+
+      // // Trigger a "new job" event via Pusher to alert model providers
+      // pusher.trigger('private-v3jobs', 'new-job', jobObject);
+      // // console.log("SENT PUSHER EVENT")
+
+      // // Deduct balance (replace this with actual SQL code)
+      // await deductUserBalance(userId, 7); // Placeholder function
     } else {
       return NextResponse.json({ error: 'Insufficient balance' });
     }
