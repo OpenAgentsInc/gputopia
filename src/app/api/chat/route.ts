@@ -1,9 +1,9 @@
 import { OpenAIStream, StreamingTextResponse } from "ai"
-import mysql from "mysql2/promise"
+// import mysql from "mysql2/promise"
 import { NextRequest, NextResponse } from "next/server"
 import { Configuration, OpenAIApi } from "openai-edge"
 
-// export const runtime = 'edge'
+export const runtime = 'edge'
 
 const configuration = new Configuration({
   apiKey: `testkey${1}`,
@@ -32,7 +32,8 @@ export async function POST(req: NextRequest) {
   }
 
   const res = await openai.createChatCompletion({
-    model: 'vicuna-v1-7b-q4f32_0',
+    model: 'TheBloke/WizardLM-7B-uncensored-GGML:q4_K_M',
+    // model: 'meta-llama/Llama-2-70b-chat-hf',
     messages,
     stream: true
   })
@@ -46,60 +47,68 @@ export async function POST(req: NextRequest) {
   return new StreamingTextResponse(stream)
 }
 
-
 async function checkUserBalance(userId: number): Promise<number> {
-  // Create MySQL connection
-  const connection = await mysql.createConnection(process.env.DATABASE_URL as string);
-
   try {
-    // Check balance without locking the row
-    const [rows] = await connection.execute(
-      'SELECT balance FROM users WHERE id = ?',
-      [userId]
-    ) as any;
-
-    const currentBalance = rows[0]?.balance || 0;
+    const currentBalance = 10
     return currentBalance;
-
   } catch (err: any) {
     throw new Error('Error fetching balance: ' + err.message);
-  } finally {
-    await connection.end(); // Close the connection
   }
 }
 
+// async function checkUserBalance(userId: number): Promise<number> {
+//   // Create MySQL connection
+//   const connection = await mysql.createConnection(process.env.DATABASE_URL as string);
 
-export async function deductUserBalance(userId: number, amount: number): Promise<void> {
-  // Create MySQL connection
-  const connection = await mysql.createConnection(process.env.DATABASE_URL as string);
+//   try {
+//     // Check balance without locking the row
+//     const [rows] = await connection.execute(
+//       'SELECT balance FROM users WHERE id = ?',
+//       [userId]
+//     ) as any;
 
-  await connection.beginTransaction();
-  try {
-    // Lock the row for the current transaction and check balance
-    const [rows] = await connection.execute(
-      'SELECT balance FROM users WHERE id = ? FOR UPDATE',
-      [userId]
-    ) as any;
+//     const currentBalance = rows[0]?.balance || 0;
+//     return currentBalance;
 
-    const currentBalance = rows[0]?.balance || 0;
+//   } catch (err: any) {
+//     throw new Error('Error fetching balance: ' + err.message);
+//   } finally {
+//     await connection.end(); // Close the connection
+//   }
+// }
 
-    if (currentBalance < amount) {
-      throw new Error('Insufficient balance');
-    }
 
-    // Deduct balance
-    await connection.execute(
-      'UPDATE users SET balance = balance - ? WHERE id = ?',
-      [amount, userId]
-    );
+// export async function deductUserBalance(userId: number, amount: number): Promise<void> {
+//   // Create MySQL connection
+//   const connection = await mysql.createConnection(process.env.DATABASE_URL as string);
 
-    // Commit the transaction
-    await connection.commit();
-  } catch (err: any) {
-    // Rollback in case of an error
-    await connection.rollback();
-    throw new Error('Error deducting balance: ' + err.message);
-  } finally {
-    await connection.end(); // Close the connection
-  }
-}
+//   await connection.beginTransaction();
+//   try {
+//     // Lock the row for the current transaction and check balance
+//     const [rows] = await connection.execute(
+//       'SELECT balance FROM users WHERE id = ? FOR UPDATE',
+//       [userId]
+//     ) as any;
+
+//     const currentBalance = rows[0]?.balance || 0;
+
+//     if (currentBalance < amount) {
+//       throw new Error('Insufficient balance');
+//     }
+
+//     // Deduct balance
+//     await connection.execute(
+//       'UPDATE users SET balance = balance - ? WHERE id = ?',
+//       [amount, userId]
+//     );
+
+//     // Commit the transaction
+//     await connection.commit();
+//   } catch (err: any) {
+//     // Rollback in case of an error
+//     await connection.rollback();
+//     throw new Error('Error deducting balance: ' + err.message);
+//   } finally {
+//     await connection.end(); // Close the connection
+//   }
+// }
