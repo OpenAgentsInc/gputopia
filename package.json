@@ -11,6 +11,8 @@
     "format:check": "prettier --check \"{app,lib,components}**/*.{ts,tsx,mdx}\" --cache"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.15",
+    "@headlessui/tailwindcss": "^0.2.0",
     "@mdx-js/loader": "^2.3.0",
     "@mdx-js/react": "^2.3.0",
     "@mlc-ai/web-llm": "^0.2.8",
@@ -37,6 +39,7 @@
     "clsx": "^2.0.0",
     "encoding": "^0.1.13",
     "fathom-client": "^3.5.0",
+    "framer-motion": "7.8.1",
     "mdx-annotations": "^0.1.1",
     "mysql2": "^3.6.1",
     "nanoid": "^4.0.2",
