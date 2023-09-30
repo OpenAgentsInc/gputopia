@@ -32,12 +32,9 @@ export async function POST(req: NextRequest) {
   }
 
   const res = await openai.createChatCompletion({
-    // model: 'TheBloke/WizardLM-7B-uncensored-GGML:q4_K_M',
-    // model: 'meta-llama/Llama-2-70b-chat-hf:q4_K_M',
-    // model: "TheBloke/CodeLlama-13B-Instruct-GGUF:Q5_K_M",
-    model: "TheBloke/Llama-2-70B-chat-GGUF:Q5_K_M",
+    model: "vicuna-7B-q4",
     messages,
-    max_tokens: 500,
+    max_tokens: 100,
     stream: true
   })
 

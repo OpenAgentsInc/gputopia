@@ -64,7 +64,7 @@ export function ChatPanel({
                 content: value,
                 role: 'user'
               })
-              updateBalances()
+              // updateBalances()
             }}
             input={input}
             setInput={setInput}

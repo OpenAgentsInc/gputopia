@@ -43,7 +43,6 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
         }
       }
     })
-  console.log(messages.length)
   return (
     <>
       <div className={cn('pb-[200px] pt-4 md:pt-24', className)}>
