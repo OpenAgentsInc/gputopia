@@ -1,7 +1,20 @@
-const { withAxiom } = require('next-axiom');
+import { withAxiom } from 'next-axiom'
+import nextMDX from '@next/mdx'
+
+import { recmaPlugins } from './src/mdx/recma.mjs'
+import { rehypePlugins } from './src/mdx/rehype.mjs'
+import { remarkPlugins } from './src/mdx/remark.mjs'
+
+const withMDX = nextMDX({
+  options: {
+    remarkPlugins,
+    rehypePlugins,
+    recmaPlugins,
+  },
+})
 
 /** @type {import('next').NextConfig} */
-const nextConfig = withAxiom({
+const nextConfig = {
   // https://github.com/mlc-ai/web-llm/issues/126#issuecomment-1617021764
   // Fixes npm packages that depend on `fs` module
   webpack: (config, { isServer }) => {
@@ -17,6 +30,7 @@ const nextConfig = withAxiom({
     }
     return config
   },
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'mdx'],
   typescript: {
     // !! WARN !!
     // Dangerously allow production builds to successfully complete even if
@@ -24,6 +38,6 @@ const nextConfig = withAxiom({
     // !! WARN !!
     ignoreBuildErrors: true,
   }
-})
+}
 
-module.exports = nextConfig
+export default withAxiom(withMDX(nextConfig))
