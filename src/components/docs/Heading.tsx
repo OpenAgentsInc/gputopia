@@ -95,6 +95,11 @@ export function Heading<Level extends 2 | 3>({
     }
   })
 
+  // If props.id includes "gp-utopia", replace with "gputopia"
+  if (props.id.includes('gp-utopia')) {
+    props.id = props.id.replace('gp-utopia', 'gputopia')
+  }
+
   return (
     <>
       <Eyebrow tag={tag} label={label} />
