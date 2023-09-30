@@ -4,7 +4,7 @@ import mysql from 'mysql2/promise';
 export async function POST(request) {
   const json = await request.json();
   let auth_key = json.auth_key
-  
+
   if (!auth_key) {
     const bearer = request.headers.get("Authorization")
     if (bearer && bearer.indexOf(" ")) {
@@ -13,7 +13,7 @@ export async function POST(request) {
   }
 
   if (auth_key != process.env.SPIDER_KEY) {
-    return NextResponse.json({error: "No authorization"})
+    return NextResponse.json({ error: "No authorization" })
   }
 
   const connection = await mysql.createConnection(process.env.DATABASE_URL)
@@ -22,28 +22,29 @@ export async function POST(request) {
 
   if (command == "complete") {
     // todo: use the real billing numbers from the spider
-      if (json.pay_to_lnurl) {
-          const [results] = await connection.query('SELECT id FROM users WHERE lightning_address = ?', [json.pay_to_lnurl]);
-          
-          if (!results.length) {
-              await connection.query(
-                      'INSERT INTO users (balance, total_sats_earned, lightning_address) VALUES (6, 6, ?)',
-                      [json.pay_to_lnurl]);
-          }
-          
-          await connection.query(
-              'UPDATE users SET balance = balance + 6, total_sats_earned = total_sats_earned + 6 WHERE lightning_address = ?',
-              [json.pay_to_lnurl]
-          );
+    if (json.pay_to_lnurl) {
+      const [results] = await connection.query('SELECT id FROM users WHERE lightning_address = ?', [json.pay_to_lnurl]);
+
+      if (!results.length) {
+        await connection.query(
+          'INSERT INTO users (balance, total_sats_earned, lightning_address, alby_id) VALUES (6, 6, ?, ?)',
+          // use a random alby_id as placeholder
+          [json.pay_to_lnurl, `unknown-${Math.random().toString(36).substring(7)}`]);
       }
 
-      if (json.bill_to_token) {
-          await connection.query(
-              'UPDATE users SET balance = balance - 8 WHERE access_token = ?',
-              [json.bill_to_token], function (err, results) {
-                  resolve()
-              });
-      }
+      await connection.query(
+        'UPDATE users SET balance = balance + 6, total_sats_earned = total_sats_earned + 6 WHERE lightning_address = ?',
+        [json.pay_to_lnurl]
+      );
+    }
+
+    if (json.bill_to_token) {
+      await connection.query(
+        'UPDATE users SET balance = balance - 8 WHERE access_token = ?',
+        [json.bill_to_token], function (err, results) {
+          resolve()
+        });
+    }
   }
 
   if (command == "check") {
@@ -51,13 +52,13 @@ export async function POST(request) {
     let ok = false;
     let user_id = null;
     if (json.bill_to_token) {
-        const [results] = await connection.query('SELECT id FROM users WHERE access_token = ? and balance > 5', [json.bill_to_token]);
-        if (results.length > 0) {
-            user_id = results[0].id;
-            ok = true;
-        }
+      const [results] = await connection.query('SELECT id FROM users WHERE access_token = ? and balance > 5', [json.bill_to_token]);
+      if (results.length > 0) {
+        user_id = results[0].id;
+        ok = true;
+      }
     }
-    return NextResponse.json({ok, user_id})
+    return NextResponse.json({ ok, user_id })
   }
 
   connection.end();
