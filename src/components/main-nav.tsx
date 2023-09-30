@@ -37,7 +37,16 @@ export function MainNav({
           "text-muted-foreground": !isActive("/beta")
         })}
       >
-        <span className="mx-2 mr-6">Beta</span>
+        <span className="mx-2">Beta</span>
+      </Link>
+      <Link
+        href="/docs"
+        className={cn(linkClasses, {
+          "text-white": isActive("/docs"),
+          "text-muted-foreground": !isActive("/docs")
+        })}
+      >
+        <span className="mx-2 mr-6">Docs</span>
       </Link>
       {!!user && <SellMenu />}
     </nav>
