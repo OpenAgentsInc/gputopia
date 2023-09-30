@@ -232,13 +232,14 @@ export const navigation: Array<NavGroup> = [
   {
     title: 'Guides',
     links: [
-      { title: 'Introduction', href: '/' },
-      { title: 'Quickstart', href: '/quickstart' },
-      { title: 'SDKs', href: '/sdks' },
-      { title: 'Authentication', href: '/authentication' },
-      { title: 'Pagination', href: '/pagination' },
-      { title: 'Errors', href: '/errors' },
-      { title: 'Webhooks', href: '/webhooks' },
+      { title: 'Introduction', href: '/docs' },
+      { title: 'FAQ', href: '/docs/faq' },
+      // { title: 'Quickstart', href: '/quickstart' },
+      // { title: 'SDKs', href: '/sdks' },
+      // { title: 'Authentication', href: '/authentication' },
+      // { title: 'Pagination', href: '/pagination' },
+      // { title: 'Errors', href: '/errors' },
+      // { title: 'Webhooks', href: '/webhooks' },
     ],
   },
   {

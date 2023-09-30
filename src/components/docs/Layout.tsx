@@ -7,7 +7,9 @@ import { Footer } from "@/components/docs/Footer"
 import { Header } from "@/components/docs/Header"
 import { Logo } from "@/components/docs/Logo"
 import { Navigation } from "@/components/docs/Navigation"
-import { type Section, SectionProvider } from "@/components/docs/SectionProvider"
+import {
+    Section, SectionProvider, type
+} from "@/components/docs/SectionProvider"
 
 export function Layout({
   children,
@@ -35,9 +37,9 @@ export function Layout({
             <Navigation className="hidden lg:mt-20 lg:block" />
           </div>
         </motion.header>
-        <div className="relative flex h-full flex-col px-4 pt-14 sm:px-6 lg:px-8">
+        <div className="relative flex min-h-screen h-full flex-col px-4 pt-14 sm:px-6 lg:px-8">
           <main className="flex-auto">{children}</main>
-          <Footer />
+          {/* <Footer /> */}
         </div>
       </div>
     </SectionProvider>
