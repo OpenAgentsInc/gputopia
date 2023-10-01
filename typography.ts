@@ -59,8 +59,8 @@ export default function typographyStyles({ theme }: PluginUtils) {
 
         // Text
         p: {
-          marginTop: theme('spacing.6'),
-          marginBottom: theme('spacing.6'),
+          marginTop: theme('spacing.3'),
+          marginBottom: theme('spacing.3'),
         },
         '[class~="lead"]': {
           fontSize: theme('fontSize.base')[0],
