@@ -27,7 +27,7 @@ export default async function RootLayout({
   let allSections = Object.fromEntries(allSectionsEntries)
 
   return (
-    <div className="h-full pb-24 bg-zinc-900">
+    <div className="h-full pb-24 bg-zinc-900 dark">
       <div className="flex min-h-full antialiased">
         <Providers>
           <div className="w-full">
