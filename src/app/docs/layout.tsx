@@ -7,8 +7,8 @@ import { Providers } from "./providers"
 
 export const metadata: Metadata = {
   title: {
-    template: '%s - Protocol API Reference',
-    default: 'Protocol API Reference',
+    template: '%s - GPUtopia',
+    default: 'GPUtopia',
   },
 }
 
