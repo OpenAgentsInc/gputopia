@@ -281,7 +281,7 @@ export default function typographyStyles({ theme }: PluginUtils) {
         // Inline elements
         a: {
           color: 'var(--tw-prose-links)',
-          textDecoration: 'underline transparent',
+          textDecoration: 'transparent',
           fontWeight: '500',
           transitionProperty: 'color, text-decoration-color',
           transitionDuration: theme('transitionDuration.DEFAULT'),

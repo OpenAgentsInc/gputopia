@@ -3,27 +3,21 @@ import { Heading } from "@/components/docs/Heading"
 
 const guides = [
   {
-    href: '/authentication',
-    name: 'Authentication',
-    description: 'Learn how to authenticate your API requests.',
+    href: '/docs/faq',
+    name: 'FAQ',
+    description: 'Answers to frequently asked questions',
   },
   {
-    href: '/pagination',
-    name: 'Pagination',
-    description: 'Understand how to work with paginated responses.',
+    href: '/docs/buying',
+    name: 'Buying Compute',
+    description: 'Learn how to buy and use GPU compute',
   },
   {
-    href: '/errors',
-    name: 'Errors',
+    href: '/docs/selling',
+    name: 'Selling Compute',
     description:
-      'Read about the different types of errors returned by the API.',
-  },
-  {
-    href: '/webhooks',
-    name: 'Webhooks',
-    description:
-      'Learn how to programmatically configure webhooks for your app.',
-  },
+      'Learn how to sell your GPU compute',
+  }
 ]
 
 export function Guides() {
