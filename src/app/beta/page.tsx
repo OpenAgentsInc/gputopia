@@ -19,9 +19,9 @@ export default function Beta() {
 
             <Alert>
               <RocketIcon className="h-8 w-8" />
-              <AlertTitle className="ml-4 text-lg">25 Sept Update</AlertTitle>
+              <AlertTitle className="ml-4 text-lg">2 Oct Update</AlertTitle>
               <AlertDescription className="ml-4 text-muted-foreground">
-                We have begun rolling out version 3 of our beta with the first buyer+seller experience. The first buyer interface is an AI chat experience. Try it: login and click the Buy menu, then AI Chat.
+                We have begun rolling out version 4 of our beta which adds support for our CLI worker. The web chat should work the same, but now connects to our workerbee software in addition to browsers using WebGPU. The availability bonus is disabled for now while we work out some kinks.
               </AlertDescription>
             </Alert>
 
