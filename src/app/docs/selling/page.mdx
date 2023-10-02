@@ -25,6 +25,22 @@ When your computer finishes the inference job, it sends that back to our server 
 
 It takes about 2 minutes to create an Alby wallet if you don't already have one — then you'll be ready to start earning bitcoin. Learn more about Alby on their <ExternalLink href="https://getalby.com">website</ExternalLink>.
 
+
+## I never seem to get requests.   Why?
+
+ 1. Demand is low.  Our API is "openai" compliant and anyone can use it to get openai-compatible inference for coding, summarization and more.   Users can select any huggingface model.  Tell some people about it!.
+
+ 1. Your machine's average inference times are low.   If we detect slow performance, then your machine will get fewer requests.
+
+ 1. Your machine failed a benchmark test.   If we detect that your machine's inference didn't match the expected output from the model with a fixed seed, we will assume it's faulty.
+
+ 1. Your machine doesn't have enough (CPU RAM/GPU RAM/GPU SPEED/DISK SPACE).   We use all these metrics to determine if a job should be sent.   
+ Freeing up space, or installing gfx cards can help.   A used NVIDIA 3090 or a RX 7900 24GB NVRAM card will get 34G quantized model requests
+ and will have reasonably fast inference for example (as of Oct 2023).    
+
+ 1.  You're using the Web method of selling.   Using the command-line workers alllows buyers to select from any model on hugging face.   
+ Using the web worker only allows inference on a selection of models built for the web.
+
 ## How do I install the worker software?
 
 <Note>
@@ -32,4 +48,7 @@ It takes about 2 minutes to create an Alby wallet if you don't already have one 
   days or experiment with the code in the meantime.
 </Note>
 
-Download an executable from the workerbee <ExternalLink href="https://github.com/ArcadeLabsInc/workerbee/releases">releases page</ExternalLink> or run the Python code from source following instructions in the <ExternalLink href="https://github.com/ArcadeLabsInc/workerbee/blob/main/README.md">README</ExternalLink>.
+Download an executable from the workerbee <ExternalLink href="https://github.com/ArcadeLabsInc/workerbee/releases">releases page</ExternalLink> or
+run the Python code from source following instructions in the <ExternalLink href="https://github.com/ArcadeLabsInc/workerbee/blob/main/README.md">README</ExternalLink>.
+
+Be sure you follow the README, and set up your ln_url parameter correctly to get credit for your work.
