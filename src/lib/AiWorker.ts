@@ -243,6 +243,10 @@ class AiWorker {
     return ret
   }
 
+  public unload() {
+    this.chat.unload()
+  }
+
   private connect() {
     console.log("try connect")
     let res: any = null
