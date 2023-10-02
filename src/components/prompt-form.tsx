@@ -48,15 +48,15 @@ export function PromptForm({
       }}
       ref={formRef}
     >
-      <div className="relative flex max-h-60 w-full grow flex-col overflow-hidden bg-background px-8 sm:rounded-md sm:border sm:px-12">
-        <TooltipProvider>
+      <div className="relative flex max-h-60 w-full grow flex-col overflow-hidden bg-background pl-2 pr-8 sm:rounded-md sm:border sm:pr-12">
+        {/* <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
               <button
                 onClick={e => {
                   e.preventDefault()
-                  router.refresh()
-                  router.push('/chat')
+                  // router.refresh()
+                  // router.push('/chat')
                 }}
                 className={cn(
                   buttonVariants({ size: 'sm', variant: 'outline' }),
@@ -69,7 +69,7 @@ export function PromptForm({
             </TooltipTrigger>
             <TooltipContent>New Chat</TooltipContent>
           </Tooltip>
-        </TooltipProvider>
+        </TooltipProvider> */}
         <Textarea
           ref={inputRef}
           tabIndex={0}
