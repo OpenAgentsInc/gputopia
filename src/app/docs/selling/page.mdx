@@ -1,0 +1,35 @@
+import { ExternalLink } from '@/components/ui/typography'
+
+# Selling Compute
+
+You connect your GPU to perform jobs for buyers and get paid in bitcoin. There are two ways to connect your GPU:
+
+1. Use a Chrome web browser. You can use your GPU to perform jobs without installing any software. This is the easiest way to get started, but may earn less than our worker software.
+2. Install the GPUtopia 'workerbee' software. The worker automatically connects your GPU to the marketplace and starts performing available jobs. (This is still alpha-quality and <ExternalLink href="https://github.com/ArcadeLabsInc/workerbee">under heavy development</ExternalLink>.)
+
+## How do I sell via the web browser?
+
+1. Log in with Alby
+2. Click Sell, then 'Load model'
+3. You are now available for jobs. When a job comes in and you lose out on it, you'll still earn 1 sat. (For now the balance will update only on refreshing the page.)
+
+## How does selling via browser work?
+
+GPUtopia uses a portion of your computer's GPU via <ExternalLink href="https://www.w3.org/TR/webgpu/">WebGPU</ExternalLink>, a new web standard that was <ExternalLink href="https://developer.chrome.com/blog/webgpu-release/">recently added</ExternalLink> to newer versions of Chrome.
+
+First your browser needs to download a language model. This is a ~4GB file that will be stored in your browser's cache. This will take a few minutes to download, then ~20 seconds to load from cache on future visits. You can see how this works in the <ExternalLink href="https://github.com/mlc-ai/web-llm">MLC WebLLM repo</ExternalLink>.
+
+Once you've got the model loaded, our system marks you available to receive inference jobs. Currently we send a demo inference job to all connected users every 15 seconds. This job may take ~5-30 seconds to complete depending on your GPU and the size of the job.
+
+When your computer finishes the inference job, it sends that back to our server and we reward you some bitcoin directly to your Alby wallet.
+
+It takes about 2 minutes to create an Alby wallet if you don't already have one — then you'll be ready to start earning bitcoin. Learn more about Alby on their <ExternalLink href="https://getalby.com">website</ExternalLink>.
+
+## How do I install the worker software?
+
+<Note>
+  This will not work reliably until we fully roll out v4. Check back in a few
+  days or experiment with the code in the meantime.
+</Note>
+
+Download an executable from the workerbee <ExternalLink href="https://github.com/ArcadeLabsInc/workerbee/releases">releases page</ExternalLink> or run the Python code from source following instructions in the <ExternalLink href="https://github.com/ArcadeLabsInc/workerbee/blob/main/README.md">README</ExternalLink>.

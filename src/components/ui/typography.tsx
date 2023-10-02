@@ -1,3 +1,7 @@
+"use client"
+
+import { useState } from "react"
+
 export function TypographyH1({ children, className }: { children: React.ReactNode, className?: string }) {
   return (
     <h1 className={`scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl ${className}`}>
@@ -39,11 +43,17 @@ export function TypographyP({ children, className }: { children: React.ReactNode
 }
 
 export function ExternalLink({ children, className, ...rest }: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
+  const [hover, setHover] = useState(false);
   return (
     <a
       target="_blank"
       rel="noopener noreferrer"
       className={`text-green-500 font-bold hover:text-green-700 ${className}`}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        color: hover ? 'var(--tw-prose-links-hover)' : 'var(--tw-prose-links)'
+      }}
       {...rest}
     >
       {children}
