@@ -25,6 +25,19 @@ When your computer finishes the inference job, it sends that back to our server 
 
 It takes about 2 minutes to create an Alby wallet if you don't already have one — then you'll be ready to start earning bitcoin. Learn more about Alby on their <ExternalLink href="https://getalby.com">website</ExternalLink>.
 
+
+## I never seem to get requests.   Why?
+
+ 1. Demand is low.  Our API is "openai" compliant and anyone can use it to get openai-compatible inference for coding, summarization and more.   Users can select any huggingface model.  Tell some people about it!.
+
+ 1. Your machine's average inference times are low.   If we detect slow performance, then your machine will get fewer requests.
+
+ 1. Your machine failed a benchmark test.   If we detect that your machine's inference didn't match the expected output from the model with a fixed seed, we will assume it's faulty.
+
+ 1. Your machine doesn't have enough (CPU RAM/GPU RAM/GPU SPEED/DISK SPACE).   We use all these metrics to determine if a job should be sent.   
+ Freeing up space, or installing gfx cards can help.   A used NVIDIA 3090 or a RX 7900 24GB NVRAM card will get 34G quantized model requests and will have fast inference.    
+
+
 ## How do I install the worker software?
 
 <Note>
