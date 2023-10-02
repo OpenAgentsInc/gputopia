@@ -62,6 +62,9 @@ export function SellMenu() {
             <MenubarItem onClick={() => router.push('/chat')}>
               AI Chat
             </MenubarItem>
+            <MenubarItem onClick={() => router.push('/api-endpoint')}>
+              API Endpoint
+            </MenubarItem>
             {/* <MenubarSeparator />
             <MenubarItem disabled>
               Reserve capacity...
