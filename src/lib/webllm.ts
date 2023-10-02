@@ -21,11 +21,14 @@ let worker: AiWorker | null = null;
 
 export async function initModel(lnURL: string, userId: string) {
   if (!worker) {
+    console.log("using", process.env.NEXT_PUBLIC_AI_SPIDER_URL, lnURL, userId)
+
     worker = new AiWorker({
       spiderURL: process.env.NEXT_PUBLIC_AI_SPIDER_URL as string,
       lnURL: lnURL,
       userId: userId,
     })
+    
     worker.on("loading", (report: webllm.InitProgressReport) => {
       try {
         const perc = (report.progress * 100).toFixed(0)

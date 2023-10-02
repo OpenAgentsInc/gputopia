@@ -75,7 +75,7 @@ export function SellMenu() {
 
               useStore.setState({ modelLoadPercentage: 0 })
               setModelLoading(true)
-              initModel(selectedModel)
+              initModel(user.lightning_address, userId)
             }}>
               Load model
             </MenubarItem>
