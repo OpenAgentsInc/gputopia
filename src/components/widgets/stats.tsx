@@ -5,17 +5,20 @@ import { Progress } from "@/components/ui/progress"
 import { useStore } from "@/lib/store"
 import { initModel } from "@/lib/webllm"
 import { withdraw } from "@/lib/withdraw"
+import { AlbyUser } from "@/lib/useAlby"
 
 export const Stats = () => {
   const onlineCount = useStore(state => state.onlineMembers)
   const totalSatsEarned = useStore(state => state.totalSatsEarned)
   const modelLoadPercentage = useStore(state => state.modelLoadPercentage)
   const balance = useStore(state => state.balance)
-  const user = useStore(state => state.user)
+  const user = useStore(state => state.user) as AlbyUser
 
   const [modelLoading, setModelLoading] = useState(false)
   const [modelLoaded, setModelLoaded] = useState(false)
   const [withdrawLoading, setWithdrawLoading] = useState(false)
+
+  const userId = window.sessionStorage.getItem("user_id") as string
 
   const goWithdraw = async () => {
     if (balance === 0) {
@@ -84,9 +87,10 @@ export const Stats = () => {
                     <Progress value={modelLoadPercentage} className="mx-4 w-[60%]" />
                   </div>
                 ) :
-                  <Button disabled className="mt-1" onClick={() => {
-
-                  }}>Disabled until v3</Button>}
+                  <Button className="mt-1" onClick={() => {
+                    setModelLoading(true)
+                    initModel(user.lightning_address, userId)
+                  }}>Load model</Button>}
               </div>
             )}
 

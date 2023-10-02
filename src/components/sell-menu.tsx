@@ -21,6 +21,11 @@ export function SellMenu() {
   const router = useRouter()
   const [modelLoading, setModelLoading] = useState(false)
   const [modelLoaded, setModelLoaded] = useState(false)
+
+  const user = useStore(state => state.user) as AlbyUser
+  const userId = window.sessionStorage.getItem("user_id") as string
+
+
   const modelLoadPercentage = useStore(state => state.modelLoadPercentage)
 
   const supported = useWebgpuSupported()
@@ -75,7 +80,7 @@ export function SellMenu() {
 
               useStore.setState({ modelLoadPercentage: 0 })
               setModelLoading(true)
-              initModel(selectedModel)
+              initModel(user.lightning_address, userId)
             }}>
               Load model
             </MenubarItem>

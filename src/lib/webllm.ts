@@ -1,5 +1,6 @@
 // 'use client'
 
+import AiWorker from "./AiWorker"
 import { Channel } from "pusher-js"
 import * as webllm from "@mlc-ai/web-llm"
 import appConfig from "./app-config"
@@ -16,28 +17,34 @@ function setLabel(id: string, text: string) {
   label.innerText = text;
 }
 
-let chat: webllm.ChatModule;
+let worker: AiWorker | null = null;
 
-export async function initModel(model = "vicuna-v1-7b-q4f32_0") {
-  console.log("Loading model: " + model)
-  chat = new webllm.ChatModule();
-  chat.setInitProgressCallback((report: webllm.InitProgressReport) => {
-    try {
-      const perc = (report.progress * 100).toFixed(0)
-      useStore.setState({ modelLoadPercentage: Number(perc) })
-      setLabel("perc", perc + "%");
-    } catch (e) { }
-  });
-  await chat.reload(model, {}, appConfig);
+export async function initModel(lnURL: string, userId: string) {
+  if (!worker) {
+    console.log("using", process.env.NEXT_PUBLIC_AI_SPIDER_URL, lnURL, userId)
 
-  useStore.setState({ modelLoaded: true })
-
-  const event = new Event('model-loaded');
-  document.dispatchEvent(event);
+    worker = new AiWorker({
+      spiderURL: process.env.NEXT_PUBLIC_AI_SPIDER_URL as string,
+      lnURL: lnURL,
+      userId: userId,
+    })
+    
+    worker.on("loading", (report: webllm.InitProgressReport) => {
+      try {
+        const perc = (report.progress * 100).toFixed(0)
+        useStore.setState({ modelLoadPercentage: Number(perc) })
+        setLabel("perc", perc + "%");
+      } catch (e) { }
+    });
+    await worker.preload(process.env.NEXT_PUBLIC_AI_PRELOAD_MODEL || "vicuna-v1-7b-q4f32_0");
+    const event = new Event('model-loaded');
+    document.dispatchEvent(event);
+  }
 }
 
 export async function unloadModel() {
-  await chat.unload()
+  await worker.unload()
+  worker = null
   console.log("Unloaded")
 }
 
@@ -49,9 +56,13 @@ export async function generate(prompt: string) {
     return
   }
 
-  if (!chat) {
+  if (!worker) {
     return
   }
+  
+  console.log("old gen hit, ignored")
+  return
+  
   let reply
 
   const generateProgressCallback = (_step: number, message: string) => {
@@ -59,15 +70,20 @@ export async function generate(prompt: string) {
   };
 
   try {
+    // @ts-ignore
     useStore.setState({ busyInferencing: true })
-    reply = await chat.generate(prompt, generateProgressCallback);
+    reply = await worker.generate(prompt);
     console.log(reply)
   } catch (e) {
     useStore.setState({ busyInferencing: false })
     return
   }
 
+  // Fetch POST to complete the inference
+  complete(reply || "")
+  
   useStore.setState({ busyInferencing: false })
+
 
   return reply;
 }
@@ -76,8 +92,8 @@ let lastSentTime = 0;
 let queuedMessage: string | null = null;
 
 export async function generateAndStream(job: Job, channel: Channel) {
-  if (!channel || !chat) {
-    // console.log('Returning because no channel or chat')
+  if (!channel || !worker) {
+    // console.log('Returning because no channel or worker')
     return;
   }
 
@@ -98,7 +114,7 @@ export async function generateAndStream(job: Job, channel: Channel) {
   };
 
   try {
-    const reply = await chat.generate(job.message, generateProgressCallback);
+    const reply = await worker.generate(job.message, generateProgressCallback);
 
     // Send any remaining queued message
     if (queuedMessage) {

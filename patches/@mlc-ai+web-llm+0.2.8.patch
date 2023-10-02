@@ -1,0 +1,25 @@
+diff --git a/node_modules/@mlc-ai/web-llm/lib/config.d.ts b/node_modules/@mlc-ai/web-llm/lib/config.d.ts
+index cd1a8a3..d26c0a9 100644
+--- a/node_modules/@mlc-ai/web-llm/lib/config.d.ts
++++ b/node_modules/@mlc-ai/web-llm/lib/config.d.ts
+@@ -24,6 +24,7 @@ export interface ChatConfig {
+     repetition_penalty: number;
+     top_p: number;
+     temperature: number;
++    context_free: boolean;
+ }
+ export interface ModelRecord {
+     model_url: string;
+diff --git a/node_modules/@mlc-ai/web-llm/lib/index.js b/node_modules/@mlc-ai/web-llm/lib/index.js
+index 4c80ff6..b42ddd4 100644
+--- a/node_modules/@mlc-ai/web-llm/lib/index.js
++++ b/node_modules/@mlc-ai/web-llm/lib/index.js
+@@ -4207,7 +4207,7 @@ class LLMChatPipeline {
+         let tokens = [];
+         let prompts;
+         // beginning of the conversation
+-        if (this.conversation.messages.length <= 2) {
++        if (this.conversation.messages.length <= 2 || this.config.context_free) {
+             if (this.conversation.config.add_bos) {
+                 tokens = [this.bosTokenId];
+             }
