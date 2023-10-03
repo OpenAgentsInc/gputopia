@@ -1,3 +1,8 @@
+import {
+  ExternalLink,
+  TypographyH1 as H1,
+  TypographyH2 as H2
+} from '@/components/ui/typography'
 import { Guides } from '@/components/docs/Guides'
 import { Resources } from '@/components/docs/Resources'
 import { HeroPattern } from '@/components/docs/HeroPattern'
@@ -8,16 +13,58 @@ export const metadata = {
     'The GPU arms race has begun. What if we could level the playing field?'
 }
 
-# Toward an Open GPU Mesh
+<time
+  dateTime="2023-09-12"
+  className="order-first flex items-center text-base text-zinc-500"
+>
+  <span className="h-4 w-0.5 rounded-full bg-zinc-500"></span>
+  <span className="ml-3">September 12, 2023</span>
+</time>
 
-The GPU arms race has begun. {{ className: 'lead' }}
+<H1 className="mt-4 mb-8">Toward an Open GPU Mesh</H1>
 
-Companies large and small are scrambling to hoard GPUs, which are now "considerably harder to get than drugs." [Elon]
+**_The GPU arms race has begun._**
 
-Some large companies are not only stockpiling GPUs, they are actively lobbying governments to establish "safety" regulations, creating barriers for smaller players.
+Companies large and small are <ExternalLink href="https://gpus.llm-utils.org/nvidia-h100-gpus-supply-and-demand/">scrambling</ExternalLink> to hoard GPUs, which are now &quot;considerably harder to get than drugs.&quot; [<ExternalLink href="https://youtu.be/nxbZVH9kLao?t=30">Elon</ExternalLink>]
 
-It's the familiar pattern of regulatory capture dressed in sheep's clothing, a blatant power play to stifle competition.
+Some large companies are not only stockpiling GPUs, they are actively <ExternalLink href="https://twitter.com/JosephJacks_/status/1698139860383780924">lobbying</ExternalLink> governments to establish &quot;safety&quot; regulations, creating barriers for smaller players.
+
+It's the familiar pattern of <ExternalLink href="https://wiki.mises.org/wiki/Regulatory_capture">regulatory capture</ExternalLink> dressed in sheep&apos;s clothing, a blatant power play to stifle competition.
 
 But what if we could level the playing field?
 
-What if we could enable unstoppable, universal access to GPU compute?
+**_What if we could enable unstoppable, universal access to GPU compute?_**
+
+<H2 className="mt-10 mb-4">Introducing GPUtopia</H2>
+
+You, the person reading this, likely own or can access one or more computers with unused GPU capacity.
+
+**_Would you sell that extra GPU capacity if you could?_**
+
+We think a lot of people would.
+
+So what if we connect all such devices together into **one global mesh network for GPU compute?**
+
+This is not a new idea. There are a handful of existing projects with the same goal, some of which have <ExternalLink href="https://decrypt.co/144068/gensyn-ai-secures-43m-for-decentralized-machine-learning-led-by-a16z">raised</ExternalLink> millions of dollars, but they all seem to have some garbage crypto token or convoluted crypto &quot;governance&quot; mechanism. Hilarious and unnecessary.
+
+Connecting buyers and sellers of GPU compute should be simple.
+
+No gatekeeping or quotas or waitlists or whitepapers or tokens, just a simple marketplace with pricing set through flexible supply and demand.
+
+Pay with any usual payment method and get the compute you need. And if you want the best rates, avoid any possibility of chargeback fraud by paying and earning in <ExternalLink href="https://bitcoin.org/">bitcoin</ExternalLink>.
+
+That&apos;s what we&apos;re building. Now we&apos;d love your help to test what we&apos;ve built so far.
+
+## Join us {{ className: "mt-10" }}
+
+Today we launched the beta version of our GPU seller experience. It enables anyone to sell their GPU compute for bitcoin using nothing but their web browser.
+
+Later this month we&apos;ll launch the buyer experience, enabling anyone to easily purchase that compute for a variety of AI/ML workloads.
+
+Over the coming weeks and months, we will rapidly add support for more devices and more workloads. We&apos;ll prioritize new features according to the feedback of our active users, so please get involved and tell us what you&apos;d love to see.
+
+**_See you in GPUtopia!_**
+
+<div className="mt-12 text-xs opacity-50">
+  Next post: [Opening AI](/blog/opening)
+</div>
