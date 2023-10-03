@@ -1,0 +1,21 @@
+# Open Source
+
+As of October 3, GPUtopia has open-sourced all relevant code. ([Read the announcement](/blog/opening))
+
+Core functionality is split across three GitHub repos:
+
+- [gputopia](https://github.com/ArcadeLabsInc/gputopia) - This website & front-end UI
+  - NextJS v13, React, TypeScript, Tailwind CSS, shad-ui
+- [workerbee](https://github.com/ArcadeLabsInc/workerbee) - The AI worker
+  - Python with [executables](https://github.com/ArcadeLabsInc/workerbee/releases) for Linux, Windows and soon MacOS
+- [queenbee](https://github.com/ArcadeLabsInc/queenbee) - The coordinator of AI workers
+  - Python
+  - Workers connect to our queenbee by default, but anyone can run their own
+
+All code is alpha or beta quality and under heavy development.
+
+See the [bounties](/docs/bounties) page on how to contribute.
+
+## License
+
+We use the [AGPL3](https://www.tldrlegal.com/license/gnu-affero-general-public-license-v3-agpl-3-0) license which lets you use and modify however you like, but requires you to open-source any changes you make to the code. We think it's important that all relevant code starts open and stays open.

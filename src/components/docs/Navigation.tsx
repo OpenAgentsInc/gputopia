@@ -230,30 +230,17 @@ function NavigationGroup({
 
 export const navigation: Array<NavGroup> = [
   {
-    title: 'Guides',
+    title: "",
     links: [
       { title: 'Introduction', href: '/docs' },
       { title: 'FAQ', href: '/docs/faq' },
       { title: 'Buying Compute', href: '/docs/buying' },
       { title: 'Selling Compute', href: '/docs/selling' },
-      // { title: 'Quickstart', href: '/quickstart' },
-      // { title: 'SDKs', href: '/sdks' },
-      // { title: 'Authentication', href: '/authentication' },
-      // { title: 'Pagination', href: '/pagination' },
-      // { title: 'Errors', href: '/errors' },
-      // { title: 'Webhooks', href: '/webhooks' },
+      { title: 'Bounties', href: '/docs/bounties' },
+      { title: 'Open Source', href: '/docs/opensource' },
+      { title: 'Custom Deployments', href: '/docs/custom-deployments' },
     ],
   },
-  // {
-  //   title: 'Resources',
-  //   links: [
-  //     { title: 'Contacts', href: '/contacts' },
-  //     { title: 'Conversations', href: '/conversations' },
-  //     { title: 'Messages', href: '/messages' },
-  //     { title: 'Groups', href: '/groups' },
-  //     { title: 'Attachments', href: '/attachments' },
-  //   ],
-  // },
 ]
 
 export function Navigation(props: React.ComponentPropsWithoutRef<'nav'>) {

@@ -15,6 +15,15 @@ const withMDX = nextMDX({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [
+      {
+        source: "/intro",
+        destination: "/blog/intro",
+        permanent: true,
+      }
+    ]
+  },
   // https://github.com/mlc-ai/web-llm/issues/126#issuecomment-1617021764
   // Fixes npm packages that depend on `fs` module
   webpack: (config, { isServer }) => {
