@@ -1,8 +1,8 @@
-// import "@/styles/tailwind.css"
 import glob from "fast-glob"
 import { type Metadata } from "next"
 import { BlogLayout } from "@/components/docs/BlogLayout"
 import { type Section } from "@/components/docs/SectionProvider"
+import { BackgroundImage } from "@/components/background-image"
 
 export const metadata: Metadata = {
   title: {
@@ -26,24 +26,13 @@ export default async function RootLayout({
   let allSections = Object.fromEntries(allSectionsEntries)
 
   return (
-    <div className="h-full pb-24 bg-zinc-900 dark">
+    <div className="h-full pb-24 dark">
       <div className="flex min-h-full antialiased">
         <div className="w-full">
+          <BackgroundImage />
           <BlogLayout allSections={allSections}>{children}</BlogLayout>
         </div>
       </div>
     </div>
   )
-
-  // return (
-  //   <html lang="en" className="h-full" suppressHydrationWarning>
-  //     <body className="flex min-h-full bg-white antialiased dark:bg-zinc-900">
-  //       <Providers>
-  //         <div className="w-full">
-  //           <Layout allSections={allSections}>{children}</Layout>
-  //         </div>
-  //       </Providers>
-  //     </body>
-  //   </html>
-  // )
 }
