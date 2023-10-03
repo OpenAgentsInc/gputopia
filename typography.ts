@@ -214,6 +214,7 @@ export default function typographyStyles({ theme }: PluginUtils) {
         'img, video, figure': {
           marginTop: theme('spacing.8'),
           marginBottom: theme('spacing.8'),
+          borderRadius: theme('borderRadius.xl'),
         },
         'figure > *': {
           marginTop: '0',
