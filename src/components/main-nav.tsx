@@ -22,7 +22,7 @@ export function MainNav({
         GPUTOPIA
       </Link>
       <Link
-        href="/intro"
+        href="/blog"
         className={cn(linkClasses, {
           "text-white": isActive("/intro"),
           "text-muted-foreground": !isActive("/intro")

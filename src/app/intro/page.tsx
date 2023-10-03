@@ -14,7 +14,7 @@ export default function Intro() {
 
         <div className="relative isolate overflow-hidden pb-16 pt-32 sm:pb-20 min-h-screen flex flex-col justify-center">
           <div className="mx-auto max-w-2xl p-4 sm:p-0">
-            <time dateTime="2022-09-05" className="order-first flex items-center text-base text-zinc-500">
+            <time dateTime="2023-09-12" className="order-first flex items-center text-base text-zinc-500">
               <span className="h-4 w-0.5 rounded-full bg-zinc-500"></span>
               <span className="ml-3">September 12, 2023</span>
             </time>
