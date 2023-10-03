@@ -5,8 +5,10 @@ import { Configuration, OpenAIApi } from "openai-edge"
 
 export const runtime = 'edge'
 
+const token = process.env.CRON_AI_TOKEN
+
 const configuration = new Configuration({
-  apiKey: `testkey${1}`,
+  apiKey: token,
   basePath: "https://queenbee.gputopia.ai/v1"
 })
 
