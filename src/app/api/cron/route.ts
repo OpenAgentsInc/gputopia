@@ -18,11 +18,12 @@ export async function GET(request: NextRequest) {
   // Loop through each user and send a message
   for (const user of users) {
     const { id } = user;
-    const response = await fetch("https://ai-spider-production.up.railway.app/v1/chat/completions", {
+    const token = process.env.CRON_AI_TOKEN
+    const response = await fetch("https://queenbee.gputopia.ai/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer longrandomthingthatsignored",
+        "Authorization": `Bearer ${token}`,
       },
       body: JSON.stringify(
         {
@@ -31,11 +32,11 @@ export async function GET(request: NextRequest) {
         messages: [
           {
             "role": "system",
-            "content": "you are a terse brusque assistant"
+            "content": "You are a terse, brusque assistant"
           },
           {
             "role": "user",
-            "content": `write one sentence about the number ${id}`
+            "content": `Write one sentence about the number ${id}`
           }
         ],
         max_tokens: 200
