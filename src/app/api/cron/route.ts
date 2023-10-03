@@ -42,6 +42,7 @@ export async function GET(request: NextRequest) {
         max_tokens: 200
       }
     )});
+    console.log("CRON OUT", await response.text())
   }
 
   return NextResponse.json({ ok: true, users: users.length });
