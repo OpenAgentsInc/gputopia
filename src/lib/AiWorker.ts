@@ -84,8 +84,8 @@ class AiWorker {
       // load model
       const reply = await this.getOpenAiReply(req);
       if (this.stream) {
-        this.websocket?.send(JSON.stringify({ model: this.model, choices: [{message: { role: "assistant", content: this.streamContent(reply)}, index: 0 }] } ))
-        this.websocket?.send(JSON.stringify({ model: this.model, choices: [{message: { role: "assistant", content: ""}, finish_reason: "stop", index: 0 }] } ))
+        this.websocket?.send(JSON.stringify({ model: this.model, choices: [{delta: { role: "assistant", content: this.streamContent(reply)}, index: 0 }] } ))
+        this.websocket?.send(JSON.stringify({ model: this.model, choices: [{delta: { role: "assistant", content: ""}, finish_reason: "stop", index: 0 }] } ))
       } else {
         this.websocket?.send(JSON.stringify({ model: this.model, choices: [{message: { role: "assistant", content: reply}, finish_reason: "stop", index: 0}] }))
       }
@@ -187,7 +187,7 @@ class AiWorker {
 
   private progress(report: any, content: string ) {
     if (this.stream) {
-      this.websocket?.send(JSON.stringify({ choices: [{ "message": { "role": "assistant", "content": this.streamContent(content) } }] }))
+      this.websocket?.send(JSON.stringify({ choices: [{ "delta": { "role": "assistant", "content": this.streamContent(content) } }] }))
     }
     this.callbacks.progress?.(report);
   }
