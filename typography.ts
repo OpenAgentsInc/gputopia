@@ -1,4 +1,4 @@
-import { type PluginUtils } from "tailwindcss/types/config"
+import { PluginUtils, type } from "tailwindcss/types/config"
 
 export default function typographyStyles({ theme }: PluginUtils) {
   return {
@@ -59,8 +59,9 @@ export default function typographyStyles({ theme }: PluginUtils) {
 
         // Text
         p: {
-          marginTop: theme('spacing.3'),
-          marginBottom: theme('spacing.3'),
+          marginTop: theme('spacing.6'),
+          marginBottom: theme('spacing.6'),
+          fontSize: 16
         },
         '[class~="lead"]': {
           fontSize: theme('fontSize.base')[0],
@@ -73,6 +74,8 @@ export default function typographyStyles({ theme }: PluginUtils) {
           marginTop: theme('spacing.5'),
           marginBottom: theme('spacing.5'),
           paddingLeft: '1.625rem',
+          fontSize: 16,
+          lineHeight: 2
         },
         'ol[type="A"]': {
           listStyleType: 'upper-alpha',
@@ -106,6 +109,8 @@ export default function typographyStyles({ theme }: PluginUtils) {
           marginTop: theme('spacing.5'),
           marginBottom: theme('spacing.5'),
           paddingLeft: '1.625rem',
+          fontSize: 16,
+          lineHeight: 2
         },
         li: {
           marginTop: theme('spacing.2'),
@@ -209,6 +214,7 @@ export default function typographyStyles({ theme }: PluginUtils) {
         'img, video, figure': {
           marginTop: theme('spacing.8'),
           marginBottom: theme('spacing.8'),
+          borderRadius: theme('borderRadius.xl'),
         },
         'figure > *': {
           marginTop: '0',
