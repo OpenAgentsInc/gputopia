@@ -17,6 +17,12 @@ const guides = [
     name: 'Selling Compute',
     description:
       'Learn how to sell your GPU compute',
+  },
+  {
+    href: '/docs/opensource',
+    name: 'Open Source',
+    description:
+      'Learn about the GPUtopia codebase',
   }
 ]
 
