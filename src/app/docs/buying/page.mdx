@@ -8,7 +8,7 @@
 
 # Access via chat interface:
 
-1. Click **Buy > AI Chat** when logged in.   Inference is billed for the currently loaded model.
+1. Click **Buy > AI Chat** when logged in. Inference is billed for the currently loaded model.
 
 # Access via openai-compatible endpoint:
 
@@ -16,32 +16,36 @@
 1. Copy the access token, and use it as your api key
 1. Change the base url to `https://queenbee.gputopia.ai/v1`
 
-
 ## Python example code:
 
+<div>
 ```python
 import openai
 
 # Set up the OpenAI client
+
 openai.api_key = "YOUR_ACCESS_TOKEN"
 openai.api_base = "https://queenbee.gputopia.ai/v1"
 
 # Use the model with the chat completion endpoint
 
 response = openai.ChatCompletion.create(
-  model="TheBloke/vicuna-7B-v1.5-GGUF:Q4_K_M",
-  messages=[
-        {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": "Translate the following English text to French: 'Hello World'"},
-    ]
+model="TheBloke/vicuna-7B-v1.5-GGUF:Q4_K_M",
+messages=[
+{"role": "system", "content": "You are a helpful assistant."},
+{"role": "user", "content": "Translate the following English text to French: 'Hello World'"},
+]
 )
 
 print(response.choices[0].message['content'].strip())
-```
+
+````
+</div>
 
 
 ## Node example code:
 
+<div>
 ```js
 const OpenAIApi = require('openai');
 
@@ -63,4 +67,6 @@ async function getCompletion() {
 }
 
 getCompletion();
-```
+````
+
+</div>
