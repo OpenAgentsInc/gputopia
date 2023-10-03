@@ -238,6 +238,7 @@ export const navigation: Array<NavGroup> = [
       { title: 'Selling Compute', href: '/docs/selling' },
       { title: 'Open Source', href: '/docs/opensource' },
       { title: 'Bounties', href: '/docs/bounties' },
+      { title: 'Custom deployments', href: '/docs/custom-deployments' },
     ],
   },
 ]
