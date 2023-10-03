@@ -22,10 +22,10 @@ export function MainNav({
         GPUTOPIA
       </Link>
       <Link
-        href="/blog"
+        href="/blog/opening"
         className={cn(linkClasses, {
-          "text-white": isActive("/intro"),
-          "text-muted-foreground": !isActive("/intro")
+          "text-white": isActive("/blog/opening"),
+          "text-muted-foreground": !isActive("/blog/opening")
         })}
       >
         <span className="mx-2">Blog</span>
