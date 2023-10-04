@@ -44,8 +44,13 @@ export async function POST(request: NextRequest) {
 
     connection.end();
     const response = NextResponse.json({ ok: true, userId });
-    response.headers.append('Set-Cookie', `accessToken=${token}; Path=/; HttpOnly`);
-    response.headers.append('Set-Cookie', `userId=${userId}; Path=/; HttpOnly`);
+
+    const expirationDate = new Date();
+    expirationDate.setDate(expirationDate.getDate() + 30); // Add 30 days to the current date
+    const expiresString = expirationDate.toUTCString();
+
+    response.headers.append('Set-Cookie', `accessToken=${token}; Path=/; HttpOnly; Expires=${expiresString}`);
+    response.headers.append('Set-Cookie', `userId=${userId}; Path=/; HttpOnly; Expires=${expiresString}`);
     console.log("Set userId cookie to:", userId);
 
     return response
