@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
   const key = searchParams.get('key');
   const rewardAmount = searchParams.get('rewardAmount');
 
-  if (key !== process.env.SPECIAL_KEY) {
+  if (key !== process.env.AWARD_KEY) {
     return new Response(null, {
       status: 403,
       statusText: 'Access denied',
