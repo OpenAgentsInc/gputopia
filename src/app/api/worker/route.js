@@ -21,13 +21,15 @@ export async function POST(request) {
   const command = json.command
 
   if (command == "complete") {
+    console.log("payment:", json)
+
     // todo: use the real billing numbers from the spider
     if (json.pay_to_lnurl) {
       const [results] = await connection.query('SELECT id FROM users WHERE lightning_address = ?', [json.pay_to_lnurl]);
 
       if (!results.length) {
         await connection.query(
-          'INSERT INTO users (balance, total_sats_earned, lightning_address, alby_id) VALUES (6, 6, ?, ?)',
+          'INSERT INTO users (balance, total_sats_earned, lightning_address, alby_id, email) VALUES (6, 6, ?, ?, '')',
           // use a random alby_id as placeholder
           [json.pay_to_lnurl, `unknown-${Math.random().toString(36).substring(7)}`]);
       }
@@ -39,11 +41,7 @@ export async function POST(request) {
     }
 
     if (json.bill_to_token) {
-      await connection.query(
-        'UPDATE users SET balance = balance - 8 WHERE access_token = ?',
-        [json.bill_to_token], function (err, results) {
-          resolve()
-        });
+      await connection.query('UPDATE users SET balance = balance - 8 WHERE access_token = ?', [json.bill_to_token]);
     }
   }
 
