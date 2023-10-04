@@ -228,6 +228,7 @@ class AiWorker {
   // Usage example
   public async initMessage() :  Promise<InitMessage> {
     const ret = {
+          "worker_version": "web",
           "ln_url": this.config.lnURL,
           "auth_key": "uid:" + String(this.config.userId),
           "cpu_count": navigator.hardwareConcurrency || 1,
@@ -240,6 +241,7 @@ class AiWorker {
               }
           ]
       }
+    console.log("init:" , this.initMessage)
     return ret
   }
 
