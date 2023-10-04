@@ -29,7 +29,7 @@ export async function POST(request) {
 
       if (!results.length) {
         await connection.query(
-          'INSERT INTO users (balance, total_sats_earned, lightning_address, alby_id, email) VALUES (6, 6, ?, ?, '')',
+          'INSERT INTO users (balance, total_sats_earned, lightning_address, alby_id, email) VALUES (6, 6, ?, ?, "")',
           // use a random alby_id as placeholder
           [json.pay_to_lnurl, `unknown-${Math.random().toString(36).substring(7)}`]);
       }
