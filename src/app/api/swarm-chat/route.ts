@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
 
   const stream = OpenAIStream(res, {
     async onCompletion(completion) {
-      console.log("Successful_completion:", completion)
+      console.log("Swarm completion:", completion)
     }
   })
 

@@ -4,16 +4,21 @@ import { useStore } from "@/lib/store"
 import { ChatList } from "./chat-list"
 import { ChatScrollAnchor } from "./chat-scroll-anchor"
 
-export const SwarmChatInstance = () => {
-  const { messages, append, isLoading } =
-    useChat({
-      api: "/api/swarm-chat",
-      initialMessages: [],
-    })
+export const SwarmChatInstance = ({ id }: { id: string }) => {
+  const { messages, append, isLoading } = useChat({
+    api: "/api/swarm-chat",
+    initialMessages: [],
+  });
+
+  const registerAppend = useStore(state => state.registerAppend);
+
   useEffect(() => {
-    useStore.setState({ badAppend: append })
-  }, [])
-  return <div className="m-24 w-2/5">
+    if (append) {
+      registerAppend(id, append);
+    }
+  }, []);
+
+  return <div className="m-4">
     {messages.length ? (
       <>
         <ChatList messages={messages} />

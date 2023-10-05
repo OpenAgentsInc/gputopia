@@ -2,7 +2,8 @@ import { create } from "zustand"
 import { AlbyUser } from "./useAlby"
 
 type Store = {
-  badAppend: any;
+  appends: { [key: string]: any };
+  registerAppend: (id: string, appendFunction: any) => void;
   prompt: string;
   user: AlbyUser | null;
   onlineMembers: number;
@@ -20,7 +21,10 @@ type Store = {
 };
 
 export const useStore = create<Store>((set) => ({
-  badAppend: () => { },
+  appends: {},  // Store multiple append functions
+  registerAppend: (id, appendFunction) => set((state) => ({
+    appends: { ...state.appends, [id]: appendFunction }
+  })),
   prompt: "",
   user: null,
   busyInferencing: false,
