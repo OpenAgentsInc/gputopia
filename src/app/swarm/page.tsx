@@ -1,33 +1,25 @@
 "use client"
 
-import { useChat } from "ai/react"
-import { ChatList } from "@/components/chat-list"
-import { ChatScrollAnchor } from "@/components/chat-scroll-anchor"
 import { PromptForm } from "@/components/prompt-form"
+import { SwarmChatInstance } from "@/components/swarm-chat-instance"
+import { useStore } from "@/lib/store"
 
 export default function SwarmPage() {
-  const { messages, append, isLoading, input, setInput } =
-    useChat({
-      api: "/api/swarm-chat",
-      initialMessages: [],
-    })
+  const prompt = useStore(state => state.prompt)
+  const append = useStore(state => state.badAppend)
   return <div className="m-24 w-2/5">
-    {messages.length ? (
-      <>
-        <ChatList messages={messages} />
-        <ChatScrollAnchor trackVisibility={isLoading} />
-      </>
-    ) : <></>}
+    <SwarmChatInstance />
     <PromptForm
       onSubmit={async value => {
         await append({
           content: value,
           role: 'user'
         })
+        console.log('did that horrible thing work')
       }}
-      input={input}
-      setInput={setInput}
-      isLoading={isLoading}
+      input={prompt}
+      setInput={value => useStore.setState({ prompt: value as string })}
+      isLoading={false}
     />
   </div>
 }

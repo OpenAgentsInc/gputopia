@@ -2,6 +2,8 @@ import { create } from "zustand"
 import { AlbyUser } from "./useAlby"
 
 type Store = {
+  badAppend: any;
+  prompt: string;
   user: AlbyUser | null;
   onlineMembers: number;
   balance: number;
@@ -18,6 +20,8 @@ type Store = {
 };
 
 export const useStore = create<Store>((set) => ({
+  badAppend: () => { },
+  prompt: "",
   user: null,
   busyInferencing: false,
   modelLoaded: false,
