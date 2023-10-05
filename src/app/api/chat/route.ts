@@ -1,5 +1,4 @@
 import { OpenAIStream, StreamingTextResponse } from "ai"
-// import mysql from "mysql2/promise"
 import { NextRequest, NextResponse } from "next/server"
 import { Configuration, OpenAIApi } from "openai-edge"
 

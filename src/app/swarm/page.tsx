@@ -1,18 +1,33 @@
 "use client"
 
-import { Button } from "@/components/docs/Button"
-import { Textarea } from "@/components/ui/textarea"
+import { useChat } from "ai/react"
+import { ChatList } from "@/components/chat-list"
+import { ChatScrollAnchor } from "@/components/chat-scroll-anchor"
+import { PromptForm } from "@/components/prompt-form"
 
 export default function SwarmPage() {
-  const submit = (e: any) => {
-    e.preventDefault()
-    console.log("test")
-  }
+  const { messages, append, isLoading, input, setInput } =
+    useChat({
+      api: "/api/swarm-chat",
+      initialMessages: [],
+    })
   return <div className="m-24 w-2/5">
-    <p className="text-muted-foreground">Lets begin by sending one inference to multiple sellers and streaming the results.</p>
-    <form onSubmit={submit} className="mt-8 flex flex-col items-start">
-      <Textarea placeholder="Enter your prompt" rows={4} />
-      <Button variant="secondary" type="submit" className="mt-4">Submit</Button>
-    </form>
+    {messages.length ? (
+      <>
+        <ChatList messages={messages} />
+        <ChatScrollAnchor trackVisibility={isLoading} />
+      </>
+    ) : <></>}
+    <PromptForm
+      onSubmit={async value => {
+        await append({
+          content: value,
+          role: 'user'
+        })
+      }}
+      input={input}
+      setInput={setInput}
+      isLoading={isLoading}
+    />
   </div>
 }
