@@ -8,7 +8,8 @@ export default function SwarmPage() {
   const prompt = useStore(state => state.prompt)
   const appends = useStore(state => state.appends);
 
-  const instanceIds = ["id1", "id2", "id3", "id4", "id5", "id6", "id7", "id8"];
+  const numInstances = 8;
+  const instanceIds = Array.from({ length: numInstances }, (_, i) => `id${i + 1}`);
 
   return <div className="m-24">
     <div className="grid grid-cols-4 gap-4">
@@ -18,12 +19,16 @@ export default function SwarmPage() {
     </div>
     <PromptForm
       onSubmit={async value => {
-        instanceIds.forEach(id => {
+        for (let i = 0; i < instanceIds.length; i++) {
+          const id = instanceIds[i];
           const instanceAppend = appends[id];
           if (instanceAppend) {
             instanceAppend({ content: value, role: 'user' });
+            if (i !== instanceIds.length - 1) { // Don't wait after the last append
+              await new Promise(resolve => setTimeout(resolve, 10));
+            }
           }
-        });
+        }
       }}
       input={prompt}
       setInput={value => useStore.setState({ prompt: value as string })}
