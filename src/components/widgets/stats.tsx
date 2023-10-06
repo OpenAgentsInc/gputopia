@@ -1,13 +1,13 @@
+import { useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
+import { useMachineId } from "@/lib/hooks/use-machine-id"
 import { useStore } from "@/lib/store"
+import { AlbyUser } from "@/lib/useAlby"
 import { initModel } from "@/lib/webllm"
 import { withdraw } from "@/lib/withdraw"
-import { AlbyUser } from "@/lib/useAlby"
-import { useSearchParams } from "next/navigation"
-import { useMachineId } from "@/lib/hooks/use-machine-id"
 
 export const Stats = () => {
   const onlineCount = useStore(state => state.onlineMembers)
@@ -16,10 +16,11 @@ export const Stats = () => {
   const balance = useStore(state => state.balance)
   const user = useStore(state => state.user) as AlbyUser
 
+  const machineId = useMachineId()
   const [modelLoading, setModelLoading] = useState(false)
   const [modelLoaded, setModelLoaded] = useState(false)
   const [withdrawLoading, setWithdrawLoading] = useState(false)
-  
+
   const searchParams = useSearchParams()
   const debug = !!searchParams.get("debug")
 
@@ -94,7 +95,7 @@ export const Stats = () => {
                 ) :
                   <Button className="mt-1" onClick={() => {
                     setModelLoading(true)
-                    initModel(user.lightning_address, userId, debug, useMachineId())
+                    initModel(user.lightning_address, userId, debug, machineId)
                   }}>Load model</Button>}
               </div>
             )}
