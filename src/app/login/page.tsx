@@ -2,7 +2,9 @@
 
 import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { IconArrowRight } from "@/components/ui/icons"
+import {
+    IconArrowRight, IconMessage, IconNextChat, IconSidebar
+} from "@/components/ui/icons"
 
 interface LoginCardProps {
   title: string;
@@ -30,11 +32,12 @@ export default function Login() {
 
 export function LoginCard({ title, description, selected, onSelect }: LoginCardProps) {
   const cardStyles = selected ? "bg-muted border-white" : ""; // Change these styles as per your preference
+  const icon = title === "Chat" ? <IconMessage className="mt-1 ml-2 w-5 h-5" /> : <IconSidebar className="mt-1 ml-2 w-5 h-5" />
 
   return (
     <Card className={cardStyles} onClick={() => onSelect(title)}>
       <CardHeader>
-        <CardTitle className="text-xl flex flex-row justify-between">{title} <IconArrowRight className="mt-1 ml-2 w-5 h-5" /></CardTitle>
+        <CardTitle className="text-xl flex flex-row justify-between">{title} {icon}</CardTitle>
       </CardHeader>
       <CardContent className="-mt-2 text-muted-foreground">
         {description}
