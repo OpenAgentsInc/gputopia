@@ -22,7 +22,7 @@ export default function Login() {
   const buttonStyles = selectedCard ? "opacity-100 cursor-pointer" : "opacity-25 cursor-not-allowed";
 
   const beginOauth = () => {
-    const redirect_to = selectedCard === "Chat" ? "/chat" : "/platform";
+    const redirect_to = selectedCard === "Chat" ? "/chat" : "/api-key";
     window.sessionStorage.setItem("redirect_to", redirect_to);
     startAlbyOauth()
   }
