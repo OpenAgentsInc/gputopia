@@ -10,7 +10,7 @@ const scopes = [
   "invoices:read",
 ];
 
-export async function startAlbyOauth () {
+export async function startAlbyOauth() {
   const codeVerifier = generateRandomString(64);
   const challengeMethod = crypto.subtle ? "S256" : "plain";
   const codeChallenge = challengeMethod === 'S256' ? await generateCodeChallenge(codeVerifier) : codeVerifier;

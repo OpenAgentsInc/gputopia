@@ -67,7 +67,8 @@ export default function Auth() {
             // horrible
             window.sessionStorage.setItem("user_id", data.userId.toString());
             window.sessionStorage.setItem("userId", data.userId.toString());
-            window.location.href = `/`;
+            const redirect_to = window.sessionStorage.getItem("redirect_to");
+            window.location.href = redirect_to ?? "/";
           })
           .catch((error) => {
             console.log(error);
