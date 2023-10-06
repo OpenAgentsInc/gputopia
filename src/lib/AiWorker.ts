@@ -10,6 +10,7 @@ export type AiConfig = {
   spiderURL: string;
   lnURL: string;
   userId: string;
+  machineId: string;
   [key: string]: any;
 };
 
@@ -232,7 +233,10 @@ class AiWorker {
   public async initMessage() :  Promise<InitMessage> {
     const ret = {
           "worker_version": "web",
+          "worker_id": this.config.machineId,
+          "user_id": this.config.userId,
           "ln_url": this.config.lnURL,
+          // todo: this should be an access token
           "auth_key": "uid:" + String(this.config.userId),
           "cpu_count": navigator.hardwareConcurrency || 1,
           "disk_space": await this.getAvailableStorageSpace(),

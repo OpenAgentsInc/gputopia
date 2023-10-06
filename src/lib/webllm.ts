@@ -19,15 +19,16 @@ function setLabel(id: string, text: string) {
 
 let worker: AiWorker | null = null;
 
-export async function initModel(lnURL: string, userId: string, debug: boolean) {
+export async function initModel(lnURL: string, userId: string, debug: boolean, machineId: string) {
   if (!worker) {
     console.log("using", process.env.NEXT_PUBLIC_AI_SPIDER_URL, lnURL, userId)
 
     worker = new AiWorker({
       spiderURL: process.env.NEXT_PUBLIC_AI_SPIDER_URL as string,
-      lnURL: lnURL,
-      userId: userId,
-      debug: debug,
+      lnURL,
+      userId,
+      machineId,
+      debug,
     })
     
     worker.on("loading", (report: webllm.InitProgressReport) => {

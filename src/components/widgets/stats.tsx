@@ -7,6 +7,7 @@ import { initModel } from "@/lib/webllm"
 import { withdraw } from "@/lib/withdraw"
 import { AlbyUser } from "@/lib/useAlby"
 import { useSearchParams } from "next/navigation"
+import { useMachineId } from "@/lib/hooks/use-machine-id"
 
 export const Stats = () => {
   const onlineCount = useStore(state => state.onlineMembers)
@@ -93,7 +94,7 @@ export const Stats = () => {
                 ) :
                   <Button className="mt-1" onClick={() => {
                     setModelLoading(true)
-                    initModel(user.lightning_address, userId, debug)
+                    initModel(user.lightning_address, userId, debug, useMachineId())
                   }}>Load model</Button>}
               </div>
             )}

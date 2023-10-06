@@ -10,6 +10,7 @@ import { useWebgpuSupported } from "@/lib/webgpuSupported"
 import { generate, initModel, unloadModel } from "@/lib/webllm"
 import { Button } from "./ui/button"
 import { Progress } from "./ui/progress"
+import { useMachineId } from "@/lib/hooks/use-machine-id"
 
 enum ModelType {
   "vicuna" = "vicuna-v1-7b-q4f32_0",
@@ -24,6 +25,7 @@ export function SellMenu() {
 
   const user = useStore(state => state.user) as AlbyUser
   const userId = window.sessionStorage.getItem("user_id") as string
+  const machineId = useMachineId()
 
   const searchParams = useSearchParams()
   const debug = !!searchParams.get("debug")
@@ -85,7 +87,7 @@ export function SellMenu() {
 
               useStore.setState({ modelLoadPercentage: 0 })
               setModelLoading(true)
-              initModel(user.lightning_address, userId, debug)
+              initModel(user.lightning_address, userId, debug, machineId)
             }}>
               Load model
             </MenubarItem>
