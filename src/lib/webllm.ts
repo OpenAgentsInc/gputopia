@@ -19,7 +19,7 @@ function setLabel(id: string, text: string) {
 
 let worker: AiWorker | null = null;
 
-export async function initModel(lnURL: string, userId: string) {
+export async function initModel(lnURL: string, userId: string, debug: boolean) {
   if (!worker) {
     console.log("using", process.env.NEXT_PUBLIC_AI_SPIDER_URL, lnURL, userId)
 
@@ -27,6 +27,7 @@ export async function initModel(lnURL: string, userId: string) {
       spiderURL: process.env.NEXT_PUBLIC_AI_SPIDER_URL as string,
       lnURL: lnURL,
       userId: userId,
+      debug: debug,
     })
     
     worker.on("loading", (report: webllm.InitProgressReport) => {

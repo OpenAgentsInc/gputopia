@@ -6,6 +6,7 @@ import { useStore } from "@/lib/store"
 import { initModel } from "@/lib/webllm"
 import { withdraw } from "@/lib/withdraw"
 import { AlbyUser } from "@/lib/useAlby"
+import { useSearchParams } from "next/navigation"
 
 export const Stats = () => {
   const onlineCount = useStore(state => state.onlineMembers)
@@ -17,6 +18,9 @@ export const Stats = () => {
   const [modelLoading, setModelLoading] = useState(false)
   const [modelLoaded, setModelLoaded] = useState(false)
   const [withdrawLoading, setWithdrawLoading] = useState(false)
+  
+  const searchParams = useSearchParams()
+  const debug = !!searchParams.get("debug")
 
   const userId = window.sessionStorage.getItem("user_id") as string
 
@@ -89,7 +93,7 @@ export const Stats = () => {
                 ) :
                   <Button className="mt-1" onClick={() => {
                     setModelLoading(true)
-                    initModel(user.lightning_address, userId)
+                    initModel(user.lightning_address, userId, debug)
                   }}>Load model</Button>}
               </div>
             )}

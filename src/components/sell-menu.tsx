@@ -1,4 +1,4 @@
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import {
     Menubar, MenubarCheckboxItem, MenubarContent, MenubarItem, MenubarMenu,
@@ -25,6 +25,8 @@ export function SellMenu() {
   const user = useStore(state => state.user) as AlbyUser
   const userId = window.sessionStorage.getItem("user_id") as string
 
+  const searchParams = useSearchParams()
+  const debug = !!searchParams.get("debug")
 
   const modelLoadPercentage = useStore(state => state.modelLoadPercentage)
 
@@ -83,7 +85,7 @@ export function SellMenu() {
 
               useStore.setState({ modelLoadPercentage: 0 })
               setModelLoading(true)
-              initModel(user.lightning_address, userId)
+              initModel(user.lightning_address, userId, debug)
             }}>
               Load model
             </MenubarItem>
