@@ -66,8 +66,8 @@ export function SellMenu() {
             <MenubarItem onClick={() => router.push('/chat')}>
               AI Chat
             </MenubarItem>
-            <MenubarItem onClick={() => router.push('/api-endpoint')}>
-              API Endpoint
+            <MenubarItem onClick={() => router.push('/api-key')}>
+              API Key
             </MenubarItem>
             {/* <MenubarSeparator />
             <MenubarItem disabled>

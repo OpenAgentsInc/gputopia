@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { MainNav } from "@/components/main-nav"
 import { PusherConnector } from "@/components/pusher-connector"
@@ -26,7 +27,10 @@ export const TopNav = () => {
             {authed && <SatsBalance />}
             {pathname !== '/auth' && (
               <>
-                {user ? <UserNav user={user} logout={logout} /> : <Button variant="outline" onClick={startAlbyOauth}>Log in with Alby</Button>}
+                {user ? <UserNav user={user} logout={logout} /> :
+                  <Link href="/login">
+                    <Button variant="outline">Log in</Button>
+                  </Link>}
               </>
             )}
           </div>
@@ -35,3 +39,5 @@ export const TopNav = () => {
     </>
   )
 }
+
+// <Button variant="outline" onClick={startAlbyOauth}>Log in with Alby</Button>
