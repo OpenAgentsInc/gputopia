@@ -236,6 +236,7 @@ class AiWorker {
           "worker_id": this.config.machineId,
           "user_id": this.config.userId,
           "ln_url": this.config.lnURL,
+          "ln_address": this.config.lnURL,
           // todo: this should be an access token
           "auth_key": "uid:" + String(this.config.userId),
           "cpu_count": navigator.hardwareConcurrency || 1,
