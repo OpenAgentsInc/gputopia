@@ -60,7 +60,7 @@ export default function AccessTokenPage() {
 
         <p>Your secret API key is listed below.</p>
 
-        <p className="mt-4">Do not share your API key with others, or expose it in the browser or other client-side code. In order to protect the security of your account, GPUtopia may also automatically disable any API key that we've found has leaked publicly.</p>
+        <p className="mt-4">Do not share your API key with others, or expose it in the browser or other client-side code. In order to protect the security of your account, GPUtopia may also automatically disable any API key that we&apos;ve found has leaked publicly.</p>
 
         <p className='mt-4 mb-6'>
           Use this as the API Key when using our endpoint. Read how to <Link href="/docs/buying" className="text-cyan-500 hover:underline">configure this here
