@@ -111,6 +111,8 @@ class AiWorker {
       model = model.slice(7);
     }
 
+    const startSecs = Date.now()
+
     if (model != this.model) {
       console.log("loading model", model)
       const opts: Record<string, any> = {context_free: true}
@@ -151,8 +153,9 @@ class AiWorker {
     this.stream = req.stream
     this.streamStart = 0
     const reply = await this.chat.generate(req.messages[req.messages.length - 1].content, this.progress.bind(this));
-    
-    console.log("finished generate")
+   
+    const secs = Date.now() - startSecs
+    console.log("finished generate: %s", secs/1000.0)
     return reply;
   }
 
@@ -241,7 +244,7 @@ class AiWorker {
               }
           ]
       }
-    console.log("init:" , this.initMessage)
+    console.log("init:" , ret)
     return ret
   }
 
