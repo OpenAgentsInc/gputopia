@@ -9,7 +9,7 @@ async function timer(secs: number) {
 export async function POST(request: NextRequest) {
     const json = await request.json();
 
-    const userId = Number(request.cookies.get('userId').value);
+    const userId = Number((request.cookies.get('userId') as any).value);
     const connection = await mysql.createConnection(process.env.DATABASE_URL as string)
 
     const { verify } = json
