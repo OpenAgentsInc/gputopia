@@ -1,8 +1,9 @@
 import "./globals.css"
 import { AxiomWebVitals } from "next-axiom"
 import { Inter } from "next/font/google"
+import * as React from "react"
 import Fathom from "@/components/fathom"
-import { Sidebar } from "@/components/sidebar"
+import { SidebarChat } from "@/components/sidebar-chat"
 import { ThemeProvider } from "@/components/theme-provider"
 import { TopNav } from "@/components/top-nav"
 import { WebgpuChecker } from "@/components/webgpu-checker"
@@ -29,7 +30,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <TopNav />
           <div className="flex h-screen mt-16">
-            <Sidebar />
+            <SidebarChat />
             <main className="flex-1 overflow-auto"> {/* Added overflow-auto */}
               {children}
             </main>
