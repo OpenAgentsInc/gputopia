@@ -47,6 +47,9 @@ const nextConfig = {
     // your project has type errors.
     // !! WARN !!
     ignoreBuildErrors: true
+  },
+  experimental: {
+    serverActions: true
   }
 }
 

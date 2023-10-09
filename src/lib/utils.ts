@@ -25,3 +25,12 @@ export function formatTimestampForSQLInsert(timestamp: number) {
   const formattedTimestamp = date.toISOString().replace('T', ' ').replace('Z', '')
   return formattedTimestamp
 }
+
+export function formatDate(input: string | number | Date): string {
+  const date = new Date(input)
+  return date.toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  })
+}
