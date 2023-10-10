@@ -1,11 +1,13 @@
 import { OpenAIStream, StreamingTextResponse } from "ai"
-// import mysql from "mysql2/promise"
+import { nanoid } from "nanoid"
 import { NextRequest, NextResponse } from "next/server"
 import { Configuration, OpenAIApi } from "openai-edge"
+import { kv } from "@vercel/kv"
 
 export const runtime = 'edge'
 
-const token = process.env.CRON_AI_TOKEN
+const token = "ac4a9ce1c028c7a1e652d11f4d7e009e"
+// process.env.CRON_AI_TOKEN
 
 const configuration = new Configuration({
   apiKey: token,
@@ -42,8 +44,41 @@ export async function POST(req: NextRequest) {
 
   const stream = OpenAIStream(res, {
     async onCompletion(completion) {
-      console.log("Successful_completion:", completion)
+      const title = json.messages[0].content.substring(0, 100)
+      const id = json.id ?? nanoid()
+      const createdAt = Date.now()
+      const path = `/chat/${id}`
+      const payload = {
+        id,
+        title,
+        userId,
+        createdAt,
+        path,
+        messages: [
+          ...messages,
+          {
+            content: completion,
+            role: 'assistant'
+          }
+        ]
+      }
+      await kv.hmset(`chat:${id}`, payload)
+      await kv.zadd(`user:chat:${userId}`, {
+        score: createdAt,
+        member: `chat:${id}`
+      })
     }
+    // async onCompletion(completion) {
+    //   console.log("Successful_completion:", completion)
+    //   const createdAt = Date.now()
+    //   const id = nanoid()
+
+    //   await kv.zadd(`user:chat:${userId}`, {
+    //     score: createdAt,
+    //     member: `chat:${id}`
+    //   })
+    //   console.log(`Created chat: ${id} for user: ${userId}`)
+    // }
   })
 
   return new StreamingTextResponse(stream)

@@ -1,29 +1,36 @@
 'use server'
 
-import { revalidatePath } from 'next/cache'
-import { redirect } from 'next/navigation'
-import { kv } from '@vercel/kv'
+import { revalidatePath } from "next/cache"
+import { redirect } from "next/navigation"
+import { kv } from "@vercel/kv"
 
+import type { Chat } from "@/lib/types"
 // import { auth } from '@/auth'
-const auth: any = () => {}
-import { type Chat } from '@/lib/types'
+
+const auth: any = () => { }
 
 export async function getChats(userId?: string | null) {
   if (!userId) {
+    console.log("No userId, returning empty array")
     return []
   }
+
+  // console.log("lets try the kv thing")
 
   try {
     const pipeline = kv.pipeline()
     const chats: string[] = await kv.zrange(`user:chat:${userId}`, 0, -1, {
       rev: true
     })
+    // console.log('what')
 
     for (const chat of chats) {
       pipeline.hgetall(chat)
     }
 
-    const results = await pipeline.exec()
+    // console.log('here')
+    const results = await pipeline.exec() // hanging
+    // console.log("Returning getChats results:", results)
 
     return results as Chat[]
   } catch (error) {
@@ -33,6 +40,8 @@ export async function getChats(userId?: string | null) {
 
 export async function getChat(id: string, userId: string) {
   const chat = await kv.hgetall<Chat>(`chat:${id}`)
+
+  // console.log("i found chat", chat)
 
   if (!chat || (userId && chat.userId !== userId)) {
     return null
@@ -76,7 +85,7 @@ export async function clearChats() {
 
   const chats: string[] = await kv.zrange(`user:chat:${session.user.id}`, 0, -1)
   if (!chats.length) {
-  return redirect('/')
+    return redirect('/')
   }
   const pipeline = kv.pipeline()
 

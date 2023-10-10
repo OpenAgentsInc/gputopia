@@ -7,11 +7,13 @@ import { SidebarList } from "./sidebar-list"
 
 export const SidebarChat = () => {
   const session = null
+  const userId = "1"
   return (
     <Sidebar>
       <React.Suspense fallback={<div className="flex-1 overflow-auto" />}>
         {/* @ts-ignore */}
-        <SidebarList userId={session?.user?.id} />
+        {/* <SidebarList userId={session?.user?.id} /> */}
+        <SidebarList userId={userId} />
       </React.Suspense>
       <SidebarFooter>
         {/* <ThemeToggle /> */}

@@ -36,6 +36,7 @@ import { badgeVariants } from '@/components/ui/badge'
 import {
   Tooltip,
   TooltipContent,
+  TooltipProvider,
   TooltipTrigger
 } from '@/components/ui/tooltip'
 
@@ -82,33 +83,35 @@ export function SidebarActions({
   return (
     <>
       <div className="space-x-1">
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              variant="ghost"
-              className="h-6 w-6 p-0 hover:bg-background"
-              onClick={() => setShareDialogOpen(true)}
-            >
-              <IconShare />
-              <span className="sr-only">Share</span>
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>Share chat</TooltipContent>
-        </Tooltip>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              variant="ghost"
-              className="h-6 w-6 p-0 hover:bg-background"
-              disabled={isRemovePending}
-              onClick={() => setDeleteDialogOpen(true)}
-            >
-              <IconTrash />
-              <span className="sr-only">Delete</span>
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>Delete chat</TooltipContent>
-        </Tooltip>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                className="h-6 w-6 p-0 hover:bg-background"
+                onClick={() => setShareDialogOpen(true)}
+              >
+                <IconShare />
+                <span className="sr-only">Share</span>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Share chat</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                className="h-6 w-6 p-0 hover:bg-background"
+                disabled={isRemovePending}
+                onClick={() => setDeleteDialogOpen(true)}
+              >
+                <IconTrash />
+                <span className="sr-only">Delete</span>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Delete chat</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
       <Dialog open={shareDialogOpen} onOpenChange={setShareDialogOpen}>
         <DialogContent>
