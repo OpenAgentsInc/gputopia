@@ -48,7 +48,7 @@ export default function Imagine() {
       <main>
         {!isGenerated && (
           <div className="info-box">
-            This is an image generator using Stable Diffusion v1.4, powered by a decentralized network of GPU nodes. Image generation requests are paid in bitcoin sats, currently at 7 sats per Stable Diffusion v1.4 generation. GPUtopia takes a 1-sat platform fee, and the remainder goes to the provider of the GPU compute that processes the image generation. Generated images are not saved. Your requests are not shared, but also not private. Don't share sensitive prompts.
+            This is an image generator using Stable Diffusion v1.4, powered by a decentralized network of GPU nodes. Image generation requests are paid in bitcoin sats, currently at 7 sats per Stable Diffusion v1.4 generation. GPUtopia takes a 1-sat platform fee, and the remainder goes to the provider of the GPU compute that processes the image generation. Generated images are not saved. Your requests are not shared, but also not private. Do not share sensitive prompts.
           </div>
         )}
         <div className="input-container" style={{ marginTop: isGenerated ? '50px' : '20px' }}>
