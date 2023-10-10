@@ -45,6 +45,7 @@
     "mysql2": "^3.6.1",
     "nanoid": "^4.0.2",
     "next": "13.4.19",
+    "next-auth": "^4.23.2",
     "next-axiom": "^1.0.0",
     "next-themes": "^0.2.1",
     "openai": "^4.11.0",
