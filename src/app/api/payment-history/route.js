@@ -1,13 +1,18 @@
-import { NextResponse } from 'next/server';
-import mysql from 'mysql2/promise';
+import { NextResponse } from 'next/server'
+import mysql from 'mysql2/promise'
 
 export async function POST(request) {
-  const userId = Number(request.cookies.get('userId').value);
+  // Get the user ID
+  const userIdString = req.cookies.get('userId')
+  if (!userIdString) {
+    throw new Error('Missing user ID cookie')
+  }
+  const userId = Number(userIdString.value)
 
-  let connection;
+  let connection
 
   try {
-    connection = await mysql.createConnection(process.env.DATABASE_URL);
+    connection = await mysql.createConnection(process.env.DATABASE_URL)
 
     const query = `
       SELECT id, invoice_expires_at, invoice_payment_hash, invoice_payment_request,
@@ -16,9 +21,9 @@ export async function POST(request) {
       WHERE user_id = ?
       ORDER BY created_at DESC
       LIMIT 25
-    `;
+    `
 
-    const [results] = await connection.query(query, [userId]);
+    const [results] = await connection.query(query, [userId])
 
     const payments = results.map(row => ({
       id: row.id,
@@ -28,17 +33,15 @@ export async function POST(request) {
       amount: row.amount,
       invoiceStatus: row.invoice_status,
       createdAt: row.created_at,
-      updatedAt: row.updated_at,
-    }));
+      updatedAt: row.updated_at
+    }))
 
     return NextResponse.json({ payments })
-
   } catch (err) {
-    return NextResponse.json({ error: "Database error" })
-
+    return NextResponse.json({ error: 'Database error' })
   } finally {
     if (connection) {
-      await connection.end();
+      await connection.end()
     }
   }
 }

@@ -9,14 +9,21 @@ import { UserNav } from '@/components/user-nav'
 import { OnlineUsers } from './online-users'
 import { SatsBalance } from './sats-balance'
 import { ModeToggle } from './ui/mode-toggle'
-import { signOut, useSession } from 'next-auth/react'
+import { signIn, signOut, useSession } from 'next-auth/react'
 import { useAlby } from '@/lib/useAlby'
+import { useEffect } from 'react'
 
 export const TopNav = () => {
   const { data: session, status } = useSession()
+  const pathname = usePathname()
   useAlby()
 
-  const pathname = usePathname()
+  useEffect(() => {
+    if (session?.error === 'RefreshAccessTokenError') {
+      signIn()
+    }
+  }, [session])
+
   return (
     <>
       {status === 'authenticated' && <PusherConnector />}

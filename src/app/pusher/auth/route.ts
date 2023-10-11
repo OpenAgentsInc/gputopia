@@ -2,9 +2,12 @@ import mysql from 'mysql2/promise'
 import { NextRequest, NextResponse } from 'next/server'
 import { pusher } from '@/lib/pusher'
 import { useSession } from 'next-auth/react'
+import { cp } from 'fs'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
 
 export async function POST(request: NextRequest) {
-  const { data: session, status } = useSession()
+  const session = await getServerSession(authOptions)
   try {
     const formDataText = await request.text()
     const formData = new URLSearchParams(formDataText)

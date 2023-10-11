@@ -1,7 +1,8 @@
 import axios, { AxiosError } from 'axios'
-import { useEffect, useState } from 'react'
+import { SetStateAction, useEffect, useState } from 'react'
 import { useStore } from './store'
 import { useSession } from 'next-auth/react'
+import { Session } from 'next-auth'
 
 export interface AlbyUser {
   avatar: string | null
@@ -14,11 +15,8 @@ export interface AlbyUser {
   name: string | null
 }
 
-const refreshWhenSecondsLessThan = 3700
-
 export function useAlby() {
-  const { data: session, status } = useSession()
-
+  const { data: session } = useSession()
   const [user, setUser] = useState<AlbyUser | null>(null)
 
   const logout = () => {
@@ -29,22 +27,39 @@ export function useAlby() {
   // Grab user data from Alby
   useEffect(() => {
     if (session) {
-      fetch('https://api.getalby.com/user/me', {
-        headers: {
-          Authorization: `Bearer ${session.access_token}`
-        }
-      })
-        .then(res => res.json())
-        .then(res => {
-          setUser(res)
-          useStore.setState({ user: res })
-        })
-        .catch(err => {
-          logout()
-          console.error(err)
-        })
+      // Todo move the setCookie to some other place
+      setCookie('userId', session.user.user_id)
+      fetchUserData(session, setUser, logout)
     }
-  }, [user, session])
+  }, [session])
 
   return { logout, user }
+}
+
+function fetchUserData(session: Session, setUser: any, logout: any) {
+  fetch('https://api.getalby.com/user/me', {
+    headers: {
+      Authorization: `Bearer ${session.access_token}`
+    }
+  })
+    .then(res => res.json())
+    .then(res => {
+      setUser(res)
+      useStore.setState({ user: res })
+    })
+    .catch(err => {
+      logout()
+      console.error(err)
+    })
+}
+
+function setCookie(name: string, value: string) {
+  const expirationDate = new Date()
+  expirationDate.setDate(expirationDate.getDate() + 30) // Add 30 days to the current date
+
+  // Create the cookie string
+  const cookieString = `${name}=${value}; expires=${expirationDate.toUTCString()}; path=/`
+
+  // Set the cookie
+  document.cookie = cookieString
 }

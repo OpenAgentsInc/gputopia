@@ -12,8 +12,7 @@ export interface Job {
 }
 
 // For now assume Vicuna
-export const processJob = async (job: Job) => {
-  const { data: session } = useSession()
+export const processJob = async (job: Job, userId: number) => {
   const modelLoaded = useStore.getState().modelLoaded
   if (!modelLoaded) {
     console.log('Received job but model not loaded, returning')
@@ -29,8 +28,6 @@ export const processJob = async (job: Job) => {
   }
 
   // If this user was the sender, return
-  const userId = session?.user?.user_id
-
   if (userId === 0 || !userId) {
     alert('No user ID found, please log in')
     return

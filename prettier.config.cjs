@@ -5,7 +5,7 @@ module.exports = {
   useTabs: false,
   singleQuote: true,
   arrowParens: 'avoid',
-  printWidth:100,
+  printWidth: 110,
   tabWidth: 2,
   trailingComma: 'none',
   importOrder: [

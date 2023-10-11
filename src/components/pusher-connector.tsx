@@ -5,11 +5,8 @@ import { useStore } from '@/lib/store'
 import { generate } from '@/lib/webllm'
 import { kv } from '@vercel/kv'
 import { signOut, useSession } from 'next-auth/react'
-import { useAlby } from '@/lib/useAlby'
 
 export const PusherConnector = () => {
-  useAlby()
-
   const { data: session, status } = useSession()
   const [userId, setUserId] = useState<string | null>(null)
 
@@ -52,7 +49,9 @@ export const PusherConnector = () => {
 
     // Listen for "new job" event
     window.jobChannel = pusher.subscribe('private-v3jobs')
-    window.jobChannel.bind('new-job', processJob)
+    window.jobChannel.bind('new-job', data => {
+      processJob(data, Number(userId))
+    })
 
     window.jobChannel.bind(`client-job-${userId}`, data => {
       // console.log(data.message);
