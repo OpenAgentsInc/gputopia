@@ -1,13 +1,15 @@
 import { cp } from 'fs'
 import mysql from 'mysql2/promise'
-import { getServerSession } from 'next-auth'
+// import { getServerSession } from 'next-auth'
 import { NextRequest, NextResponse } from 'next/server'
-import { authOptions } from '@/lib/auth'
+// import { authOptions } from '@/auth'
 import { pusher } from '@/lib/pusher'
+import { auth } from '@/auth'
 
 export async function POST(request: NextRequest) {
   // @ts-ignore
-  const session = await getServerSession(authOptions)
+  const session = await auth()
+  // const session = await getServerSession(authOptions)
   if (!session) {
     return new NextResponse('Unauthorized', {
       status: 401

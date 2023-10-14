@@ -1,3 +1,5 @@
+'use client'
+
 import Pusher, * as PusherTypes from 'pusher-js'
 import { useEffect, useState } from 'react'
 import { processJob } from '@/lib/processJob'
@@ -5,20 +7,25 @@ import { useStore } from '@/lib/store'
 import { generate } from '@/lib/webllm'
 import { kv } from '@vercel/kv'
 import { signOut, useSession } from 'next-auth/react'
+import { useAlby } from '@/lib/useAlby'
+// import { auth } from '@/auth'
 
-export const PusherConnector = () => {
+export function PusherConnector() {
   const { data: session, status } = useSession()
   const [userId, setUserId] = useState<string | null>(null)
 
+  // useAlby()
+
   useEffect(() => {
-    let userId = session?.user?.user_id
+    let userId = session?.user.user_id
     if (!userId) {
-      signOut()
-      alert('Error. Please log in again.')
+      console.log('skipping signout in pusherconntectororor')
+      // signOut()
+      // alert('Error. Please log in again.')
     } else {
       setUserId(userId)
     }
-  }, [session?.user?.user_id])
+  }, [session?.user.user_id])
 
   useEffect(() => {
     if (!userId || userId === null) return

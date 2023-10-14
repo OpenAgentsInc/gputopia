@@ -28,6 +28,7 @@ const AlbyProvider = {
     // You can use the tokens, in case you want to fetch more profile information
     // For example several OAuth providers do not return email by default.
     // Depending on your provider, will have tokens like `access_token`, `id_token` and or `refresh_token`
+    console.log('PROFILE:', profile)
     return {
       id: profile.identifier,
       email: profile.email,
@@ -45,6 +46,22 @@ export const {
 } = NextAuth({
   providers: [AlbyProvider],
   callbacks: {
+    // jwt({ token, account }) {
+    //   if (account) {
+    //     token.access_token = account.access_token
+    //     token.refresh_token = account.refresh_token
+    //   }
+    //   // token.id = 1
+    //   // token.user_id = 'testttt'
+    //   // console.log('Returning jwt token:', token)
+    //   // console.log('in jwt, account is', account)
+    //   return token
+    // },
+    // authorized({ auth }) {
+    //   console.log('auth:', auth)
+    //   console.log('returnin', !!auth?.user)
+    //   return !!auth?.user // this ensures there is a logged in user for -every- request
+    // },
     async jwt({ token, account, profile, trigger }) {
       // Persist the OAuth access_token to the token right after signin
       if (account) {
@@ -61,6 +78,7 @@ export const {
         })
           .then(response => response.json())
           .then(data => {
+            console.log('Did what?', data)
             token.user_id = data.userId
           })
 
@@ -81,7 +99,6 @@ export const {
     },
     async session({ session, token, user }) {
       if (token) {
-        console.log('seeing token wut')
         session.access_token = token.access_token
         session.refresh_token = token.refresh_token
         session.user.avatar = token.avatar
