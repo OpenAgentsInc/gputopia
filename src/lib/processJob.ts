@@ -1,8 +1,6 @@
-import { Channel } from 'pusher-js'
-import { complete } from './complete'
-import { useStore } from './store'
-import { generateAndStream } from './webllm'
-import { useSession } from 'next-auth/react'
+import { complete } from "./complete"
+import { useStore } from "./store"
+import { generateAndStream } from "./webllm"
 
 export interface Job {
   userId: number
