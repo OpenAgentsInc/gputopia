@@ -1,11 +1,11 @@
-import { authOptions } from '@/lib/auth'
-import { OpenAIStream, StreamingTextResponse } from 'ai'
-import { getServerSession } from 'next-auth'
+import { OpenAIStream, StreamingTextResponse } from "ai"
+import { getServerSession } from "next-auth"
 // import mysql from "mysql2/promise"
-import { NextRequest, NextResponse } from 'next/server'
-import { Configuration, OpenAIApi } from 'openai-edge'
+import { NextRequest, NextResponse } from "next/server"
+import { Configuration, OpenAIApi } from "openai-edge"
+import { authOptions } from "@/lib/auth"
 
-export const runtime = 'edge'
+// export const runtime = 'edge'
 
 const token = process.env.CRON_AI_TOKEN
 
