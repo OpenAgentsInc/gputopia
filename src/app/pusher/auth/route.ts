@@ -23,6 +23,8 @@ export async function POST(request: NextRequest) {
     const socket_id = formData.get('socket_id') as string
     const channel_name = formData.get('channel_name') as string
 
+    console.log(session)
+
     const accessToken = session?.access_token
 
     if (!accessToken) {
@@ -31,7 +33,7 @@ export async function POST(request: NextRequest) {
 
     const connection = await mysql.createConnection(process.env.DATABASE_URL as string)
     const [results] = await connection.query('SELECT user_id FROM access_tokens WHERE token = ?', [
-      accessToken.value
+      accessToken
     ])
 
     if (results.length === 0) {
