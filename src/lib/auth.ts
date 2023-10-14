@@ -54,7 +54,8 @@ export const authOptions = {
     async jwt({ token, account, profile, trigger }) {
       // Persist the OAuth access_token to the token right after signin
       if (account) {
-        await fetch('/api/save-token', {
+        const serverUrl = process.env.NEXTAUTH_URL || 'https://localhost:3000'
+        await fetch(`${serverUrl}/api/save-token`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

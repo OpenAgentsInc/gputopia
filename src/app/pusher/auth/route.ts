@@ -9,7 +9,7 @@ import { pusher } from "@/lib/pusher"
 export async function POST(request: NextRequest) {
   // @ts-ignore
   const session = await getServerSession(authOptions)
-  console.log('SESSION?')
+  console.log('SESSION:')
   console.log(session)
   if (!session) {
     return new NextResponse('Unauthorized', {
