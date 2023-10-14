@@ -48,7 +48,7 @@ export function ExternalLink({ children, className, ...rest }: React.AnchorHTMLA
     <a
       target="_blank"
       rel="noopener noreferrer"
-      className={`text-green-500 font-bold hover:text-green-700 ${className}`}
+      className={`no-prose text-green-500 font-bold hover:text-green-700 ${className}`}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       style={{

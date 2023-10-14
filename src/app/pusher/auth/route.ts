@@ -1,14 +1,16 @@
-import mysql from 'mysql2/promise'
-import { NextRequest, NextResponse } from 'next/server'
-import { pusher } from '@/lib/pusher'
-import { useSession } from 'next-auth/react'
-import { cp } from 'fs'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/auth'
+import { cp } from "fs"
+import mysql from "mysql2/promise"
+import { getServerSession } from "next-auth"
+import { useSession } from "next-auth/react"
+import { NextRequest, NextResponse } from "next/server"
+import { authOptions } from "@/lib/auth"
+import { pusher } from "@/lib/pusher"
 
 export async function POST(request: NextRequest) {
   // @ts-ignore
   const session = await getServerSession(authOptions)
+  console.log('SESSION?')
+  console.log(session)
   if (!session) {
     return new NextResponse('Unauthorized', {
       status: 401
