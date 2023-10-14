@@ -1,21 +1,20 @@
-import { useStore } from "./store"
+import { useStore } from './store'
 
 export const updatePayments = () => {
   const user = useStore.getState().user
-  if (!user) return console.log("No user found")
+  if (!user) return console.log('No user found')
 
-  fetch("/api/payment-history", {
+  fetch('/api/payment-history', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-  }).then((res) => {
-    if (res.ok) {
-      return res.json()
-    }
-  }).then((json) => {
-    if (json.payments) {
-      useStore.setState({ payments: json.payments })
-    }
-  }).catch((error) => {
-    console.log(error);
+    headers: { 'Content-Type': 'application/json' }
   })
+    .then(res => res.json())
+    .then(data => {
+      if (data.payments) {
+        useStore.setState({ payments: data.payments })
+      }
+    })
+    .catch(error => {
+      console.log(error)
+    })
 }
