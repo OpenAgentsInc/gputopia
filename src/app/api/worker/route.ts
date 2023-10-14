@@ -1,17 +1,7 @@
-import { NextResponse } from 'next/server'
-import mysql from 'mysql2/promise'
-import { authOptions } from '@/lib/auth'
-import { getServerSession } from 'next-auth'
+import mysql from "mysql2/promise"
+import { NextResponse } from "next/server"
 
 export async function POST(request: NextResponse) {
-  // @ts-ignore
-  const session = await getServerSession(authOptions)
-  if (!session) {
-    return new NextResponse('Unauthorized', {
-      status: 401
-    })
-  }
-
   const json = await request.json()
   let auth_key = json.auth_key
 
