@@ -19,7 +19,8 @@ export function PusherConnector() {
   useEffect(() => {
     let userId = session?.user.user_id
     if (!userId) {
-      console.log('skipping signout in pusherconntectororor')
+      console.log("Skipping pusher auth, don't have the right")
+      // console.log('skipping signout in pusherconntectororor')
       // signOut()
       // alert('Error. Please log in again.')
     } else {
