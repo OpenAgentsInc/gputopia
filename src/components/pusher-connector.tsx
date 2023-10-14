@@ -29,10 +29,8 @@ export function PusherConnector() {
     })
     presenceChannel.bind('pusher:member_added', (member: any) => {
       useStore.getState().increment()
-      // console.log('Member added:', member)
     })
     presenceChannel.bind('pusher:member_removed', (member: any) => {
-      // console.log('Member removed:', member)
       useStore.getState().decrement()
     })
 

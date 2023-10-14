@@ -1,19 +1,12 @@
-import { cp } from 'fs'
 import mysql from 'mysql2/promise'
-// import { getServerSession } from 'next-auth'
 import { NextRequest, NextResponse } from 'next/server'
-// import { authOptions } from '@/auth'
 import { pusher } from '@/lib/pusher'
 import { auth } from '@/auth'
 
 export async function POST(request: NextRequest) {
-  // @ts-ignore
   const session = await auth()
-  // const session = await getServerSession(authOptions)
   if (!session) {
-    return new NextResponse('Unauthorized', {
-      status: 401
-    })
+    return new NextResponse('Unauthorized', { status: 401 })
   }
 
   try {
@@ -22,7 +15,7 @@ export async function POST(request: NextRequest) {
     const socket_id = formData.get('socket_id') as string
     const channel_name = formData.get('channel_name') as string
 
-    const accessToken = session?.access_token
+    const accessToken = session?.user?.access_token
 
     if (!accessToken) {
       return NextResponse.json({ ok: false, error: 'No access token found' })
