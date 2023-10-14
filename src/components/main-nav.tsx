@@ -1,8 +1,8 @@
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { useStore } from "@/lib/store"
-import { cn } from "@/lib/utils"
-import { SellMenu } from "./sell-menu"
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { useStore } from '@/lib/store'
+import { cn } from '@/lib/utils'
+import { SellMenu } from './sell-menu'
 
 const linkClasses = 'text-sm font-medium transition-colors hover:text-primary'
 

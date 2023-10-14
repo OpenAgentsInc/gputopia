@@ -1,33 +1,33 @@
 // Fathom.tsx
-"use client";
+'use client'
 
-import { load, trackPageview } from "fathom-client"
-import { usePathname, useSearchParams } from "next/navigation"
-import { Suspense, useEffect } from "react"
+import { load, trackPageview } from 'fathom-client'
+import { usePathname, useSearchParams } from 'next/navigation'
+import { Suspense, useEffect } from 'react'
 
 function TrackPageView() {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
 
   // Load the Fathom script on mount
   useEffect(() => {
-    load("GMTDZOPO", {
-      includedDomains: ["gputopia.ai"],
-      auto: false,
-    });
-  }, []);
+    load('GMTDZOPO', {
+      includedDomains: ['gputopia.ai'],
+      auto: false
+    })
+  }, [])
 
   // Record a pageview when route changes
   useEffect(() => {
-    if (!pathname) return;
+    if (!pathname) return
 
     trackPageview({
       url: pathname + searchParams.toString(),
-      referrer: document.referrer,
-    });
-  }, [pathname, searchParams]);
+      referrer: document.referrer
+    })
+  }, [pathname, searchParams])
 
-  return null;
+  return null
 }
 
 export default function Fathom() {
@@ -35,5 +35,5 @@ export default function Fathom() {
     <Suspense fallback={null}>
       <TrackPageView />
     </Suspense>
-  );
+  )
 }

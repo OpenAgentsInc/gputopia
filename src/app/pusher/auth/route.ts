@@ -1,9 +1,9 @@
-import { cp } from "fs"
-import mysql from "mysql2/promise"
-import { getServerSession } from "next-auth"
-import { NextRequest, NextResponse } from "next/server"
-import { authOptions } from "@/lib/auth"
-import { pusher } from "@/lib/pusher"
+import { cp } from 'fs'
+import mysql from 'mysql2/promise'
+import { getServerSession } from 'next-auth'
+import { NextRequest, NextResponse } from 'next/server'
+import { authOptions } from '@/lib/auth'
+import { pusher } from '@/lib/pusher'
 
 export async function POST(request: NextRequest) {
   // @ts-ignore

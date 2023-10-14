@@ -107,10 +107,7 @@ export function SellMenu() {
               <MenubarSubTrigger>Set model</MenubarSubTrigger>
               <MenubarSubContent>
                 <MenubarRadioGroup value={selectedModel}>
-                  <MenubarRadioItem
-                    value={ModelType.vicuna}
-                    onClick={() => changeModel(ModelType.vicuna)}
-                  >
+                  <MenubarRadioItem value={ModelType.vicuna} onClick={() => changeModel(ModelType.vicuna)}>
                     Vicuna 7B
                   </MenubarRadioItem>
                   <MenubarRadioItem

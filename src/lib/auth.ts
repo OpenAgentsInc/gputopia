@@ -1,5 +1,5 @@
-import NextAuth, { DefaultSession } from "next-auth"
-import { fetchUserFromAlby } from "./alby"
+import NextAuth, { DefaultSession } from 'next-auth'
+import { fetchUserFromAlby } from './alby'
 
 declare module 'next-auth' {
   interface Session {
@@ -54,7 +54,7 @@ export const authOptions = {
     async jwt({ token, account, profile, trigger }) {
       // Persist the OAuth access_token to the token right after signin
       if (account) {
-        const serverUrl = process.env.NEXTAUTH_URL || 'https://localhost:3000'
+        const serverUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000'
         await fetch(`${serverUrl}/api/save-token`, {
           method: 'POST',
           headers: {

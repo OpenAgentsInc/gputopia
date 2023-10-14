@@ -1,13 +1,10 @@
 'use client'
 
-import clsx from "clsx"
-import {
-    Children, createContext, isValidElement, useContext, useEffect, useRef,
-    useState
-} from "react"
-import { create } from "zustand"
-import { Tag } from "@/components/docs/Tag"
-import { Tab } from "@headlessui/react"
+import clsx from 'clsx'
+import { Children, createContext, isValidElement, useContext, useEffect, useRef, useState } from 'react'
+import { create } from 'zustand'
+import { Tag } from '@/components/docs/Tag'
+import { Tab } from '@headlessui/react'
 
 const languageNames: Record<string, string> = {
   js: 'JavaScript',
@@ -17,16 +14,10 @@ const languageNames: Record<string, string> = {
   php: 'PHP',
   python: 'Python',
   ruby: 'Ruby',
-  go: 'Go',
+  go: 'Go'
 }
 
-function getPanelTitle({
-  title,
-  language,
-}: {
-  title?: string
-  language?: string
-}) {
+function getPanelTitle({ title, language }: { title?: string; language?: string }) {
   if (title) {
     return title
   }
@@ -72,11 +63,11 @@ function CopyButton({ code }: { code: string }) {
         'group/button absolute right-4 top-3.5 overflow-hidden rounded-full py-1 pl-2 pr-3 text-2xs font-medium opacity-0 backdrop-blur transition focus:opacity-100 group-hover:opacity-100',
         copied
           ? 'bg-emerald-400/10 ring-1 ring-inset ring-emerald-400/20'
-          : 'bg-white/5 hover:bg-white/7.5 dark:bg-white/2.5 dark:hover:bg-white/5',
+          : 'bg-white/5 hover:bg-white/7.5 dark:bg-white/2.5 dark:hover:bg-white/5'
       )}
       onClick={() => {
         window.navigator.clipboard.writeText(code).then(() => {
-          setCopyCount((count) => count + 1)
+          setCopyCount(count => count + 1)
         })
       }}
     >
@@ -84,7 +75,7 @@ function CopyButton({ code }: { code: string }) {
         aria-hidden={copied}
         className={clsx(
           'pointer-events-none flex items-center gap-0.5 text-zinc-400 transition duration-300',
-          copied && '-translate-y-1.5 opacity-0',
+          copied && '-translate-y-1.5 opacity-0'
         )}
       >
         <ClipboardIcon className="h-5 w-5 fill-zinc-500/20 stroke-zinc-500 transition-colors group-hover/button:stroke-zinc-400" />
@@ -94,7 +85,7 @@ function CopyButton({ code }: { code: string }) {
         aria-hidden={!copied}
         className={clsx(
           'pointer-events-none absolute inset-0 flex items-center justify-center text-emerald-400 transition duration-300',
-          !copied && 'translate-y-1.5 opacity-0',
+          !copied && 'translate-y-1.5 opacity-0'
         )}
       >
         Copied!
@@ -115,12 +106,8 @@ function CodePanelHeader({ tag, label }: { tag?: string; label?: string }) {
           <Tag variant="small">{tag}</Tag>
         </div>
       )}
-      {tag && label && (
-        <span className="h-0.5 w-0.5 rounded-full bg-zinc-500" />
-      )}
-      {label && (
-        <span className="font-mono text-xs text-zinc-400">{label}</span>
-      )}
+      {tag && label && <span className="h-0.5 w-0.5 rounded-full bg-zinc-500" />}
+      {label && <span className="font-mono text-xs text-zinc-400">{label}</span>}
     </div>
   )
 }
@@ -129,7 +116,7 @@ function CodePanel({
   children,
   tag,
   label,
-  code,
+  code
 }: {
   children: React.ReactNode
   tag?: string
@@ -145,9 +132,7 @@ function CodePanel({
   }
 
   if (!code) {
-    throw new Error(
-      '`CodePanel` requires a `code` prop, or a child with a `code` prop.',
-    )
+    throw new Error('`CodePanel` requires a `code` prop, or a child with a `code` prop.')
   }
 
   return (
@@ -164,7 +149,7 @@ function CodePanel({
 function CodeGroupHeader({
   title,
   children,
-  selectedIndex,
+  selectedIndex
 }: {
   title: string
   children: React.ReactNode
@@ -178,11 +163,7 @@ function CodeGroupHeader({
 
   return (
     <div className="flex min-h-[calc(theme(spacing.12)+1px)] flex-wrap items-start gap-x-4 border-b border-zinc-700 bg-zinc-800 px-4 dark:border-zinc-800 dark:bg-transparent">
-      {title && (
-        <h3 className="mr-auto pt-3 text-xs font-semibold text-white">
-          {title}
-        </h3>
-      )}
+      {title && <h3 className="mr-auto pt-3 text-xs font-semibold text-white">{title}</h3>}
       {hasTabs && (
         <Tab.List className="-mb-px flex gap-4 text-xs font-medium">
           {Children.map(children, (child, childIndex) => (
@@ -191,7 +172,7 @@ function CodeGroupHeader({
                 'border-b py-3 transition ui-not-focus-visible:outline-none',
                 childIndex === selectedIndex
                   ? 'border-emerald-500 text-emerald-400'
-                  : 'border-transparent text-zinc-400 hover:text-zinc-300',
+                  : 'border-transparent text-zinc-400 hover:text-zinc-300'
               )}
             >
               {getPanelTitle(isValidElement(child) ? child.props : {})}
@@ -203,16 +184,13 @@ function CodeGroupHeader({
   )
 }
 
-function CodeGroupPanels({
-  children,
-  ...props
-}: React.ComponentPropsWithoutRef<typeof CodePanel>) {
+function CodeGroupPanels({ children, ...props }: React.ComponentPropsWithoutRef<typeof CodePanel>) {
   let hasTabs = Children.count(children) > 1
 
   if (hasTabs) {
     return (
       <Tab.Panels>
-        {Children.map(children, (child) => (
+        {Children.map(children, child => (
           <Tab.Panel>
             <CodePanel {...props}>{child}</CodePanel>
           </Tab.Panel>
@@ -248,35 +226,32 @@ function usePreventLayoutShift() {
       callback()
 
       rafRef.current = window.requestAnimationFrame(() => {
-        let newTop =
-          positionRef.current?.getBoundingClientRect().top ?? initialTop
+        let newTop = positionRef.current?.getBoundingClientRect().top ?? initialTop
         window.scrollBy(0, newTop - initialTop)
       })
-    },
+    }
   }
 }
 
 const usePreferredLanguageStore = create<{
   preferredLanguages: Array<string>
   addPreferredLanguage: (language: string) => void
-}>()((set) => ({
+}>()(set => ({
   preferredLanguages: [],
-  addPreferredLanguage: (language) =>
-    set((state) => ({
+  addPreferredLanguage: language =>
+    set(state => ({
       preferredLanguages: [
-        ...state.preferredLanguages.filter(
-          (preferredLanguage) => preferredLanguage !== language,
-        ),
-        language,
-      ],
-    })),
+        ...state.preferredLanguages.filter(preferredLanguage => preferredLanguage !== language),
+        language
+      ]
+    }))
 }))
 
 function useTabGroupProps(availableLanguages: Array<string>) {
   let { preferredLanguages, addPreferredLanguage } = usePreferredLanguageStore()
   let [selectedIndex, setSelectedIndex] = useState(0)
   let activeLanguage = [...availableLanguages].sort(
-    (a, z) => preferredLanguages.indexOf(z) - preferredLanguages.indexOf(a),
+    (a, z) => preferredLanguages.indexOf(z) - preferredLanguages.indexOf(a)
   )[0]
   let languageIndex = availableLanguages.indexOf(activeLanguage)
   let newSelectedIndex = languageIndex === -1 ? selectedIndex : languageIndex
@@ -291,10 +266,8 @@ function useTabGroupProps(availableLanguages: Array<string>) {
     ref: positionRef,
     selectedIndex,
     onChange: (newSelectedIndex: number) => {
-      preventLayoutShift(() =>
-        addPreferredLanguage(availableLanguages[newSelectedIndex]),
-      )
-    },
+      preventLayoutShift(() => addPreferredLanguage(availableLanguages[newSelectedIndex]))
+    }
   }
 }
 
@@ -306,9 +279,7 @@ export function CodeGroup({
   ...props
 }: React.ComponentPropsWithoutRef<typeof CodeGroupPanels> & { title: string }) {
   let languages =
-    Children.map(children, (child) =>
-      getPanelTitle(isValidElement(child) ? child.props : {}),
-    ) ?? []
+    Children.map(children, child => getPanelTitle(isValidElement(child) ? child.props : {})) ?? []
   let tabGroupProps = useTabGroupProps(languages)
   let hasTabs = Children.count(children) > 1
 
@@ -338,17 +309,12 @@ export function CodeGroup({
   )
 }
 
-export function Code({
-  children,
-  ...props
-}: React.ComponentPropsWithoutRef<'code'>) {
+export function Code({ children, ...props }: React.ComponentPropsWithoutRef<'code'>) {
   let isGrouped = useContext(CodeGroupContext)
 
   if (isGrouped) {
     if (typeof children !== 'string') {
-      throw new Error(
-        '`Code` children must be a string when nested inside a `CodeGroup`.',
-      )
+      throw new Error('`Code` children must be a string when nested inside a `CodeGroup`.')
     }
     return <code {...props} dangerouslySetInnerHTML={{ __html: children }} />
   }
@@ -356,10 +322,7 @@ export function Code({
   return <code {...props}>{children}</code>
 }
 
-export function Pre({
-  children,
-  ...props
-}: React.ComponentPropsWithoutRef<typeof CodeGroup>) {
+export function Pre({ children, ...props }: React.ComponentPropsWithoutRef<typeof CodeGroup>) {
   let isGrouped = useContext(CodeGroupContext)
 
   if (isGrouped) {

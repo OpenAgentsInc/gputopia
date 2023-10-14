@@ -1,14 +1,14 @@
 // Inspired by Chatbot-UI and modified to fit the needs of this project
 // @see https://github.com/mckaywrigley/chatbot-ui/blob/main/components/Chat/ChatMessage.tsx
 
-import { Message } from "ai"
-import remarkGfm from "remark-gfm"
-import remarkMath from "remark-math"
-import { ChatMessageActions } from "@/components/chat-message-actions"
-import { MemoizedReactMarkdown } from "@/components/markdown"
-import { CodeBlock } from "@/components/ui/codeblock"
-import { IconGPUtopia, IconOpenAI, IconUser } from "@/components/ui/icons"
-import { cn } from "@/lib/utils"
+import { Message } from 'ai'
+import remarkGfm from 'remark-gfm'
+import remarkMath from 'remark-math'
+import { ChatMessageActions } from '@/components/chat-message-actions'
+import { MemoizedReactMarkdown } from '@/components/markdown'
+import { CodeBlock } from '@/components/ui/codeblock'
+import { IconGPUtopia, IconOpenAI, IconUser } from '@/components/ui/icons'
+import { cn } from '@/lib/utils'
 
 export interface ChatMessageProps {
   message: Message
@@ -16,24 +16,19 @@ export interface ChatMessageProps {
 
 export function ChatMessage({ message, ...props }: ChatMessageProps) {
   return (
-    <div
-      className={cn('group relative mb-4 flex items-start md:-ml-12')}
-      {...props}
-    >
+    <div className={cn('group relative mb-4 flex items-start md:-ml-12')} {...props}>
       <div
         className={cn(
           'flex h-8 w-8 shrink-0 select-none items-center justify-center rounded-md border shadow',
-          message.role === 'user'
-            ? 'bg-background'
-            : 'bg-primary text-primary-foreground'
+          message.role === 'user' ? 'bg-background' : 'bg-primary text-primary-foreground'
         )}
       >
         {message.role === 'user' ? <IconUser /> : <IconGPUtopia />}
       </div>
       <div className="flex-1 px-1 ml-4 space-y-2 overflow-hidden">
-        {message.content === "..." ? <div className="ml-1 mt-1 loader" /> : (
-
-
+        {message.content === '...' ? (
+          <div className="ml-1 mt-1 loader" />
+        ) : (
           <MemoizedReactMarkdown
             className="prose-invert prose-p:leading-relaxed prose-pre:p-0"
             remarkPlugins={[remarkGfm, remarkMath]}
@@ -44,9 +39,7 @@ export function ChatMessage({ message, ...props }: ChatMessageProps) {
               code({ node, inline, className, children, ...props }) {
                 if (children.length) {
                   if (children[0] == '▍') {
-                    return (
-                      <span className="mt-1 cursor-default animate-pulse">▍</span>
-                    )
+                    return <span className="mt-1 cursor-default animate-pulse">▍</span>
                   }
 
                   children[0] = (children[0] as string).replace('`▍`', '▍')
@@ -76,7 +69,7 @@ export function ChatMessage({ message, ...props }: ChatMessageProps) {
             {message.content}
           </MemoizedReactMarkdown>
         )}
-        {message.content !== "..." && <ChatMessageActions message={message} />}
+        {message.content !== '...' && <ChatMessageActions message={message} />}
       </div>
     </div>
   )

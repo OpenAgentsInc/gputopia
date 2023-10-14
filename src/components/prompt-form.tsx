@@ -1,28 +1,20 @@
-import { UseChatHelpers } from "ai/react"
-import { useRouter } from "next/navigation"
-import * as React from "react"
-import Textarea from "react-textarea-autosize"
-import { Button, buttonVariants } from "@/components/ui/button"
-import { IconArrowElbow, IconPlus } from "@/components/ui/icons"
-import {
-    Tooltip, TooltipContent, TooltipProvider, TooltipTrigger
-} from "@/components/ui/tooltip"
-import { useEnterSubmit } from "@/lib/hooks/use-enter-submit"
-import { useStore } from "@/lib/store"
-import { cn } from "@/lib/utils"
+import { UseChatHelpers } from 'ai/react'
+import { useRouter } from 'next/navigation'
+import * as React from 'react'
+import Textarea from 'react-textarea-autosize'
+import { Button, buttonVariants } from '@/components/ui/button'
+import { IconArrowElbow, IconPlus } from '@/components/ui/icons'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { useEnterSubmit } from '@/lib/hooks/use-enter-submit'
+import { useStore } from '@/lib/store'
+import { cn } from '@/lib/utils'
 
-export interface PromptProps
-  extends Pick<UseChatHelpers, 'input' | 'setInput'> {
+export interface PromptProps extends Pick<UseChatHelpers, 'input' | 'setInput'> {
   onSubmit: (value: string) => Promise<void>
   isLoading: boolean
 }
 
-export function PromptForm({
-  onSubmit,
-  input,
-  setInput,
-  isLoading
-}: PromptProps) {
+export function PromptForm({ onSubmit, input, setInput, isLoading }: PromptProps) {
   const { formRef, onKeyDown } = useEnterSubmit()
   const inputRef = React.useRef<HTMLTextAreaElement>(null)
   const router = useRouter()
@@ -77,7 +69,7 @@ export function PromptForm({
           rows={1}
           value={input}
           onChange={e => setInput(e.target.value)}
-          placeholder={"Send a message."}
+          placeholder={'Send a message.'}
           spellCheck={false}
           className="min-h-[60px] w-full resize-none bg-transparent px-4 py-[1.3rem] focus-within:outline-none sm:text-sm"
         />
@@ -85,11 +77,7 @@ export function PromptForm({
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button
-                  type="submit"
-                  size="icon"
-                  disabled={isLoading || input === '' || insufficientBalance}
-                >
+                <Button type="submit" size="icon" disabled={isLoading || input === '' || insufficientBalance}>
                   <IconArrowElbow />
                   <span className="sr-only">Send message</span>
                 </Button>

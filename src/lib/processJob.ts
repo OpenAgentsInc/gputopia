@@ -1,6 +1,6 @@
-import { complete } from "./complete"
-import { useStore } from "./store"
-import { generateAndStream } from "./webllm"
+import { complete } from './complete'
+import { useStore } from './store'
+import { generateAndStream } from './webllm'
 
 export interface Job {
   userId: number
