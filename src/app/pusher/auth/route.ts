@@ -1,7 +1,6 @@
 import { cp } from "fs"
 import mysql from "mysql2/promise"
 import { getServerSession } from "next-auth"
-import { useSession } from "next-auth/react"
 import { NextRequest, NextResponse } from "next/server"
 import { authOptions } from "@/lib/auth"
 import { pusher } from "@/lib/pusher"
@@ -9,8 +8,6 @@ import { pusher } from "@/lib/pusher"
 export async function POST(request: NextRequest) {
   // @ts-ignore
   const session = await getServerSession(authOptions)
-  console.log('SESSION:')
-  console.log(session)
   if (!session) {
     return new NextResponse('Unauthorized', {
       status: 401
@@ -22,8 +19,6 @@ export async function POST(request: NextRequest) {
     const formData = new URLSearchParams(formDataText)
     const socket_id = formData.get('socket_id') as string
     const channel_name = formData.get('channel_name') as string
-
-    console.log(session)
 
     const accessToken = session?.access_token
 
