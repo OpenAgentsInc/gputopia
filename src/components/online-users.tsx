@@ -1,3 +1,5 @@
+'use client'
+
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { useStore } from '@/lib/store'
 import { PersonIcon } from '@radix-ui/react-icons'

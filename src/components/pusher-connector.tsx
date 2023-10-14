@@ -2,28 +2,17 @@
 
 import Pusher, * as PusherTypes from 'pusher-js'
 import { useEffect, useState } from 'react'
-import { processJob } from '@/lib/processJob'
 import { useStore } from '@/lib/store'
 import { generate } from '@/lib/webllm'
-import { kv } from '@vercel/kv'
-import { signOut, useSession } from 'next-auth/react'
-import { useAlby } from '@/lib/useAlby'
-// import { auth } from '@/auth'
+import { useSession } from 'next-auth/react'
 
 export function PusherConnector() {
-  const { data: session, status } = useSession()
+  const { data: session } = useSession()
   const [userId, setUserId] = useState<string | null>(null)
-
-  // useAlby()
 
   useEffect(() => {
     let userId = session?.user.user_id
-    if (!userId) {
-      console.log("Skipping pusher auth, don't have the right")
-      // console.log('skipping signout in pusherconntectororor')
-      // signOut()
-      // alert('Error. Please log in again.')
-    } else {
+    if (userId) {
       setUserId(userId)
     }
   }, [session?.user.user_id])
@@ -54,17 +43,6 @@ export function PusherConnector() {
         return await generate(data.job)
       })
     }
-
-    // Listen for "new job" event
-    window.jobChannel = pusher.subscribe('private-v3jobs')
-    window.jobChannel.bind('new-job', data => {
-      processJob(data, Number(userId))
-    })
-
-    window.jobChannel.bind(`client-job-${userId}`, data => {
-      // console.log(data.message);
-      useStore.setState({ lastMessage: data.message })
-    })
 
     window.pusher = pusher
   }, [userId])

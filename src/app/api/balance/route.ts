@@ -1,11 +1,9 @@
 import { NextResponse } from 'next/server'
 import mysql from 'mysql2'
-import { authOptions } from '@/lib/auth'
-import { getServerSession } from 'next-auth'
+import { auth } from '@/auth'
 
 export async function GET() {
-  // @ts-ignore
-  const session = await getServerSession(authOptions)
+  const session = await auth()
   if (!session) {
     return new NextResponse('Unauthorized', {
       status: 401
