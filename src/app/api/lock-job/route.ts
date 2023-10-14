@@ -1,42 +1,45 @@
-import { NextRequest, NextResponse } from "next/server"
-import { kv } from "@vercel/kv"
+import { NextRequest, NextResponse } from 'next/server'
+import { kv } from '@vercel/kv'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
 
 export async function POST(req: NextRequest) {
-  const json = await req.json();
-  const { jobId, updated } = json;
-
-  // Get the user ID
-  const userIdString = req.cookies.get('userId');
-  if (!userIdString) {
-    throw new Error("Missing user ID cookie");
+  //@ts-ignore
+  const session = await getServerSession(authOptions)
+  if (!session) {
+    return new NextResponse('Unauthorized', {
+      status: 401
+    })
   }
-  const userId = Number(userIdString.value);
+
+  const json = await req.json()
+  const { jobId, updated } = json
+
+  const userId = session.user.user_id
 
   if (updated !== true) {
     console.log(`Forcing update for user ${userId} on job ${jobId}`)
-    throw new Error("Outdated client code, please refresh")
+    throw new Error('Outdated client code, please refresh')
   } else {
-    console.log("Update is true, continuing...")
+    console.log('Update is true, continuing...')
   }
 
-  const lockKey = `lock:${jobId}`;
+  const lockKey = `lock:${jobId}`
   console.log(`Attempting to lock job ${jobId}`)
 
   // Try to acquire lock
-  const lockSet = await kv.setnx(lockKey, 'locked');
+  const lockSet = await kv.setnx(lockKey, 'locked')
 
   try {
-    if (lockSet === 1) { // Lock acquired
+    if (lockSet === 1) {
+      // Lock acquired
       console.log(`"WON JOB: user ${userId} locked job ${jobId}`)
     } else {
       console.log(`"LOST JOB: user ${userId} lost out on job ${jobId}`)
     }
-
   } catch (e) {
-    console.log("Error locking job")
+    console.log('Error locking job')
   }
 
-
-
-  return NextResponse.json({ lockSet });
+  return NextResponse.json({ lockSet })
 }

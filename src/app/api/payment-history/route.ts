@@ -1,18 +1,23 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import mysql from 'mysql2/promise'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
 
-export async function POST(request) {
-  // Get the user ID
-  const userIdString = req.cookies.get('userId')
-  if (!userIdString) {
-    throw new Error('Missing user ID cookie')
+export async function POST(request: NextRequest) {
+  // @ts-ignore
+  const session = await getServerSession(authOptions)
+  if (!session) {
+    return new NextResponse('Unauthorized', {
+      status: 401
+    })
   }
-  const userId = Number(userIdString.value)
+
+  const userId = session.user.user_id
 
   let connection
 
   try {
-    connection = await mysql.createConnection(process.env.DATABASE_URL)
+    connection = await mysql.createConnection(process.env.DATABASE_URL as string)
 
     const query = `
       SELECT id, invoice_expires_at, invoice_payment_hash, invoice_payment_request,

@@ -1,27 +1,22 @@
-import { useEffect } from "react"
-import { useStore } from "./store"
+import { useEffect } from 'react'
+import { useStore } from './store'
 
 export function useBalance() {
-  const balance = useStore((state) => state.balance)
-  const user = useStore((state) => state.user)
+  const balance = useStore(state => state.balance)
+  const user = useStore(state => state.user)
   useEffect(() => {
     if (!user || balance > 0) return
 
-    fetch("/api/balance", {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: user.email }),
-    }).then((res) => {
-      if (res.ok) {
-        return res.json()
-      }
-    }).then((json) => {
-      if (json.totalSatsEarned || json.totalSatsEarned === 0) {
-        useStore.setState({ balance: json.balance, totalSatsEarned: json.totalSatsEarned })
-      }
-    }).catch((error) => {
-      console.log(error);
-    })
-  }, [user?.email, balance])
+    fetch('/api/balance')
+      .then(res => res.json())
+      .then(json => {
+        if (json.totalSatsEarned || json.totalSatsEarned === 0) {
+          useStore.setState({ balance: json.balance, totalSatsEarned: json.totalSatsEarned })
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }, [user?.email, balance, user])
   return balance
 }

@@ -1,16 +1,26 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import mysql from 'mysql2'
+import crypto from 'crypto'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
 
-const crypto = require('crypto')
-
-function generateRandomHex(n) {
+function generateRandomHex(n: number) {
   const randomValues = crypto.randomBytes(n)
   return randomValues.toString('hex')
 }
 
-export async function GET(request) {
-  const userId = Number(request.cookies.get('userId').value)
-  const connection = mysql.createConnection(process.env.DATABASE_URL)
+export async function GET() {
+  // @ts-ignore
+  const session = await getServerSession(authOptions)
+  if (!session) {
+    return new NextResponse('Unauthorized', {
+      status: 401
+    })
+  }
+
+  const userId = session?.user.user_id
+
+  const connection = mysql.createConnection(process.env.DATABASE_URL as string)
   return new Promise((resolve, reject) => {
     connection.query('SELECT access_token FROM users WHERE id = ?', [userId], function (err, results) {
       connection.end()
@@ -27,10 +37,19 @@ export async function GET(request) {
   })
 }
 
-export async function POST(request) {
-  const userId = Number(request.cookies.get('userId').value)
+export async function POST(request: NextRequest) {
+  // @ts-ignore
+  const session = await getServerSession(authOptions)
+  if (!session) {
+    return new NextResponse('Unauthorized', {
+      status: 401
+    })
+  }
+
+  const userId = session?.user.user_id
+
   const json = await request.json()
-  const connection = mysql.createConnection(process.env.DATABASE_URL)
+  const connection = mysql.createConnection(process.env.DATABASE_UR as string)
   const accessToken = generateRandomHex(16)
   if (json.command == 'generate') {
     return new Promise((resolve, reject) => {

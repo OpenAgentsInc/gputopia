@@ -27,8 +27,6 @@ export function useAlby() {
   // Grab user data from Alby
   useEffect(() => {
     if (session) {
-      // Todo move the setCookie to some other place
-      setCookie('userId', session.user.user_id)
       fetchUserData(session, setUser, logout)
     }
   }, [session])
@@ -51,15 +49,4 @@ function fetchUserData(session: Session, setUser: any, logout: any) {
       logout()
       console.error(err)
     })
-}
-
-function setCookie(name: string, value: string) {
-  const expirationDate = new Date()
-  expirationDate.setDate(expirationDate.getDate() + 30) // Add 30 days to the current date
-
-  // Create the cookie string
-  const cookieString = `${name}=${value}; expires=${expirationDate.toUTCString()}; path=/`
-
-  // Set the cookie
-  document.cookie = cookieString
 }

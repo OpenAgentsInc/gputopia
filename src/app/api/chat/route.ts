@@ -1,7 +1,9 @@
-import { OpenAIStream, StreamingTextResponse } from "ai"
+import { authOptions } from '@/lib/auth'
+import { OpenAIStream, StreamingTextResponse } from 'ai'
+import { getServerSession } from 'next-auth'
 // import mysql from "mysql2/promise"
-import { NextRequest, NextResponse } from "next/server"
-import { Configuration, OpenAIApi } from "openai-edge"
+import { NextRequest, NextResponse } from 'next/server'
+import { Configuration, OpenAIApi } from 'openai-edge'
 
 export const runtime = 'edge'
 
@@ -9,32 +11,34 @@ const token = process.env.CRON_AI_TOKEN
 
 const configuration = new Configuration({
   apiKey: token,
-  basePath: "https://queenbee.gputopia.ai/v1"
+  basePath: 'https://queenbee.gputopia.ai/v1'
 })
 
 const openai = new OpenAIApi(configuration)
 
 export async function POST(req: NextRequest) {
-  const json = await req.json();
-  const { messages } = json;
-
-  // Get the user ID
-  const userIdString = req.cookies.get('userId');
-  if (!userIdString) {
-    throw new Error("Missing user ID cookie");
+  // @ts-ignore
+  const session = await getServerSession(authOptions)
+  if (!session) {
+    return new NextResponse('Unauthorized', {
+      status: 401
+    })
   }
-  const userId = Number(userIdString.value);
 
-  // Check user balance
-  const userBalance = await checkUserBalance(userId);
-  console.log(userBalance + " balance")
+  const json = await req.json()
+  const { messages } = json
+
+  const userId = session.user.user_id
+
+  const userBalance = await checkUserBalance(Number(userId))
+  console.log(userBalance + ' balance')
 
   if (userBalance < 7) {
-    return NextResponse.json({ error: 'Insufficient balance' });
+    return NextResponse.json({ error: 'Insufficient balance' })
   }
 
   const res = await openai.createChatCompletion({
-    model: "vicuna-7B-q4",
+    model: 'vicuna-7B-q4',
     messages,
     max_tokens: 500,
     stream: true
@@ -42,7 +46,7 @@ export async function POST(req: NextRequest) {
 
   const stream = OpenAIStream(res, {
     async onCompletion(completion) {
-      console.log("Successful_completion:", completion)
+      console.log('Successful_completion:', completion)
     }
   })
 
@@ -52,9 +56,9 @@ export async function POST(req: NextRequest) {
 async function checkUserBalance(userId: number): Promise<number> {
   try {
     const currentBalance = 10
-    return currentBalance;
+    return currentBalance
   } catch (err: any) {
-    throw new Error('Error fetching balance: ' + err.message);
+    throw new Error('Error fetching balance: ' + err.message)
   }
 }
 
@@ -78,7 +82,6 @@ async function checkUserBalance(userId: number): Promise<number> {
 //     await connection.end(); // Close the connection
 //   }
 // }
-
 
 // export async function deductUserBalance(userId: number, amount: number): Promise<void> {
 //   // Create MySQL connection

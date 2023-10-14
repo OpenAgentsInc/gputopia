@@ -44,6 +44,9 @@ export const authOptions = {
       clientSecret: process.env.NEXT_PUBLIC_ALBY_CLIENT_SECRET
     }
   ],
+  session: {
+    maxAge: 60 * 60 * 2
+  },
   pages: {
     signIn: '/login'
   },

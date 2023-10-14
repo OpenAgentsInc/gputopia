@@ -1,13 +1,22 @@
-import { NextRequest, NextResponse } from "next/server"
-import { pusher } from "@/lib/pusher"
+import { NextRequest, NextResponse } from 'next/server'
+import { pusher } from '@/lib/pusher'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
 
 export async function GET(request: NextRequest) {
+  // @ts-ignore
+  const session = await getServerSession(authOptions)
+  if (!session) {
+    return new NextResponse('Unauthorized', {
+      status: 401
+    })
+  }
 
   // Ensure that the request is coming from the cron server
-  const { searchParams } = new URL(request.url);
-  const sharedKey = searchParams.get('sharedKey');
+  const { searchParams } = new URL(request.url)
+  const sharedKey = searchParams.get('sharedKey')
   if (!sharedKey || sharedKey !== process.env.CRON_KEY) {
-    return NextResponse.json({ ok: false });
+    return NextResponse.json({ ok: false })
   }
 
   // Get list of everyone online in the Pusher channel
@@ -17,33 +26,32 @@ export async function GET(request: NextRequest) {
 
   // Loop through each user and send a message
   for (const user of users) {
-    const { id } = user;
+    const { id } = user
     const token = process.env.CRON_AI_TOKEN
-    const response = await fetch("https://queenbee.gputopia.ai/v1/chat/completions", {
-      method: "POST",
+    const response = await fetch('https://queenbee.gputopia.ai/v1/chat/completions', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(
-        {
-        gpu_filter: {worker_id: id},
-        model: "vicuna-v1-7b-q4f32_0",
+      body: JSON.stringify({
+        gpu_filter: { worker_id: id },
+        model: 'vicuna-v1-7b-q4f32_0',
         messages: [
           {
-            "role": "system",
-            "content": "You are a terse, brusque assistant"
+            role: 'system',
+            content: 'You are a terse, brusque assistant'
           },
           {
-            "role": "user",
-            "content": `Write one sentence about the number ${id}`
+            role: 'user',
+            content: `Write one sentence about the number ${id}`
           }
         ],
         max_tokens: 200
-      }
-    )});
-    console.log("CRON OUT", await response.text())
+      })
+    })
+    console.log('CRON OUT', await response.text())
   }
 
-  return NextResponse.json({ ok: true, users: users.length });
+  return NextResponse.json({ ok: true, users: users.length })
 }

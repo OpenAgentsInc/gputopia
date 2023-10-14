@@ -1,69 +1,70 @@
-import mysql from "mysql2/promise"
-import { NextRequest, NextResponse } from "next/server"
+import { authOptions } from '@/lib/auth'
+import mysql from 'mysql2/promise'
+import { getServerSession } from 'next-auth'
+import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
-  const json = await request.json();
-  const payment_request = json.payment_request;
-
-  // Get the user ID
-  const userIdString = request.cookies.get('userId');
-  if (!userIdString) {
-    throw new Error("Missing user ID cookie");
+  // @ts-ignore
+  const session = await getServerSession(authOptions)
+  if (!session) {
+    return new NextResponse('Unauthorized', {
+      status: 401
+    })
   }
-  const userId = Number(userIdString.value);
+
+  const json = await request.json()
+  const payment_request = json.payment_request
+
+  const userId = session.user.user_id
 
   // Get payment details from Alby
-  const albyResponse = await fetch(`https://api.getalby.com/decode/bolt11/${payment_request}`);
-  const albyData = await albyResponse.json();
-
-  const payment_hash = albyData.payment_hash;
-  const expires_at = albyData.created_at + albyData.expiry;
-  const amount = albyData.amount;
-
+  const albyResponse = await fetch(`https://api.getalby.com/decode/bolt11/${payment_request}`)
   if (!albyResponse.ok) {
-    return NextResponse.json({ ok: false, message: "Invalid invoice" });
+    return NextResponse.json({ ok: false, message: 'Invalid invoice' })
   }
 
-  // Create MySQL connection
-  const connection = await mysql.createConnection(process.env.DATABASE_URL as string);
+  const albyData = await albyResponse.json()
 
-  await connection.beginTransaction();
+  const payment_hash = albyData.payment_hash
+  const expires_at = albyData.created_at + albyData.expiry
+  const amount = albyData.amount
+
+  // Create MySQL connection
+  const connection = await mysql.createConnection(process.env.DATABASE_URL as string)
+
+  await connection.beginTransaction()
   try {
     // Check balance and lock the row for the current transaction
-    const [rows] = await connection.execute(
-      'SELECT balance FROM users WHERE id = ? FOR UPDATE',
-      [userId]
-    ) as any;
-    const currentBalance = rows[0]?.balance || 0;
+    const [rows] = (await connection.execute('SELECT balance FROM users WHERE id = ? FOR UPDATE', [
+      userId
+    ])) as any
+    const currentBalance = rows[0]?.balance || 0
 
     if (currentBalance < amount) {
-      throw new Error('Insufficient balance');
+      throw new Error('Insufficient balance')
     }
 
     // Insert into Payments table
     await connection.execute(
       'INSERT INTO payments (user_id, invoice_expires_at, invoice_payment_hash, invoice_payment_request, amount, invoice_status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW())',
-      [userId, expires_at, payment_hash, payment_request, amount, "pending"]
-    );
+      [userId, expires_at, payment_hash, payment_request, amount, 'pending']
+    )
 
     // Update the balance
-    await connection.execute(
-      'UPDATE users SET balance = balance - ? WHERE id = ?',
-      [amount, userId]
-    );
+    await connection.execute('UPDATE users SET balance = balance - ? WHERE id = ?', [amount, userId])
 
     // Commit the transaction
-    await connection.commit();
+    await connection.commit()
 
     const payResponse = await fetch(`${process.env.LNBITS_BASE_URL}/payments`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-Api-Key': process.env.LNBITS_API_KEY as string,
+        'X-Api-Key': process.env.LNBITS_API_KEY as string
       },
       body: JSON.stringify({
-        "out": true,
-        "bolt11": payment_request,
+        out: true,
+        bolt11: payment_request
       })
     })
 
@@ -72,15 +73,14 @@ export async function POST(request: NextRequest) {
       await connection.execute(
         'UPDATE payments SET invoice_status = "settled" WHERE invoice_payment_hash = ?',
         [payment_hash]
-      );
+      )
     }
   } catch (err: any) {
-    // Rollback in case of an error
-    await connection.rollback();
-    return NextResponse.json({ ok: false, error: err.message });
+    await connection.rollback()
+    return NextResponse.json({ ok: false, error: err.message })
   } finally {
-    await connection.end(); // Close the connection
+    await connection.end()
   }
 
-  return NextResponse.json({ ok: true });
+  return NextResponse.json({ ok: true })
 }

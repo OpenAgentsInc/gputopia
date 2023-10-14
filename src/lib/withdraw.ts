@@ -18,9 +18,8 @@ export const withdraw = async (access_token: string) => {
       })
     })
 
-    const data = await response.json()
-
     if (response.ok) {
+      const data = await response.json()
       // console.log(data)
 
       const payResponse = await fetch('/api/pay', {

@@ -7,7 +7,14 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 
 export async function POST(request: NextRequest) {
+  // @ts-ignore
   const session = await getServerSession(authOptions)
+  if (!session) {
+    return new NextResponse('Unauthorized', {
+      status: 401
+    })
+  }
+
   try {
     const formDataText = await request.text()
     const formData = new URLSearchParams(formDataText)

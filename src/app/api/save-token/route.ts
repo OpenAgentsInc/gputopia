@@ -4,6 +4,7 @@ import { fetchUserFromAlby } from '@/lib/alby'
 
 export async function POST(request: NextRequest) {
   let userId
+
   try {
     const body = await request.json()
     const { token, refresh_token } = body
@@ -19,9 +20,7 @@ export async function POST(request: NextRequest) {
 
     const connection = await mysql.createConnection(process.env.DATABASE_URL as string)
 
-    const [results] = await connection.execute('SELECT * FROM users WHERE alby_id = ?', [
-      albyUser.alby_id
-    ])
+    const [results] = await connection.execute('SELECT * FROM users WHERE alby_id = ?', [albyUser.alby_id])
 
     if (results.length > 0) {
       userId = results[0].id
