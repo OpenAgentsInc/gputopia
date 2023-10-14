@@ -1,9 +1,7 @@
-import Link from "next/link"
-import {
-    Tooltip, TooltipContent, TooltipProvider, TooltipTrigger
-} from "@/components/ui/tooltip"
-import { useBalance } from "@/lib/useBalance"
-import { Button } from "./ui/button"
+import Link from 'next/link'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { useBalance } from '@/lib/useBalance'
+import { Button } from './ui/button'
 
 export const SatsBalance = () => {
   const balance = useBalance()

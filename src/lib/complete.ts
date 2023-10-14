@@ -1,4 +1,4 @@
-import { updateBalances } from "./update-balances"
+import { updateBalances } from './update-balances'
 
 export const complete = async (completion: string, jobId: string) => {
   // Fetch POST to complete the inference
@@ -6,7 +6,7 @@ export const complete = async (completion: string, jobId: string) => {
     method: 'POST',
     // @ts-ignore
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
       // @ts-ignore
     },
     body: JSON.stringify({ result: completion, jobId })
@@ -17,5 +17,5 @@ export const complete = async (completion: string, jobId: string) => {
     })
     .catch(error => {
       console.error('Error:', error)
-    });
+    })
 }

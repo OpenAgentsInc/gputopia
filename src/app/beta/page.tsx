@@ -1,12 +1,15 @@
 'use client'
 
-import { BackgroundImage } from "@/components/background-image"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { BackgroundImage } from '@/components/background-image'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import {
-    ExternalLink, TypographyH1 as H1, TypographyH2 as H2, TypographyH3 as H3,
-    TypographyP as P
-} from "@/components/ui/typography"
-import { RocketIcon } from "@radix-ui/react-icons"
+  ExternalLink,
+  TypographyH1 as H1,
+  TypographyH2 as H2,
+  TypographyH3 as H3,
+  TypographyP as P
+} from '@/components/ui/typography'
+import { RocketIcon } from '@radix-ui/react-icons'
 
 export default function Beta() {
   return (

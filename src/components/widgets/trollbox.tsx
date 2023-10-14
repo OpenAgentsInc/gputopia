@@ -1,8 +1,8 @@
 'use client'
 
-import { Card } from "@/components/ui/card"
-import { useStore } from "@/lib/store"
-import { ChatBox } from "./chat"
+import { Card } from '@/components/ui/card'
+import { useStore } from '@/lib/store'
+import { ChatBox } from './chat'
 
 export const Trollbox = () => {
   const user = useStore(state => state.user)
@@ -11,5 +11,5 @@ export const Trollbox = () => {
     <Card className="flex flex-col max-h-[calc(100vh-280px)] overflow-hidden col-span-2">
       <ChatBox user={user} />
     </Card>
-  );
-};
+  )
+}
