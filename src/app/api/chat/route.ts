@@ -15,7 +15,9 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration)
 
 export async function POST(req: NextRequest) {
+  console.log('Chat test.')
   const session = await auth()
+  console.log('Here with session:', session)
   if (!session) {
     return new NextResponse('Unauthorized', {
       status: 401
@@ -23,6 +25,7 @@ export async function POST(req: NextRequest) {
   }
 
   const json = await req.json()
+  console.log('json:', json)
   const { messages } = json
 
   const userId = session.user.id
