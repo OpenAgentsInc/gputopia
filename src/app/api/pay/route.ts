@@ -1,6 +1,4 @@
-import { authOptions } from '@/lib/auth'
 import mysql from 'mysql2/promise'
-import { getServerSession } from 'next-auth'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
