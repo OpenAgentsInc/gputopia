@@ -1,18 +1,18 @@
 import NextAuth, { DefaultSession } from 'next-auth'
 import { fetchUserFromAlby } from './alby'
 
-declare module 'next-auth' {
-  interface Session {
-    access_token: string
-    refresh_token: string
-    user: {
-      avatar: string
-      user_id: string
-      alby_id: string
-      lightning_address: string
-    } & DefaultSession['user']
-  }
-}
+// declare module 'next-auth' {
+//   interface Session {
+//     access_token: string
+//     refresh_token: string
+//     user: {
+//       avatar: string
+//       user_id: string
+//       alby_id: string
+//       lightning_address: string
+//     } & DefaultSession['user']
+//   }
+// }
 
 export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,

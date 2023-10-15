@@ -1,11 +1,9 @@
+import { auth } from '@/auth'
 import { OpenAIStream, StreamingTextResponse } from 'ai'
-import { getServerSession } from 'next-auth'
-// import mysql from "mysql2/promise"
 import { NextRequest, NextResponse } from 'next/server'
 import { Configuration, OpenAIApi } from 'openai-edge'
-import { authOptions } from '@/lib/auth'
 
-// export const runtime = 'edge'
+export const runtime = 'edge'
 
 const token = process.env.CRON_AI_TOKEN
 
@@ -17,8 +15,7 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration)
 
 export async function POST(req: NextRequest) {
-  // @ts-ignore
-  const session = await getServerSession(authOptions)
+  const session = await auth()
   if (!session) {
     return new NextResponse('Unauthorized', {
       status: 401
@@ -28,10 +25,10 @@ export async function POST(req: NextRequest) {
   const json = await req.json()
   const { messages } = json
 
-  const userId = session.user.user_id
+  const userId = session.user.id
+  console.log('Checking userId:', userId)
 
   const userBalance = await checkUserBalance(Number(userId))
-  console.log(userBalance + ' balance')
 
   if (userBalance < 7) {
     return NextResponse.json({ error: 'Insufficient balance' })
@@ -55,6 +52,7 @@ export async function POST(req: NextRequest) {
 
 async function checkUserBalance(userId: number): Promise<number> {
   try {
+    // Horrible balance placeholder so we don't charge users for now
     const currentBalance = 10
     return currentBalance
   } catch (err: any) {

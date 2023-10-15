@@ -1,11 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import mysql from 'mysql2/promise'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/auth'
+import { auth } from '@/auth'
 
 export async function POST(request: NextRequest) {
-  // @ts-ignore
-  const session = await getServerSession(authOptions)
+  const session = await auth()
   if (!session) {
     return new NextResponse('Unauthorized', {
       status: 401
@@ -13,6 +11,11 @@ export async function POST(request: NextRequest) {
   }
 
   const userId = session.user.user_id
+  if (!userId) {
+    return new NextResponse('Unauthorized', {
+      status: 401
+    })
+  }
 
   let connection
 

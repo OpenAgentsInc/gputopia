@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import mysql from 'mysql2'
 import crypto from 'crypto'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/auth'
+import { auth } from '@/auth'
 
 function generateRandomHex(n: number) {
   const randomValues = crypto.randomBytes(n)
@@ -10,8 +9,7 @@ function generateRandomHex(n: number) {
 }
 
 export async function GET() {
-  // @ts-ignore
-  const session = await getServerSession(authOptions)
+  const session = await auth()
   if (!session) {
     return new NextResponse('Unauthorized', {
       status: 401
