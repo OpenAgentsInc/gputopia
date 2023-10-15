@@ -1,11 +1,9 @@
-import { authOptions } from '@/lib/auth'
+import { auth } from '@/auth'
 import mysql from 'mysql2/promise'
-import { getServerSession } from 'next-auth'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
-  // @ts-ignore
-  const session = await getServerSession(authOptions)
+  const session = await auth()
   if (!session) {
     return new NextResponse('Unauthorized', {
       status: 401
@@ -16,6 +14,11 @@ export async function POST(request: NextRequest) {
   const payment_request = json.payment_request
 
   const userId = session.user.user_id
+  if (!userId) {
+    return new NextResponse('Unauthorized', {
+      status: 401
+    })
+  }
 
   // Get payment details from Alby
   const albyResponse = await fetch(`https://api.getalby.com/decode/bolt11/${payment_request}`)
