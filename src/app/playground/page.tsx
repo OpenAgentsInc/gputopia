@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import Image from 'next/image'
-import { CounterClockwiseClockIcon } from '@radix-ui/react-icons'
+import { CounterClockwiseClockIcon, RocketIcon } from '@radix-ui/react-icons'
 
 import { Button } from '@/components/ui/button'
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card'
@@ -20,6 +20,7 @@ import { TemperatureSelector } from './components/temperature-selector'
 import { TopPSelector } from './components/top-p-selector'
 import { models, types } from './data/models'
 import { presets } from './data/presets'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 
 export const metadata: Metadata = {
   title: 'Playground',
@@ -29,6 +30,15 @@ export const metadata: Metadata = {
 export default function PlaygroundPage() {
   return (
     <div className="mt-20 mx-8">
+      <div>
+        <Alert>
+          <RocketIcon className="h-8 w-8" />
+          <AlertTitle className="ml-4 text-lg">Demo only</AlertTitle>
+          <AlertDescription className="ml-4 text-muted-foreground">
+            This is not yet operational
+          </AlertDescription>
+        </Alert>
+      </div>
       <div className="h-full flex-col flex">
         <div className="container flex flex-col items-start justify-between space-y-2 py-4 sm:flex-row sm:items-center sm:space-y-0 md:h-16">
           <h2 className="text-lg font-semibold">Playground</h2>
