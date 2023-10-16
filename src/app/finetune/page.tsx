@@ -15,7 +15,7 @@ export default function Finetune() {
         </AlertDescription>
       </Alert>
 
-      <h1 className="text-2xl font-bold mb-4">Fine-tuning</h1>
+      <h1 className="text-2xl font-bold my-4">Fine-tuning</h1>
 
       <div className="flex flex-row justify-between mb-8">
         <div className="flex flex-row">
