@@ -36,8 +36,7 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-  // @ts-ignore
-  const session = await getServerSession(authOptions)
+  const session = await auth()
   if (!session) {
     return new NextResponse('Unauthorized', {
       status: 401
