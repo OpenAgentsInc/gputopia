@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios'
 import { SetStateAction, useEffect, useState } from 'react'
 import { useStore } from './store'
-import { useSession } from 'next-auth/react'
+import { useSession, signOut } from 'next-auth/react'
 import { Session } from 'next-auth'
 
 export interface AlbyUser {
@@ -43,9 +43,18 @@ function fetchUserData(session: Session, setUser: any, logout: any) {
     .then(res => res.json())
     .then(res => {
       setUser(res)
+
+      if (res.status === 401) {
+        signOut()
+        logout()
+        return
+      }
+
       useStore.setState({ user: res })
     })
     .catch(err => {
+      console.log('caught error')
+      signOut()
       logout()
       console.error(err)
     })
