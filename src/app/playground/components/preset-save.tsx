@@ -1,4 +1,4 @@
-import { Button } from "@/registry/new-york/ui/button"
+import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -6,10 +6,10 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
-} from "@/registry/new-york/ui/dialog"
-import { Input } from "@/registry/new-york/ui/input"
-import { Label } from "@/registry/new-york/ui/label"
+  DialogTrigger
+} from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 
 export function PresetSave() {
   return (
@@ -21,8 +21,8 @@ export function PresetSave() {
         <DialogHeader>
           <DialogTitle>Save preset</DialogTitle>
           <DialogDescription>
-            This will save the current playground state as a preset which you
-            can access later or share with others.
+            This will save the current playground state as a preset which you can access later or share with
+            others.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
