@@ -1,15 +1,19 @@
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
+import { CreateJob } from './components/create-job'
 
 export default function Finetune() {
   return (
     <div className="mt-12 bg-transparent min-h-screen p-8">
       <h1 className="text-2xl font-bold mb-4">Fine-tuning</h1>
 
-      <div className="flex mb-8">
-        <button className="px-4 py-2 border rounded mr-2">All</button>
-        <button className="px-4 py-2 border rounded mr-2">Successful</button>
-        <button className="px-4 py-2 border rounded">Failed</button>
+      <div className="flex flex-row justify-between mb-8">
+        <div className="flex flex-row">
+          <button className="px-4 py-2 border rounded mr-2">All</button>
+          <button className="px-4 py-2 border rounded mr-2">Successful</button>
+          <button className="px-4 py-2 border rounded">Failed</button>
+        </div>
+        <CreateJob />
       </div>
 
       <div className="grid grid-cols-2 gap-8">
