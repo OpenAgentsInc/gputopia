@@ -3,8 +3,8 @@ import { Chat } from '@/components/chat'
 import { nanoid } from '@/lib/utils'
 import { redirect } from 'next/navigation'
 
-export const runtime = 'edge'
-export const preferredRegion = 'home'
+// export const runtime = 'edge'
+// export const preferredRegion = 'home'
 
 export default async function IndexPage() {
   const id = nanoid()
