@@ -153,7 +153,7 @@ export default function PlaygroundPage() {
                   <div className="flex flex-col space-y-4">
                     <div className="grid h-full grid-rows-2 gap-6 lg:grid-cols-2 lg:grid-rows-1">
                       <Textarea
-                        placeholder="We're writing to [inset]. Congrats from OpenAI!"
+                        placeholder="We're writing to [inset]. Congrats from GPUtopia!"
                         className="h-full min-h-[300px] lg:min-h-[700px] xl:min-h-[700px]"
                       />
                       <div className="rounded-md border bg-muted"></div>
