@@ -79,6 +79,8 @@ export function SellMenu() {
           <MenubarTrigger>Buy</MenubarTrigger>
           <MenubarContent>
             <MenubarItem onClick={() => router.push('/chat')}>AI Chat</MenubarItem>
+            {/* <MenubarItem onClick={() => router.push('/finetune')}>Fine-tuning</MenubarItem> */}
+            {/* <MenubarItem onClick={() => router.push('/playground')}>Playground</MenubarItem> */}
             <MenubarItem onClick={() => router.push('/api-key')}>API Key</MenubarItem>
             {/* <MenubarSeparator />
             <MenubarItem disabled>
