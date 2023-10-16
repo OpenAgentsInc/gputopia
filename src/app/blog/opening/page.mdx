@@ -4,15 +4,19 @@ import { Resources } from '@/components/docs/Resources'
 import { HeroPattern } from '@/components/docs/HeroPattern'
 import { ExternalLink, TypographyH1 as H1 } from '@/components/ui/typography'
 
-export const metadata = {
+export const article = {
+  author: 'GPUtopia',
+  date: '2023-10-03',
   title: 'Opening AI',
   description: 'We are building truly open AI - and we need your help.'
 }
 
-<time
-  dateTime="2023-10-03"
-  className="order-first flex items-center text-base text-zinc-500"
->
+export const metadata = {
+  title: article.title,
+  description: article.description
+}
+
+<time dateTime="2023-10-03" className="order-first flex items-center text-base text-zinc-500">
   <span className="h-4 w-0.5 rounded-full bg-zinc-500"></span>
   <span className="ml-3">October 3, 2023</span>
 </time>
@@ -81,8 +85,7 @@ Here are some directions we’re excited to explore:
 - Bringing AI to the edge with wearable hardware connected to our GPU mesh
 - Doing all of the above in an open and decentralized marketplace accessible to all people
 
-<ExternalLink href="https://hivemind.vc/ai/">Actually open AI</ExternalLink> must
-win.
+<ExternalLink href="https://hivemind.vc/ai/">Actually open AI</ExternalLink> must win.
 
 Whether it does &mdash; and how soon &mdash; is up to all of us.
 
@@ -97,10 +100,7 @@ Whether it does &mdash; and how soon &mdash; is up to all of us.
 </div>
 
 <div className="mt-12 text-xs opacity-75 italic">
-  Next post: [Transcript: Thriller Bitcoin interviews Christopher
-  David](/blog/thriller)
+  Next post: [Transcript: Thriller Bitcoin interviews Christopher David](/blog/thriller)
 </div>
 
-<div className="mt-12 text-xs opacity-75 italic">
-  Previous post: [Toward an Open GPU Mesh](/blog/intro)
-</div>
+<div className="mt-12 text-xs opacity-75 italic">Previous post: [Toward an Open GPU Mesh](/blog/intro)</div>

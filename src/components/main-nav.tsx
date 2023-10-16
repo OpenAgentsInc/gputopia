@@ -27,10 +27,10 @@ export async function MainNav({ className, ...props }: React.HTMLAttributes<HTML
         GPUTOPIA
       </Link>
       <Link
-        href="/blog/opening"
+        href="/blog"
         className={cn(linkClasses, {
-          'text-white': isActive('/blog/opening'),
-          'text-muted-foreground': !isActive('/blog/opening')
+          'text-white': isActive('/blog'),
+          'text-muted-foreground': !isActive('/blog')
         })}
       >
         <span className="mx-2">Blog</span>
