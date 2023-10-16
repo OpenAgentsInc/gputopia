@@ -11,7 +11,7 @@ export default function Finetune() {
         <RocketIcon className="h-8 w-8" />
         <AlertTitle className="ml-4 text-lg">Demo only</AlertTitle>
         <AlertDescription className="ml-4 text-muted-foreground">
-          This is a non-functional demo so you can see what we're working on
+          This is a non-functional demo so you can see what we&apos;re working on
         </AlertDescription>
       </Alert>
 
