@@ -50,7 +50,7 @@ export function MainNav({ className, ...props }: React.HTMLAttributes<HTMLElemen
       >
         <span className="mx-2 mr-6">Docs</span>
       </Link>
-      {/* {!!user && <SellMenu />} */}
+      {!!user && <SellMenu />}
     </nav>
   )
 }
