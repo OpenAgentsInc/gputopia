@@ -1,17 +1,20 @@
-'use client'
+// 'use client'
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useStore } from '@/lib/store'
 import { cn } from '@/lib/utils'
 import { SellMenu } from './sell-menu'
+import { auth } from '@/auth'
 
 const linkClasses = 'text-sm font-medium transition-colors hover:text-primary'
 
-export function MainNav({ className, ...props }: React.HTMLAttributes<HTMLElement>) {
-  const pathname = usePathname()
-  const isActive = (path: string) => pathname === path
-  const user = useStore(state => state.user)
+export async function MainNav({ className, ...props }: React.HTMLAttributes<HTMLElement>) {
+  // const pathname = usePathname()
+  // const isActive = (path: string) => pathname === path
+  const isActive = () => false
+  // const user = useStore(state => state.user)
+  const session = await auth()
   return (
     <nav className={cn('flex items-center space-x-4 lg:space-x-6', className)} {...props}>
       <Link
@@ -50,7 +53,7 @@ export function MainNav({ className, ...props }: React.HTMLAttributes<HTMLElemen
       >
         <span className="mx-2 mr-6">Docs</span>
       </Link>
-      {!!user && <SellMenu />}
+      {!!session?.user && <SellMenu />}
     </nav>
   )
 }

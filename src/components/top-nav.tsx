@@ -19,9 +19,9 @@ export async function TopNav() {
       <Suspense fallback={null}>{session?.user && <PusherConnector />}</Suspense>
       <div className="border-b fixed top-0 left-0 right-0 z-50 backdrop-blur bg-background/80">
         <div className="flex h-16 items-center px-4">
-          <Suspense fallback={null}>
-            <MainNav className="mx-6" />
-          </Suspense>
+          {/* <Suspense fallback={null}> */}
+          <MainNav className="mx-6" />
+          {/* </Suspense> */}
           <div className="ml-auto flex items-center space-x-4">
             {session?.user ? (
               <Suspense fallback={null}>

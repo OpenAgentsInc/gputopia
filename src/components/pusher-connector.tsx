@@ -5,13 +5,16 @@ import { useEffect, useState } from 'react'
 import { useStore } from '@/lib/store'
 import { generate } from '@/lib/webllm'
 import { useSession } from 'next-auth/react'
+import { useAlby } from '@/lib/useAlby'
 
 export function PusherConnector() {
   const { data: session } = useSession()
   const [userId, setUserId] = useState<string | null>(null)
+  useAlby()
 
   useEffect(() => {
     let userId = session?.user.user_id
+    console.log('setting userId', userId)
     if (userId) {
       setUserId(userId)
     }
