@@ -14,7 +14,6 @@ export function PusherConnector() {
 
   useEffect(() => {
     let userId = session?.user.user_id
-    console.log('setting userId', userId)
     if (userId) {
       setUserId(userId)
     }
