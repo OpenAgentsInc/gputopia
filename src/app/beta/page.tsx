@@ -24,7 +24,7 @@ export default function Beta() {
               <AlertTitle className="ml-4 text-lg">16 Oct Update</AlertTitle>
               <AlertDescription className="ml-4 text-muted-foreground">
                 Our beta web interface is back up. Codebase is under heavy development so may be unstable.
-                Join our
+                Join our{' '}
                 <ExternalLink className="text-cyan-500" href="https://discord.gg/vJhMqcqN">
                   Discord
                 </ExternalLink>{' '}
