@@ -21,9 +21,10 @@ export default function Beta() {
           <div className="mx-auto max-w-2xl p-4 sm:p-0">
             <Alert>
               <RocketIcon className="h-8 w-8" />
-              <AlertTitle className="ml-4 text-lg">14 Oct Update</AlertTitle>
+              <AlertTitle className="ml-4 text-lg">16 Oct Update</AlertTitle>
               <AlertDescription className="ml-4 text-muted-foreground">
-                Our beta web interface is down for maintenance. Join our{' '}
+                Our beta web interface is back up. Codebase is under heavy development so may be unstable.
+                Join our
                 <ExternalLink className="text-cyan-500" href="https://discord.gg/vJhMqcqN">
                   Discord
                 </ExternalLink>{' '}
