@@ -44,11 +44,11 @@ function fetchUserData(session: Session, setUser: any, logout: any) {
     .then(res => {
       setUser(res)
 
-      if (res.status === 401) {
-        signOut()
-        logout()
-        return
-      }
+      // if (res.status === 401) {
+      //   signOut()
+      //   logout()
+      //   return
+      // }
 
       useStore.setState({ user: res })
     })
