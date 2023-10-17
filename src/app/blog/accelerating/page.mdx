@@ -1,0 +1,37 @@
+import { Button } from '@/components/ui/button'
+import { Guides } from '@/components/docs/Guides'
+import { Resources } from '@/components/docs/Resources'
+import { HeroPattern } from '@/components/docs/HeroPattern'
+import { ExternalLink, TypographyH1 as H1 } from '@/components/ui/typography'
+
+export const article = {
+  author: 'GPUtopia',
+  date: '2023-10-17',
+  title: 'Accelerating Open AI',
+  description: 'We increase our bounty prize pool to 4 BTC (~$110,000 USD).'
+}
+
+export const metadata = {
+  title: article.title,
+  description: article.description
+}
+
+<time dateTime="2023-10-03" className="order-first flex items-center text-base text-zinc-500">
+  <span className="h-4 w-0.5 rounded-full bg-zinc-500"></span>
+  <span className="ml-3">October 17, 2023</span>
+</time>
+
+<H1 className="mt-4 mb-8">Accelerating Open AI</H1>
+
+### We increase our bounty prize pool to 4 BTC (~$110,000 USD). {{ class: "text-zinc-500 text-2xl" }}
+
+![Bounties](/images/bounties4btc.png)
+
+Previously we announced 1 BTC of bounties to build [truly open AI](/blog/opening).
+
+<div className="-mt-12 text-center flex flex-col justify-center items-center">
+![4 BTC prizes](/images/4btc.png)
+
+We've got 4 Bitcoin for bounties ready to go. {{ className: '-mt-8 mb-6 italic text-sm opacity-75' }}
+
+</div>
