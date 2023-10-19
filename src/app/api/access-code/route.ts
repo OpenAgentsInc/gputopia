@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
   const userId = session?.user.user_id
 
   const json = await request.json()
-  const connection = mysql.createConnection(process.env.DATABASE_UR as string)
+  const connection = mysql.createConnection(process.env.DATABASE_URL as string)
   const accessToken = generateRandomHex(16)
   if (json.command == 'generate') {
     return new Promise((resolve, reject) => {
