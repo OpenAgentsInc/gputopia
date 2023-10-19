@@ -3,8 +3,10 @@ import Link from 'next/link'
 import { CreateJob } from './components/create-job'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { RocketIcon } from '@radix-ui/react-icons'
+import { useFinetuneJobs } from '@/lib/hooks/use-finetune-jobs'
 
 export default function Finetune() {
+  const jobs = useFinetuneJobs()
   return (
     <div className="mt-12 bg-transparent min-h-screen p-8">
       <Alert>
@@ -28,10 +30,14 @@ export default function Finetune() {
 
       <div className="grid grid-cols-2 gap-8">
         <div>
-          <div className="border p-4 mb-8">
-            <h2 className="text-xl font-semibold mb-4">my-custom-mistral</h2>
-            <p>10/16/2023, 3:57 PM</p>
-          </div>
+          {jobs.map(job => (
+            <Link key={job.id} href={`/finetune/${job.id}`}>
+              <div className="border p-4 mb-8">
+                <h2 className="text-xl font-semibold mb-4">{job.name}</h2>
+                <p>{job.createdAt}</p>
+              </div>
+            </Link>
+          ))}
         </div>
 
         <div>
