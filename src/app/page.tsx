@@ -10,9 +10,9 @@ export default function Home() {
         <div className="-mt-16 mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
             <div className="my-8 flex justify-center">
-              <a href="/blog/opening">
+              <a href="/blog/accelerating">
                 <div className="tracking-wider shentox relative rounded-full px-3 py-1 text-md leading-6 text-gray-400 hover:text-white ring-1 ring-white/10">
-                  READ: Opening AI
+                  READ: Accelerating Open AI
                 </div>
               </a>
             </div>
