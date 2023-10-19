@@ -9,7 +9,8 @@
     "lint": "next lint",
     "format:write": "prettier --write \"{app,lib,components}/**/*.{ts,tsx,mdx}\" --cache",
     "format:check": "prettier --check \"{app,lib,components}**/*.{ts,tsx,mdx}\" --cache",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "setup": "cp .env.local.template .env.local && docker-compose up -d && yarn install && yarn dev"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.15",
