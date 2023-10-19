@@ -30,14 +30,17 @@ export default function Finetune() {
 
       <div className="grid grid-cols-2 gap-8">
         <div>
-          {jobs.map(job => (
-            <Link key={job.id} href={`/finetune/${job.id}`}>
-              <div className="border p-4 mb-8">
-                <h2 className="text-xl font-semibold mb-4">{job.name}</h2>
-                <p>{job.createdAt}</p>
-              </div>
-            </Link>
-          ))}
+          {jobs.map(job => {
+            const humanReadableDate = new Date(job.created_at * 1000).toLocaleString()
+            return (
+              <Link key={job.id} href={`/finetune/${job.id}`}>
+                <div className="border p-4 mb-8">
+                  <h2 className="text-xl font-semibold mb-4">{job.id}</h2>
+                  <p>{humanReadableDate}</p>
+                </div>
+              </Link>
+            )
+          })}
         </div>
 
         <div>
