@@ -10,6 +10,7 @@ import { useFinetuneJobs } from '@/lib/hooks/use-finetune-jobs'
 export default function FinetuneDetail({ params }: { params: { id: string } }) {
   const jobs = useFinetuneJobs()
   const job = jobs.find(job => job.id === params.id)
+  console.log(job)
   return (
     <div className="mt-12 bg-transparent min-h-screen p-8">
       <Alert>
@@ -38,7 +39,7 @@ export default function FinetuneDetail({ params }: { params: { id: string } }) {
             return (
               <Link key={job.id} href={`/finetune/${job.id}`}>
                 <div className="flex flex-row justify-between items-center border p-4">
-                  <span className="font-mono text-sm font-semibold">{job.fine_tuned_model}</span>
+                  <span className="font-mono text-sm font-semibold">{job.fine_tuned_model ?? job.model}</span>
                   <div className="text-xs">{humanReadableDate}</div>
                 </div>
               </Link>
@@ -49,7 +50,7 @@ export default function FinetuneDetail({ params }: { params: { id: string } }) {
         {job && (
           <div>
             <h3 className="text-xs font-semibold">MODEL</h3>
-            <h3 className="text-lg font-semibold mb-8">{job?.fine_tuned_model}</h3>
+            <h3 className="text-lg font-semibold mb-8">{job?.fine_tuned_model ?? job?.model}</h3>
             <p className="mb-2">
               <strong>Job ID</strong>: {job?.id}
             </p>
@@ -69,7 +70,7 @@ export default function FinetuneDetail({ params }: { params: { id: string } }) {
             </p>
             <Separator />
             <p className="mb-2">
-              <strong>Trained tokens</strong>: {job?.trained_tokens}
+              <strong>Trained tokens</strong>: {job?.trained_tokens ?? '-'}
             </p>
             <p className="mb-2">
               <strong>Epochs</strong>: {job.hyperparameters.n_epochs}

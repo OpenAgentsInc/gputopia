@@ -36,7 +36,7 @@ export default function Finetune() {
             return (
               <Link key={job.id} href={`/finetune/${job.id}`}>
                 <div className="flex flex-row justify-between items-center border p-4">
-                  <span className="font-mono text-sm font-semibold">{job.fine_tuned_model}</span>
+                  <span className="font-mono text-sm font-semibold">{job.fine_tuned_model ?? job.model}</span>
                   <div className="text-xs">{humanReadableDate}</div>
                 </div>
               </Link>
