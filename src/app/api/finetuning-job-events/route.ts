@@ -1,6 +1,6 @@
-import OpenAI from 'openai'
 import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@/auth'
+import axios from 'axios'
 
 export async function GET(request: NextRequest) {
   const session = await auth()
@@ -9,16 +9,21 @@ export async function GET(request: NextRequest) {
       status: 401
     })
   }
-  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 
   try {
     const id = request.nextUrl.searchParams.get('id')
     if (!id) {
       return NextResponse.json({ events: [] })
     }
-    const list = await openai.fineTuning.jobs.listEvents(id, { limit: 100 })
+    const res = await axios.get(`https://queenbee.gputopia.ai/v1/fine_tuning/jobs/${id}/events`, {
+      headers: {
+        Authorization: `Bearer ac4a9ce1c028c7a1e652d11f4d7e009e`
+      }
+    })
+    const json = await res.data
+    console.log(json)
 
-    return NextResponse.json({ events: list.data })
+    return NextResponse.json({ events: json.reverse() })
   } catch (error) {
     console.log(error)
   }

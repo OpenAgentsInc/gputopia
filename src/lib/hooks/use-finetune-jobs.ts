@@ -25,7 +25,9 @@ export function useFinetuneJobs(): FinetuneJob[] {
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log('fetching')
       const response = await axios.get('/api/finetuning-jobs')
+      console.log(response.status)
       setJobs(response.data.jobs)
     }
 

@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@/auth'
 import { writeFile } from 'fs/promises'
 import { createReadStream } from 'fs'
+import axios from 'axios'
 
 export async function GET() {
   const session = await auth()
@@ -11,20 +12,37 @@ export async function GET() {
       status: 401
     })
   }
-  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 
-  try {
-    const list = await openai.fineTuning.jobs.list()
-    const jobs = []
+  const openai = new OpenAI({
+    apiKey: 'ac4a9ce1c028c7a1e652d11f4d7e009e',
+    baseURL: 'https://queenbee.gputopia.ai/v1'
+  })
 
-    for await (const fineTune of list) {
-      jobs.push(fineTune)
+  // make request to queenbee with apitoken as Authorization bearer header
+  const res = await axios.get('https://queenbee.gputopia.ai/v1/fine_tuning/jobs', {
+    headers: {
+      Authorization: `Bearer ac4a9ce1c028c7a1e652d11f4d7e009e`
     }
+  })
+  // console.log(res)
+  const json = await res.data
+  // console.log(json)
 
-    return NextResponse.json({ jobs })
-  } catch (error) {
-    console.log(error)
-  }
+  // let jobs = []
+  // try {
+  //   const list = await openai.fineTuning.jobs.list()
+  //   console.log('list is', list)
+
+  //   for await (const fineTune of list) {
+  //     jobs.push(fineTune)
+  //     console.log('PUSHED', fineTune.id)
+  //   }
+  // } catch (error) {
+  //   console.log(error)
+  //   return
+  // }
+
+  return NextResponse.json({ jobs: json.data })
 }
 
 export async function POST(request: NextRequest) {
@@ -42,7 +60,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: false })
   }
 
-  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+  const openai = new OpenAI({
+    apiKey: 'ac4a9ce1c028c7a1e652d11f4d7e009e',
+    baseURL: 'https://queenbee.gputopia.ai/v1'
+  })
 
   const trainingBytes = await trainingFile.arrayBuffer()
   const trainingBuffer = Buffer.from(trainingBytes)
