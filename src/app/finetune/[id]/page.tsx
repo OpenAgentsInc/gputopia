@@ -10,7 +10,6 @@ export default function FinetuneDetail({ params }: { params: { id: string } }) {
   const jobs = useFinetuneJobs()
   const job = jobs.find(job => job.id === params.id)
   const jobEvents = useFinetuneJobEvents(job?.id)
-  console.log(jobEvents)
   return (
     <div className="mt-12 bg-transparent min-h-screen p-8">
       <h1 className="text-2xl font-bold my-4">Fine-tuning</h1>
@@ -72,6 +71,29 @@ export default function FinetuneDetail({ params }: { params: { id: string } }) {
             <h3 className="text-lg font-semibold mb-2">Files</h3>
             <div className="mb-2 block">Training: {job.training_file}</div>
             <div className="mb-2 block">Validation: {job.validation_file}</div>
+
+            <Separator />
+
+            <h3 className="text-lg font-semibold mb-2 mt-12">Events</h3>
+            {jobEvents.map(event => {
+              if (event.type === 'metrics') return null
+              return (
+                <div key={event.id} className="mb-2 flex flex-row items-center">
+                  <div className="text-xs mb-1 w-48">
+                    {' '}
+                    {new Date(event.created_at * 1000).toLocaleString('en-US', {
+                      month: 'short',
+                      day: '2-digit',
+                      year: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      hour12: true
+                    })}
+                  </div>
+                  <div className="text-xs mb-1 ml-12">{event.message}</div>
+                </div>
+              )
+            })}
           </div>
         )}
       </div>
