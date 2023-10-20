@@ -91,7 +91,7 @@ export async function POST(request: NextRequest) {
   const fineTune = await openai.fineTuning.jobs.create({
     training_file: trainingId,
     validation_file: validationId,
-    model: 'davinci-002',
+    model: 'mistralai/Mistral-7B-Instruct-v0.1',
     hyperparameters: { n_epochs: 3 }
   })
   console.log(fineTune)
