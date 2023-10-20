@@ -4,10 +4,13 @@ import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
 import { CreateJob } from '../components/create-job'
 import { useFinetuneJobs } from '@/lib/hooks/use-finetune-jobs'
+import { useFinetuneJobEvents } from '@/lib/hooks/use-finetune-job-events'
 
 export default function FinetuneDetail({ params }: { params: { id: string } }) {
   const jobs = useFinetuneJobs()
   const job = jobs.find(job => job.id === params.id)
+  const jobEvents = useFinetuneJobEvents(job?.id)
+  console.log(jobEvents)
   return (
     <div className="mt-12 bg-transparent min-h-screen p-8">
       <h1 className="text-2xl font-bold my-4">Fine-tuning</h1>
