@@ -34,16 +34,12 @@ export function CreateJob() {
       body: formData
     })
 
-    // console.log(res)
     if (res.ok) {
       const json = await res.json()
-      console.log(json)
       setOpen(false)
-      console.log('Attempting redirect to ', `/finetune/${json.finetuneId}`)
-      // redirect(`/finetune/${json.finetuneId}`)
       router.push(`/finetune/${json.finetuneId}`)
     } else {
-      // Handle error
+      alert('Something went wrong. Please try again.')
     }
   }
   return (

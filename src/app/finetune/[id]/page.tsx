@@ -3,24 +3,13 @@
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
 import { CreateJob } from '../components/create-job'
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
-import { RocketIcon } from '@radix-ui/react-icons'
 import { useFinetuneJobs } from '@/lib/hooks/use-finetune-jobs'
 
 export default function FinetuneDetail({ params }: { params: { id: string } }) {
   const jobs = useFinetuneJobs()
   const job = jobs.find(job => job.id === params.id)
-  console.log(job)
   return (
     <div className="mt-12 bg-transparent min-h-screen p-8">
-      <Alert>
-        <RocketIcon className="h-8 w-8" />
-        <AlertTitle className="ml-4 text-lg">Demo only</AlertTitle>
-        <AlertDescription className="ml-4 text-muted-foreground">
-          This is a non-functional demo so you can see what we&apos;re working on
-        </AlertDescription>
-      </Alert>
-
       <h1 className="text-2xl font-bold my-4">Fine-tuning</h1>
 
       <div className="flex flex-row justify-between mb-8">
