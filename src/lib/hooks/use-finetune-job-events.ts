@@ -8,7 +8,7 @@ export function useFinetuneJobEvents(id: string | undefined) {
     if (!id) return
     console.log(`Retrieving events for job ${id}`)
     const fetchData = async () => {
-      const response = await axios.get(`/api/finetuning-job-events/${id}`)
+      const response = await axios.get(`/api/finetuning-job-events?id=${id}`)
       setEvents(response.data.events)
     }
 
