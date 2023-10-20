@@ -1,3 +1,5 @@
+'use client'
+
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
 import { CreateJob } from './components/create-job'
@@ -7,6 +9,7 @@ import { useFinetuneJobs } from '@/lib/hooks/use-finetune-jobs'
 
 export default function Finetune() {
   const jobs = useFinetuneJobs()
+  console.log(jobs)
   return (
     <div className="mt-12 bg-transparent min-h-screen p-8">
       <Alert>
