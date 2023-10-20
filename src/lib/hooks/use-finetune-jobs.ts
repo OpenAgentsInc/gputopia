@@ -9,6 +9,7 @@ interface FinetuneJob {
   message: string
   data: any
   type: string
+  fine_tuned_model: string
 }
 
 export function useFinetuneJobs(): FinetuneJob[] {

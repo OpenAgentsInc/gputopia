@@ -9,7 +9,6 @@ import { useFinetuneJobs } from '@/lib/hooks/use-finetune-jobs'
 
 export default function Finetune() {
   const jobs = useFinetuneJobs()
-  console.log(jobs)
   return (
     <div className="mt-12 bg-transparent min-h-screen p-8">
       <Alert>
@@ -37,9 +36,9 @@ export default function Finetune() {
             const humanReadableDate = new Date(job.created_at * 1000).toLocaleString()
             return (
               <Link key={job.id} href={`/finetune/${job.id}`}>
-                <div className="border p-4 mb-8">
-                  <h2 className="text-xl font-semibold mb-4">{job.id}</h2>
-                  <p>{humanReadableDate}</p>
+                <div className="flex flex-row justify-between items-center border p-4">
+                  <span className="font-mono text-sm font-semibold">{job.fine_tuned_model}</span>
+                  <div className="text-xs">{humanReadableDate}</div>
                 </div>
               </Link>
             )
