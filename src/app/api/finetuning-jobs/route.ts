@@ -28,6 +28,12 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  const session = await auth()
+  if (!session) {
+    return new NextResponse('Unauthorized', {
+      status: 401
+    })
+  }
   const data = await request.formData()
   const trainingFile: File | null = data.get('trainingData') as unknown as File
   const validationFile: File | null = data.get('validationData') as unknown as File
