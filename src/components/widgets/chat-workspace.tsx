@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { useEffect, useState } from 'react'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 export const ChatWorkspace = () => {
-  const [paymentHistory, setPaymentHistory] = useState([]);
+  const [paymentHistory, setPaymentHistory] = useState([])
 
   // useEffect(() => {
   //   // Fetch payment history here and update the state
@@ -13,7 +13,5 @@ export const ChatWorkspace = () => {
   //     });
   // }, []);
 
-  return (
-    <div className="col-span-2" />
-  );
-};
+  return <div className="col-span-2" />
+}

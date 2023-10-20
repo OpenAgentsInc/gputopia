@@ -1,11 +1,11 @@
 'use client'
 
-import { usePathname } from "next/navigation"
-import { Section, SectionProvider } from "@/components/docs/SectionProvider"
+import { usePathname } from 'next/navigation'
+import { Section, SectionProvider } from '@/components/docs/SectionProvider'
 
 export function BlogLayout({
   children,
-  allSections,
+  allSections
 }: {
   children: React.ReactNode
   allSections: Record<string, Array<Section>>

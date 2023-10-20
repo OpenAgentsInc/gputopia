@@ -1,10 +1,8 @@
 'use client'
 
-import {
-    createContext, useContext, useEffect, useLayoutEffect, useState
-} from "react"
-import { createStore, type StoreApi, useStore } from "zustand"
-import { remToPx } from "@/lib/remToPx"
+import { createContext, useContext, useEffect, useLayoutEffect, useState } from 'react'
+import { createStore, type StoreApi, useStore } from 'zustand'
+import { remToPx } from '@/lib/remToPx'
 
 export interface Section {
   id: string
@@ -21,7 +19,7 @@ interface SectionState {
   registerHeading: ({
     id,
     ref,
-    offsetRem,
+    offsetRem
   }: {
     id: string
     ref: React.RefObject<HTMLHeadingElement>
@@ -30,47 +28,39 @@ interface SectionState {
 }
 
 function createSectionStore(sections: Array<Section>) {
-  return createStore<SectionState>()((set) => ({
+  return createStore<SectionState>()(set => ({
     sections,
     visibleSections: [],
-    setVisibleSections: (visibleSections) =>
-      set((state) =>
-        state.visibleSections.join() === visibleSections.join()
-          ? {}
-          : { visibleSections },
-      ),
+    setVisibleSections: visibleSections =>
+      set(state => (state.visibleSections.join() === visibleSections.join() ? {} : { visibleSections })),
     registerHeading: ({ id, ref, offsetRem }) =>
-      set((state) => {
+      set(state => {
         return {
-          sections: state.sections.map((section) => {
+          sections: state.sections.map(section => {
             if (section.id === id) {
               return {
                 ...section,
                 headingRef: ref,
-                offsetRem,
+                offsetRem
               }
             }
             return section
-          }),
+          })
         }
-      }),
+      })
   }))
 }
 
 function useVisibleSections(sectionStore: StoreApi<SectionState>) {
-  let setVisibleSections = useStore(sectionStore, (s) => s.setVisibleSections)
-  let sections = useStore(sectionStore, (s) => s.sections)
+  let setVisibleSections = useStore(sectionStore, s => s.setVisibleSections)
+  let sections = useStore(sectionStore, s => s.sections)
 
   useEffect(() => {
     function checkVisibleSections() {
       let { innerHeight, scrollY } = window
       let newVisibleSections = []
 
-      for (
-        let sectionIndex = 0;
-        sectionIndex < sections.length;
-        sectionIndex++
-      ) {
+      for (let sectionIndex = 0; sectionIndex < sections.length; sectionIndex++) {
         let { id, headingRef, offsetRem = 0 } = sections[sectionIndex]
 
         if (!headingRef?.current) {
@@ -86,8 +76,7 @@ function useVisibleSections(sectionStore: StoreApi<SectionState>) {
 
         let nextSection = sections[sectionIndex + 1]
         let bottom =
-          (nextSection?.headingRef?.current?.getBoundingClientRect().top ??
-            Infinity) +
+          (nextSection?.headingRef?.current?.getBoundingClientRect().top ?? Infinity) +
           scrollY -
           remToPx(nextSection?.offsetRem ?? 0)
 
@@ -117,12 +106,11 @@ function useVisibleSections(sectionStore: StoreApi<SectionState>) {
 
 const SectionStoreContext = createContext<StoreApi<SectionState> | null>(null)
 
-const useIsomorphicLayoutEffect =
-  typeof window === 'undefined' ? useEffect : useLayoutEffect
+const useIsomorphicLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect
 
 export function SectionProvider({
   sections,
-  children,
+  children
 }: {
   sections: Array<Section>
   children: React.ReactNode
@@ -135,11 +123,7 @@ export function SectionProvider({
     sectionStore.setState({ sections })
   }, [sectionStore, sections])
 
-  return (
-    <SectionStoreContext.Provider value={sectionStore}>
-      {children}
-    </SectionStoreContext.Provider>
-  )
+  return <SectionStoreContext.Provider value={sectionStore}>{children}</SectionStoreContext.Provider>
 }
 
 export function useSectionStore<T>(selector: (state: SectionState) => T) {

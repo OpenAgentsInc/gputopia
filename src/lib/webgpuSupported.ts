@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from 'react'
 
 export function useWebgpuSupported() {
   const [webgpuSupported, setWebgpuSupported] = useState(null)

@@ -1,9 +1,7 @@
-"use client"
+'use client'
 
-import {
-    Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle
-} from "@/components/ui/dialog"
-import { useStore } from "@/lib/store"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { useStore } from '@/lib/store'
 
 export const WebgpuChecker = () => {
   const showWebgpuWarning = useStore(state => state.showWebgpuWarning)
@@ -13,7 +11,8 @@ export const WebgpuChecker = () => {
         <DialogHeader>
           <DialogTitle>Browser not supported</DialogTitle>
           <DialogDescription>
-            Your browser does not support WebGPU, so you won&apos;t be able to sell GPU compute here. Please try Chrome on a desktop or laptop.
+            Your browser does not support WebGPU, so you won&apos;t be able to sell GPU compute here. Please
+            try Chrome on a desktop or laptop.
           </DialogDescription>
         </DialogHeader>
       </DialogContent>

@@ -1,4 +1,4 @@
-import { GridPattern } from "@/components/docs/GridPattern"
+import { GridPattern } from '@/components/docs/GridPattern'
 
 export function HeroPattern() {
   return (
@@ -14,7 +14,7 @@ export function HeroPattern() {
               [4, 3],
               [2, 1],
               [7, 3],
-              [10, 6],
+              [10, 6]
             ]}
             className="absolute inset-x-0 inset-y-[-50%] h-[200%] w-full skew-y-[-18deg] fill-black/40 stroke-black/50 mix-blend-overlay dark:fill-white/2.5 dark:stroke-white/5"
           />
