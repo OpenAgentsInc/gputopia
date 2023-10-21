@@ -42,7 +42,7 @@ export async function GET() {
   //   return
   // }
 
-  return NextResponse.json({ jobs: json.data })
+  return NextResponse.json({ jobs: json.data.reverse() })
 }
 
 export async function POST(request: NextRequest) {
