@@ -52,7 +52,7 @@ export function CheckoutForm() {
 
     setIsLoading(true)
 
-    const { error } = await stripe.confirmPayment({
+    const { error } = await stripe.confirmSetup({
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
