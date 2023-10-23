@@ -56,7 +56,7 @@ export function CheckoutForm() {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: 'http://localhost:3000/billing'
+        return_url: `${process.env.NEXTAUTH_URL as string}/billing`
       }
     })
 
