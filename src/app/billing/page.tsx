@@ -1,7 +1,6 @@
 'use client'
 
 import { PaymentMethods } from './components/PaymentMethods'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
 import { loadStripe } from '@stripe/stripe-js'
 // import { CheckoutForm } from './components/CheckoutForm'
@@ -11,6 +10,7 @@ import { useEffect, useState } from 'react'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { RocketIcon } from '@radix-ui/react-icons'
 import { BackgroundImage } from '@/components/background-image'
+import { AccountCredit } from './components/AccountCredit'
 // import { Button } from '@/components/ui/button'
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string)
@@ -50,15 +50,7 @@ export default function Billing() {
           </Alert>
         </div> */}
 
-        <Card className="mt-6">
-          <CardHeader>
-            <CardTitle>Credit</CardTitle>
-            <CardDescription>Prepaid account credit</CardDescription>
-          </CardHeader>
-          <CardContent className="grid gap-4">
-            <div className="-mt-2 text-2xl text-center">$0.00</div>
-          </CardContent>
-        </Card>
+        <AccountCredit />
 
         {clientSecret && (
           <Elements options={options} stripe={stripePromise}>
