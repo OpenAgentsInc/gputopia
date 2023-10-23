@@ -74,6 +74,7 @@
     "shiki": "^0.11.1",
     "stream-chat": "^8.12.0",
     "stream-chat-react": "^10.10.2",
+    "stripe": "^14.1.0",
     "utf-8-validate": "^6.0.3",
     "zustand": "^4.4.1"
   },
