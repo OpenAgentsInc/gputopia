@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { AlbyUser } from '@/lib/useAlby'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 interface UserNavTypes {
   signout: () => void
@@ -19,6 +20,7 @@ interface UserNavTypes {
 }
 
 export function UserNav({ signout, user }: UserNavTypes) {
+  // const { push } = useRouter()
   if (!user) return <></>
   return (
     <DropdownMenu>
@@ -38,8 +40,10 @@ export function UserNav({ signout, user }: UserNavTypes) {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Link href="/billing">Billing</Link>
+        <DropdownMenuItem className="m-0">
+          <Link href="/billing" className="w-full">
+            Billing
+          </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={signout}>Log out</DropdownMenuItem>
