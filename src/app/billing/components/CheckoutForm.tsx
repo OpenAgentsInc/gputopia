@@ -1,5 +1,5 @@
 import React from 'react'
-import { AddressElement, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js'
+import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import { Button } from '@/components/ui/button'
 
 export function CheckoutForm() {
@@ -61,6 +61,7 @@ export function CheckoutForm() {
         return_url: `${window.location.origin}/billing`
       }
     })
+    console.log(error)
 
     // This point will only be reached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to
