@@ -39,7 +39,7 @@ export function AddCreditDialog() {
       alert(`Something went wrong. Please try again. (${status})`)
       return
     } else {
-      alert(`Success! Your account has been funded $${credit}.`)
+      alert(`Success! Your account has been funded $${credit}. (Refresh the page to update balance)`)
     }
   }
 
