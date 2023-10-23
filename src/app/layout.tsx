@@ -8,6 +8,7 @@ import { WebgpuChecker } from '@/components/webgpu-checker'
 
 import type { Metadata } from 'next'
 import NextAuthProvider from './context/NextAuthProvider'
+import Script from 'next/script'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
