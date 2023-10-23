@@ -1,5 +1,5 @@
 import React from 'react'
-import { PaymentElement, LinkAuthenticationElement, useStripe, useElements } from '@stripe/react-stripe-js'
+import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import { Button } from '@/components/ui/button'
 
 export function CheckoutForm() {
@@ -76,7 +76,7 @@ export function CheckoutForm() {
   }
 
   const paymentElementOptions = {
-    layout: 'tabs'
+    layout: 'tabs' as const
   }
 
   return (

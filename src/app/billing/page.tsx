@@ -6,7 +6,7 @@ import { PaymentMethods } from './components/PaymentMethods'
 import { Elements } from '@stripe/react-stripe-js'
 import { useEffect, useState } from 'react'
 
-const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx')
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string)
 
 export default function Billing() {
   const [clientSecret, setClientSecret] = useState('')
