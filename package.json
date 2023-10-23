@@ -38,6 +38,8 @@
     "@radix-ui/react-toggle": "^1.0.3",
     "@radix-ui/react-tooltip": "^1.0.6",
     "@sindresorhus/slugify": "^2.1.1",
+    "@stripe/react-stripe-js": "^2.3.1",
+    "@stripe/stripe-js": "^2.1.9",
     "@types/mdx": "^2.0.8",
     "@vercel/kv": "^0.2.3",
     "ai": "^2.2.13",
