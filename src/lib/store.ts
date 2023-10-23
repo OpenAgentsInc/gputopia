@@ -5,6 +5,7 @@ type Store = {
   user: AlbyUser | null
   onlineMembers: number
   balance: number
+  balanceUsd: number
   payments: any[]
   totalSatsEarned: number
   modelLoadPercentage: number
@@ -23,6 +24,7 @@ export const useStore = create<Store>(set => ({
   busyInferencing: false,
   modelLoaded: false,
   balance: 0,
+  balanceUsd: 0,
   payments: [],
   onlineMembers: 0,
   totalSatsEarned: 0,

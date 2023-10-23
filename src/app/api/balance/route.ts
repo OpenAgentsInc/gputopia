@@ -16,7 +16,7 @@ export async function GET() {
 
   return new Promise((resolve, reject) => {
     connection.query(
-      'SELECT balance,total_sats_earned FROM users WHERE email = ?',
+      'SELECT balance,total_sats_earned,balance_cents FROM users WHERE email = ?',
       [email],
       function (err, results: any) {
         connection.end()
@@ -31,7 +31,8 @@ export async function GET() {
         resolve(
           NextResponse.json({
             balance: results[0].balance ?? null,
-            totalSatsEarned: results[0].total_sats_earned ?? null
+            totalSatsEarned: results[0].total_sats_earned ?? null,
+            balanceCents: results[0].balance_cents ?? null
           })
         )
       }
