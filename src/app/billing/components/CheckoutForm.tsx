@@ -52,11 +52,13 @@ export function CheckoutForm() {
 
     setIsLoading(true)
 
+    console.log(`${window.location.origin}/billing`)
+
     const { error } = await stripe.confirmSetup({
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: `${process.env.NEXTAUTH_URL as string}/billing`
+        return_url: `${window.location.origin}/billing`
       }
     })
 
