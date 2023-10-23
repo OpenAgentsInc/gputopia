@@ -41,7 +41,6 @@ const AlbyProvider = {
 }
 
 async function refreshAccessToken(refresh_token) {
-  console.log('Refresh Token: ', refresh_token)
   try {
     const response = await fetch(AlbyProvider.token, {
       method: 'POST',
@@ -130,8 +129,6 @@ export const {
       }
 
       // Handle token expiration and refreshing
-      //token.expiry = Date.now() - 100000;
-      console.log(Date.now(),  token.expiry, Date.now() > token.expiry)
       if (token?.expiry && Date.now() > token.expiry) {
         const refreshedTokens = await refreshAccessToken(token.refresh_token);
         if (refreshedTokens) {
