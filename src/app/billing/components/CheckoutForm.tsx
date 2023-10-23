@@ -1,5 +1,5 @@
 import React from 'react'
-import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js'
+import { AddressElement, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import { Button } from '@/components/ui/button'
 
 export function CheckoutForm() {
@@ -82,6 +82,7 @@ export function CheckoutForm() {
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
       <PaymentElement id="payment-element" options={paymentElementOptions} />
+      <AddressElement id="address-element" options={{ mode: 'billing' }} />
       <Button disabled={isLoading || !stripe || !elements} id="submit" className="mt-4">
         <span id="button-text">{isLoading ? <div className="spinner" id="spinner"></div> : 'Pay now'}</span>
       </Button>
