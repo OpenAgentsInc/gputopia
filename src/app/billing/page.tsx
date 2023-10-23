@@ -10,6 +10,7 @@ import { Elements } from '@stripe/react-stripe-js'
 import { useEffect, useState } from 'react'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { RocketIcon } from '@radix-ui/react-icons'
+import { BackgroundImage } from '@/components/background-image'
 // import { Button } from '@/components/ui/button'
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string)
@@ -37,7 +38,9 @@ export default function Billing() {
   return (
     <div className="flex flex-col h-screen">
       <div className="mt-24 flex flex-col flex-grow items-center">
-        <div className="w-96">
+        <BackgroundImage />
+
+        {/* <div className="w-96">
           <Alert>
             <RocketIcon className="h-8 w-8" />
             <AlertTitle className="ml-4 text-lg">Demo only</AlertTitle>
@@ -45,7 +48,7 @@ export default function Billing() {
               We are testing with fake data
             </AlertDescription>
           </Alert>
-        </div>
+        </div> */}
 
         <Card className="mt-6">
           <CardHeader>
@@ -53,7 +56,7 @@ export default function Billing() {
             <CardDescription>Prepaid account credit</CardDescription>
           </CardHeader>
           <CardContent className="grid gap-4">
-            <div className="-mt-2 text-2xl text-center">$20.47</div>
+            <div className="-mt-2 text-2xl text-center">$0.00</div>
           </CardContent>
         </Card>
 

@@ -6,7 +6,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, { apiVersion:
 export async function GET() {
   const customerId = 'cus_OsDSwjUXTQPa2l'
 
-  const paymentMethods = await stripe.customers.listPaymentMethods(customerId, { type: 'card' })
+  const paymentMethods = await stripe.customers.listPaymentMethods(customerId) // , { type: 'card' }
 
   return NextResponse.json({ paymentMethods: paymentMethods.data })
 }

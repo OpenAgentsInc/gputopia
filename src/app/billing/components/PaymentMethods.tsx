@@ -25,8 +25,8 @@ export function PaymentMethods() {
   return (
     <Card className="mt-6">
       <CardHeader>
-        <CardTitle>Payment Cards</CardTitle>
-        <CardDescription>A list of payment cards on your account</CardDescription>
+        <CardTitle>Payment Method</CardTitle>
+        <CardDescription>Your active payment method</CardDescription>
       </CardHeader>
       <CardContent className="-mt-2 grid gap-4">
         {paymentMethods.map(paymentMethod => {
@@ -55,7 +55,7 @@ export function PaymentMethods() {
             </div>
           )
         })}
-        <AddCardDialog />
+        {paymentMethods.length === 0 && <AddCardDialog />}
       </CardContent>
     </Card>
   )
