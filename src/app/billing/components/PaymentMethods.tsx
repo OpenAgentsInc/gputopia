@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { usePaymentMethods } from '@/lib/hooks/use-payment-methods'
+import { AddCardDialog } from './AddCardDialog'
 
 export function PaymentMethods() {
   const paymentMethods = usePaymentMethods()
@@ -11,7 +12,7 @@ export function PaymentMethods() {
         <CardTitle>Payment Cards</CardTitle>
         <CardDescription>A list of payment cards on your account</CardDescription>
       </CardHeader>
-      <CardContent className="grid gap-4">
+      <CardContent className="-mt-2 grid gap-4">
         {paymentMethods.map(paymentMethod => {
           if (paymentMethod.type !== 'card' || !paymentMethod.card) return null
           const { brand, last4, exp_month, exp_year } = paymentMethod.card
@@ -33,7 +34,7 @@ export function PaymentMethods() {
           )
         })}
 
-        <Button variant="outline">Add card</Button>
+        <AddCardDialog />
       </CardContent>
     </Card>
   )

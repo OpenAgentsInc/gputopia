@@ -57,7 +57,7 @@ export function CheckoutForm() {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: 'http://localhost:3000'
+        return_url: 'http://localhost:3000/billing'
       }
     })
 
@@ -82,9 +82,9 @@ export function CheckoutForm() {
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
       <PaymentElement id="payment-element" options={paymentElementOptions} />
-      <AddressElement id="address-element" options={{ mode: 'billing' }} />
+      {/* <AddressElement id="address-element" options={{ mode: 'billing' }} /> */}
       <Button disabled={isLoading || !stripe || !elements} id="submit" className="mt-4">
-        <span id="button-text">{isLoading ? <div className="spinner" id="spinner"></div> : 'Pay now'}</span>
+        <span id="button-text">{isLoading ? <div className="spinner" id="spinner"></div> : 'Add card'}</span>
       </Button>
       {/* Show any error or success messages */}
       {message && <div id="payment-message">{message}</div>}
