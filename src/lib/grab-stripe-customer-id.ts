@@ -8,22 +8,16 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, { apiVersion:
 // If not, we create a new customer via Stripe and save the ID to the database.
 
 export async function grabStripeCustomerId(userId: number) {
-  console.log('userId:', userId)
-
   const connection = await mysql.createConnection(process.env.DATABASE_URL as string)
-
   await connection.beginTransaction()
 
   // Fetch Stripe customer ID for the given user ID
   const [rows]: any = await connection.execute('SELECT stripe_customer_id FROM users WHERE id = ?', [userId])
 
-  console.log('ROWS:', rows)
-
   let stripeCustomerId: string
 
   if (rows.length > 0 && rows[0].stripe_customer_id) {
     stripeCustomerId = rows[0].stripe_customer_id
-    console.log('Returning found ', stripeCustomerId)
   } else {
     // Create a new Stripe customer and save the ID in the database
     const customer = await stripe.customers.create({
@@ -35,7 +29,6 @@ export async function grabStripeCustomerId(userId: number) {
       stripeCustomerId,
       userId
     ])
-    console.log('Updated with', stripeCustomerId)
   }
 
   // Commit the transaction
