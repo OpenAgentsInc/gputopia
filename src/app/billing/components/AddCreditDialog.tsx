@@ -16,10 +16,10 @@ export function AddCreditDialog() {
   const [credit, setCredit] = useState(25)
   const paymentMethods = useStore(state => state.paymentMethods)
   const paymentMethod = paymentMethods?.[0] ?? null
+  const [open, setOpen] = useState(false)
 
   const pay = async (e: any) => {
     e.preventDefault()
-    console.log('paying', credit)
 
     const res = await fetch('/api/charge', {
       method: 'POST',
@@ -33,10 +33,13 @@ export function AddCreditDialog() {
       })
     })
     const { success, status } = await res.json()
-    console.log('success', success, status)
+
+    setOpen(false)
     if (!res.ok || !success) {
-      alert('Something went wrong. Please try again.')
+      alert(`Something went wrong. Please try again. (${status})`)
       return
+    } else {
+      alert(`Success! Your account has been funded $${credit}.`)
     }
   }
 
@@ -47,7 +50,7 @@ export function AddCreditDialog() {
       </p>
     )
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={open => setOpen(open)}>
       <DialogTrigger asChild>
         <Button variant="outline" className="w-full" disabled={!paymentMethod}>
           Fund account
