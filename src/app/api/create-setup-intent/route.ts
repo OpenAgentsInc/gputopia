@@ -12,7 +12,9 @@ export async function POST() {
   //   })
   // }
 
-  const setupIntent = await stripe.setupIntents.create()
+  const setupIntent = await stripe.setupIntents.create({
+    customer: 'cus_OsDSwjUXTQPa2l'
+  })
 
   return NextResponse.json({ clientSecret: setupIntent.client_secret })
 }
