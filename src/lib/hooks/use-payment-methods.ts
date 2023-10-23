@@ -2,17 +2,22 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import stripe from 'stripe'
 
-export function usePaymentMethods(): stripe.PaymentMethod[] {
+interface PaymentMethodsResponse {
+  paymentMethods: stripe.PaymentMethod[]
+  fetchData: () => void
+}
+
+export function usePaymentMethods(): PaymentMethodsResponse {
   const [paymentMethods, setPaymentMethods] = useState([])
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get('/api/payment-methods')
-      setPaymentMethods(response.data.paymentMethods)
-    }
+  const fetchData = async () => {
+    const response = await axios.get('/api/payment-methods')
+    setPaymentMethods(response.data.paymentMethods)
+  }
 
+  useEffect(() => {
     fetchData()
   }, [])
 
-  return paymentMethods
+  return { paymentMethods, fetchData }
 }

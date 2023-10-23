@@ -2,18 +2,25 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { usePaymentMethods } from '@/lib/hooks/use-payment-methods'
 import { AddCardDialog } from './AddCardDialog'
+import { useRouter } from 'next/navigation'
 
 export function PaymentMethods() {
-  const paymentMethods = usePaymentMethods()
+  const router = useRouter()
+  const { paymentMethods, fetchData } = usePaymentMethods()
   const deletePaymentMethod = async (id: string) => {
-    console.log("Let's delete payment method id: ", id)
     const res = await fetch('/api/payment-methods', {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id })
     })
     const data = await res.json()
-    console.log(data)
+    if (res.ok && data.success) {
+      alert('Payment method deleted successfully')
+      router.replace('/billing')
+      fetchData()
+    } else {
+      alert('Unknown error, please try again')
+    }
   }
   return (
     <Card className="mt-6">
