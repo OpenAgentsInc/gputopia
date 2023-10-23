@@ -42,7 +42,7 @@ export default function Billing() {
             <RocketIcon className="h-8 w-8" />
             <AlertTitle className="ml-4 text-lg">Demo only</AlertTitle>
             <AlertDescription className="ml-4 text-muted-foreground">
-              We're testing with fake data
+              We are testing with fake data
             </AlertDescription>
           </Alert>
         </div>
