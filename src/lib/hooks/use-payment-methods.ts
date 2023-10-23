@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import stripe from 'stripe'
 
-export function usePaymentMethods() {
+export function usePaymentMethods(): stripe.PaymentMethod[] {
   const [paymentMethods, setPaymentMethods] = useState([])
 
   useEffect(() => {
