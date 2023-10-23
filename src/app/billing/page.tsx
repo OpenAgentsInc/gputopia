@@ -50,9 +50,10 @@ export default function Billing() {
           </Alert>
         </div> */}
 
+        <AccountCredit />
+
         {clientSecret && (
           <Elements options={options} stripe={stripePromise}>
-            <AccountCredit />
             <PaymentMethods />
           </Elements>
         )}
