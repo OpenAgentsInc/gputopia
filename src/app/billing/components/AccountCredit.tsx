@@ -3,13 +3,13 @@ import { AddCreditDialog } from './AddCreditDialog'
 
 export function AccountCredit() {
   return (
-    <Card className="mt-6">
+    <Card className="mt-6 w-72">
       <CardHeader>
         <CardTitle>Credit</CardTitle>
         <CardDescription>Prepaid account credit</CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
-        <div className="-mt-2 text-2xl text-center">$0.00</div>
+        <div className="-my-2 text-2xl text-center">$0.00</div>
       </CardContent>
       <CardFooter className="w-full">
         <AddCreditDialog />

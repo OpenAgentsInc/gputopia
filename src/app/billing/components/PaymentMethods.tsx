@@ -23,7 +23,7 @@ export function PaymentMethods() {
     }
   }
   return (
-    <Card className="mt-6">
+    <Card className="mt-6 w-72">
       <CardHeader>
         <CardTitle>Payment Method</CardTitle>
         <CardDescription>Your active payment method</CardDescription>

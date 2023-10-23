@@ -15,6 +15,7 @@ type Store = {
   setCount: (count: number) => void
   showWebgpuWarning: boolean
   busyInferencing: boolean
+  paymentMethods: any[]
 }
 
 export const useStore = create<Store>(set => ({
@@ -30,5 +31,6 @@ export const useStore = create<Store>(set => ({
   showWebgpuWarning: false,
   increment: () => set(state => ({ onlineMembers: state.onlineMembers + 1 })),
   decrement: () => set(state => ({ onlineMembers: state.onlineMembers - 1 })),
-  setCount: count => set(() => ({ onlineMembers: count }))
+  setCount: count => set(() => ({ onlineMembers: count })),
+  paymentMethods: []
 }))

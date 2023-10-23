@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import stripe from 'stripe'
+import { useStore } from '@/lib/store'
 
 interface PaymentMethodsResponse {
   paymentMethods: stripe.PaymentMethod[]
@@ -13,6 +14,7 @@ export function usePaymentMethods(): PaymentMethodsResponse {
   const fetchData = async () => {
     const response = await axios.get('/api/payment-methods')
     setPaymentMethods(response.data.paymentMethods)
+    useStore.setState({ paymentMethods: response.data.paymentMethods })
   }
 
   useEffect(() => {
