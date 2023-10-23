@@ -81,7 +81,7 @@ export function CheckoutForm() {
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
       <PaymentElement id="payment-element" options={paymentElementOptions} />
-      <Button disabled={isLoading || !stripe || !elements} id="submit" className="mt-4">
+      <Button disabled={isLoading || !stripe || !elements} id="submit" className="mt-6">
         <span id="button-text">{isLoading ? 'Processing...' : 'Add card'}</span>
       </Button>
     </form>
