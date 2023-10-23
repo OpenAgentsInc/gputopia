@@ -1,6 +1,7 @@
 'use client'
 
 import { PaymentMethods } from './components/PaymentMethods'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
 // import { loadStripe } from '@stripe/stripe-js'
 // import { CheckoutForm } from './components/CheckoutForm'
@@ -34,13 +35,17 @@ export default function Billing() {
   // }
   return (
     <div className="flex flex-col h-screen">
-      <div className="mt-24 flex flex-col flex-grow items-center">
-        <div className="border bg-card p-4 rounded-lg text-white flex justify-between items-center">
-          <div>
-            <div className="text-muted-foreground text-xl">Credit</div>
-            <div className="text-2xl mt-2">$20.47</div>
-          </div>
-        </div>
+      <div className="mt-20 flex flex-col flex-grow items-center">
+        <Card className="mt-6">
+          <CardHeader>
+            <CardTitle>Credit</CardTitle>
+            <CardDescription>Prepaid account credit</CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-4">
+            <div className="text-2xl text-center">$20.47</div>
+          </CardContent>
+        </Card>
+
         <PaymentMethods />
       </div>
     </div>
