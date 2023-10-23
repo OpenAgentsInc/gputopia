@@ -17,10 +17,9 @@ export default function Billing() {
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
-    fetch('/api/create-payment-intent', {
+    fetch('/api/create-setup-intent', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount: 515 })
+      headers: { 'Content-Type': 'application/json' }
     })
       .then(res => res.json())
       .then(data => setClientSecret(data.clientSecret))
