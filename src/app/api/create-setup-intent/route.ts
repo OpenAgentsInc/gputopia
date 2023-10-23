@@ -5,12 +5,12 @@ import Stripe from 'stripe'
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, { apiVersion: '2023-10-16' })
 
 export async function POST() {
-  const session = await auth()
-  if (!session) {
-    return new NextResponse('Unauthorized', {
-      status: 401
-    })
-  }
+  // const session = await auth()
+  // if (!session) {
+  //   return new NextResponse('Unauthorized', {
+  //     status: 401
+  //   })
+  // }
 
   const setupIntent = await stripe.setupIntents.create()
 
