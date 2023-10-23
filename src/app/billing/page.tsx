@@ -1,5 +1,7 @@
 'use client'
 
+import { PaymentMethods } from './components/PaymentMethods'
+
 // import { loadStripe } from '@stripe/stripe-js'
 // import { CheckoutForm } from './components/CheckoutForm'
 // import { PaymentMethods } from './components/PaymentMethods'
@@ -39,6 +41,7 @@ export default function Billing() {
             <div className="text-2xl mt-2">$20.47</div>
           </div>
         </div>
+        <PaymentMethods />
       </div>
     </div>
   )

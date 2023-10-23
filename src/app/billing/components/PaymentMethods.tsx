@@ -1,8 +1,11 @@
+import { usePaymentMethods } from '@/lib/hooks/use-payment-methods'
 import React from 'react'
 
 export function PaymentMethods() {
+  const paymentMethods = usePaymentMethods()
+  console.log(paymentMethods)
   return (
-    <div className="bg-card p-6 w-96 rounded-lg shadow-lg">
+    <div className="mt-12 border bg-card p-6 w-96 rounded-lg shadow-lg">
       <h1 className="text-2xl font-semibold mb-6 text-gray-100">Payment methods</h1>
 
       <div className="mb-4 flex flex-col justify-between border-gray-600 rounded-lg p-3">
