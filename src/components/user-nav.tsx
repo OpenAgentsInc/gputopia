@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 import { AlbyUser } from '@/lib/useAlby'
+import Link from 'next/link'
 
 interface UserNavTypes {
   signout: () => void
@@ -36,6 +37,10 @@ export function UserNav({ signout, user }: UserNavTypes) {
             <p className="text-xs leading-none text-muted-foreground">{user.email ?? '-'}</p>
           </div>
         </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>
+          <Link href="/billing">Billing</Link>
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={signout}>Log out</DropdownMenuItem>
       </DropdownMenuContent>
