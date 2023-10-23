@@ -22,8 +22,5 @@ export async function POST(request: NextRequest) {
     // add any other desired parameters here, like metadata, customer ID, etc.
   })
 
-  console.log('paymentIntent:', paymentIntent)
-  console.log('Returning client secret', paymentIntent.client_secret)
-
   return NextResponse.json({ clientSecret: paymentIntent.client_secret })
 }
