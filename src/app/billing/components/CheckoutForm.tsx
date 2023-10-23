@@ -6,7 +6,6 @@ export function CheckoutForm() {
   const stripe = useStripe()
   const elements = useElements()
 
-  const [email, setEmail] = React.useState('')
   const [message, setMessage] = React.useState<string | null | undefined>(null)
   const [isLoading, setIsLoading] = React.useState(false)
 
@@ -82,12 +81,9 @@ export function CheckoutForm() {
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
       <PaymentElement id="payment-element" options={paymentElementOptions} />
-      {/* <AddressElement id="address-element" options={{ mode: 'billing' }} /> */}
       <Button disabled={isLoading || !stripe || !elements} id="submit" className="mt-4">
-        <span id="button-text">{isLoading ? <div className="spinner" id="spinner"></div> : 'Add card'}</span>
+        <span id="button-text">{isLoading ? 'Processing...' : 'Add card'}</span>
       </Button>
-      {/* Show any error or success messages */}
-      {message && <div id="payment-message">{message}</div>}
     </form>
   )
 }
