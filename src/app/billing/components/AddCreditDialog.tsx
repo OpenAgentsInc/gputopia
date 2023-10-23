@@ -17,9 +17,27 @@ export function AddCreditDialog() {
   const paymentMethods = useStore(state => state.paymentMethods)
   const paymentMethod = paymentMethods?.[0] ?? null
 
-  const pay = async e => {
+  const pay = async (e: any) => {
     e.preventDefault()
     console.log('paying', credit)
+
+    const res = await fetch('/api/charge', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        amount: credit,
+        customer: paymentMethod.customer,
+        paymentMethod: paymentMethod.id
+      })
+    })
+    const { success, status } = await res.json()
+    console.log('success', success, status)
+    if (!res.ok || !success) {
+      alert('Something went wrong. Please try again.')
+      return
+    }
   }
 
   if (!paymentMethod)
@@ -28,7 +46,6 @@ export function AddCreditDialog() {
         To fund your account, add a payment method below.
       </p>
     )
-  console.log(paymentMethod)
   return (
     <Dialog>
       <DialogTrigger asChild>
