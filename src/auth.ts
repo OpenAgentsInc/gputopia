@@ -46,22 +46,6 @@ export const {
 } = NextAuth({
   providers: [AlbyProvider],
   callbacks: {
-    // jwt({ token, account }) {
-    //   if (account) {
-    //     token.access_token = account.access_token
-    //     token.refresh_token = account.refresh_token
-    //   }
-    //   // token.id = 1
-    //   // token.user_id = 'testttt'
-    //   // console.log('Returning jwt token:', token)
-    //   // console.log('in jwt, account is', account)
-    //   return token
-    // },
-    // authorized({ auth }) {
-    //   console.log('auth:', auth)
-    //   console.log('returnin', !!auth?.user)
-    //   return !!auth?.user // this ensures there is a logged in user for -every- request
-    // },
     async jwt({ token, account, profile, trigger }) {
       // Persist the OAuth access_token to the token right after signin
       if (account) {

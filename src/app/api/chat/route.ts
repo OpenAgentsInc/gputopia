@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
   const stream = OpenAIStream(res, {
     async onCompletion(completion) {
       const session = await auth()
-      const userId = session?.user.id
+      const userId = session?.user.user_id
       const title = json.messages[0].content.substring(0, 100)
       const id = json.id ?? nanoid()
       const createdAt = Date.now()
