@@ -26,8 +26,6 @@ export async function GET() {
           return
         }
 
-        console.log(results)
-
         resolve(
           NextResponse.json({
             balance: results[0].balance ?? null,

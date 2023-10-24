@@ -82,7 +82,7 @@ export function AddCreditDialog() {
         </div>
         <form onSubmit={pay} className="flex flex-col items-center">
           <Button className="mt-2 w-48" type="submit" disabled={loading}>
-            {loading ? `Processing...` : `Pay ${credit}`}
+            {loading ? `Processing...` : `Pay $${credit}`}
           </Button>
         </form>
       </DialogContent>
