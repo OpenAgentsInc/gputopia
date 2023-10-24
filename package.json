@@ -38,6 +38,8 @@
     "@radix-ui/react-toggle": "^1.0.3",
     "@radix-ui/react-tooltip": "^1.0.6",
     "@sindresorhus/slugify": "^2.1.1",
+    "@stripe/react-stripe-js": "^2.3.1",
+    "@stripe/stripe-js": "^2.1.9",
     "@types/mdx": "^2.0.8",
     "@vercel/kv": "^0.2.3",
     "ai": "^2.2.13",
@@ -74,6 +76,7 @@
     "shiki": "^0.11.1",
     "stream-chat": "^8.12.0",
     "stream-chat-react": "^10.10.2",
+    "stripe": "^14.1.0",
     "utf-8-validate": "^6.0.3",
     "zustand": "^4.4.1"
   },
