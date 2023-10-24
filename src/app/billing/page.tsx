@@ -45,9 +45,9 @@ export default function Billing() {
             <RocketIcon className="h-8 w-8" />
             <AlertTitle className="ml-4 text-lg">Demo mode</AlertTitle>
             <AlertDescription className="ml-4 text-muted-foreground">
-              This is a test of the buyer billing dashboard using Stripe's test mode. You can test this with a
-              fake credit card number "4242 4242 4242 4242" and any CVV & future date, then try funding your
-              account. Refresh the page and your balance should be updated.
+              This is a test of the buyer billing dashboard using Stripe&apos;s test mode. You can test this
+              with a demo credit card number &quot;4242424242424242&quot; and any CVV & future date, then try
+              funding your account. Refresh the page and your balance should be updated.
             </AlertDescription>
           </Alert>
         </div>
