@@ -20,7 +20,7 @@ export async function GET() {
     })
   }
 
-  const customerId = await grabStripeCustomerId(userId)
+  const customerId = await grabStripeCustomerId()
   const paymentMethods = await stripe.customers.listPaymentMethods(customerId)
 
   return NextResponse.json({ paymentMethods: paymentMethods.data })

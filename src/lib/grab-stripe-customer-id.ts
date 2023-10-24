@@ -1,5 +1,6 @@
 import Stripe from 'stripe'
 import mysql from 'mysql2/promise'
+import { auth } from '@/auth'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, { apiVersion: '2023-10-16' })
 
@@ -7,7 +8,19 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, { apiVersion:
 // First we check the database to see if there's an existing customer ID for the user.
 // If not, we create a new customer via Stripe and save the ID to the database.
 
-export async function grabStripeCustomerId(userId: number) {
+export async function grabStripeCustomerId() {
+  const session = await auth()
+  if (!session) {
+    throw new Error('Unauthorized')
+  }
+
+  const userId = session.user.user_id
+  // if userId is not a number, return error
+  if (typeof userId !== 'number') {
+    throw new Error('Unauthorized')
+  }
+  // console.log(session)
+
   const connection = await mysql.createConnection(process.env.DATABASE_URL as string)
   await connection.beginTransaction()
 
@@ -21,6 +34,8 @@ export async function grabStripeCustomerId(userId: number) {
   } else {
     // Create a new Stripe customer and save the ID in the database
     const customer = await stripe.customers.create({
+      name: session.user.name ?? `Alby User ${session.user.alby_id}`,
+      email: session.user.email ?? undefined
       /* Additional Stripe options if needed */
     })
     stripeCustomerId = customer.id

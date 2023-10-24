@@ -40,15 +40,17 @@ export default function Billing() {
       <div className="mt-24 flex flex-col flex-grow items-center">
         <BackgroundImage />
 
-        {/* <div className="w-96">
+        <div className="w-2/3 sm:w-1/2">
           <Alert>
             <RocketIcon className="h-8 w-8" />
-            <AlertTitle className="ml-4 text-lg">Demo only</AlertTitle>
+            <AlertTitle className="ml-4 text-lg">Demo mode</AlertTitle>
             <AlertDescription className="ml-4 text-muted-foreground">
-              We are testing with fake data
+              This is a test of the buyer billing dashboard using Stripe's test mode. You can test this with a
+              fake credit card number "4242 4242 4242 4242" and any CVV & future date, then try funding your
+              account. Refresh the page and your balance should be updated.
             </AlertDescription>
           </Alert>
-        </div> */}
+        </div>
 
         <AccountCredit />
 

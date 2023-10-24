@@ -20,7 +20,7 @@ export async function POST() {
     })
   }
 
-  const customerId = await grabStripeCustomerId(userId)
+  const customerId = await grabStripeCustomerId()
   const setupIntent = await stripe.setupIntents.create({
     customer: customerId
   })

@@ -14,12 +14,14 @@ import { useStore } from '@/lib/store'
 
 export function AddCreditDialog() {
   const [credit, setCredit] = useState(25)
+  const [loading, setLoading] = useState(false)
   const paymentMethods = useStore(state => state.paymentMethods)
   const paymentMethod = paymentMethods?.[0] ?? null
   const [open, setOpen] = useState(false)
 
   const pay = async (e: any) => {
     e.preventDefault()
+    setLoading(true)
 
     const res = await fetch('/api/charge', {
       method: 'POST',
@@ -35,6 +37,7 @@ export function AddCreditDialog() {
     const { success, status } = await res.json()
 
     setOpen(false)
+    setLoading(false)
     if (!res.ok || !success) {
       alert(`Something went wrong. Please try again. (${status})`)
       return
@@ -78,8 +81,8 @@ export function AddCreditDialog() {
           </div>
         </div>
         <form onSubmit={pay} className="flex flex-col items-center">
-          <Button className="mt-2 w-48" type="submit">
-            Pay ${credit}
+          <Button className="mt-2 w-48" type="submit" disabled={loading}>
+            {loading ? `Processing...` : `Pay ${credit}`}
           </Button>
         </form>
       </DialogContent>

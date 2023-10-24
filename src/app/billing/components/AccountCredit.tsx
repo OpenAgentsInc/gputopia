@@ -13,7 +13,7 @@ export function AccountCredit() {
   return (
     <Card className="mt-6 w-72">
       <CardHeader>
-        <CardTitle>Credit</CardTitle>
+        <CardTitle>Credit (demo mode)</CardTitle>
         <CardDescription>Prepaid account credit</CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
