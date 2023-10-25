@@ -40,6 +40,36 @@ const AlbyProvider = {
   clientSecret: process.env.NEXT_PUBLIC_ALBY_CLIENT_SECRET as string
 }
 
+async function refreshAccessToken(refresh_token) {
+  try {
+    const response = await fetch(AlbyProvider.token, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `Basic ${Buffer.from(`${process.env.ALBY_CLIENT_ID}:${process.env.ALBY_CLIENT_SECRET}`).toString('base64')}`,
+      },
+      body: new URLSearchParams({
+        grant_type: 'refresh_token',
+        refresh_token,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok && data.access_token) {
+      return {
+        accessToken: data.access_token,
+        expiresIn: data.expires_in,
+        refreshToken: data.refresh_token,
+      };
+    }
+  } catch (error) {
+    console.error('Error refreshing access token:', error);
+    return null;
+  }
+}
+
+
 export const {
   handlers: { GET, POST },
   auth
@@ -94,6 +124,18 @@ export const {
         token.access_token = account.access_token
         token.refresh_token = account.refresh_token
         token.lightning_address = profile.lightning_address
+
+        token.expiry = Date.now() + (account.expires_in * 1000); // If 'expires_in' is in seconds
+      }
+
+      // Handle token expiration and refreshing
+      if (token?.expiry && Date.now() > token.expiry) {
+        const refreshedTokens = await refreshAccessToken(token.refresh_token);
+        if (refreshedTokens) {
+          token.access_token = refreshedTokens.accessToken;
+          token.refresh_token = refreshedTokens.refreshToken; // Update this line
+          token.expiry = Date.now() + (refreshedTokens.expiresIn * 1000);
+        }
       }
       return token
     },
@@ -111,7 +153,7 @@ export const {
     }
   },
   session: {
-    maxAge: 60 * 60 * 2
+    maxAge: 60 * 60 * 24
   },
   pages: {
     signIn: '/login'
