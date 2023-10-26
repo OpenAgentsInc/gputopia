@@ -1,5 +1,8 @@
 import { fetchUserFromAlby } from '@/lib/alby'
 import NextAuth, { type DefaultSession } from 'next-auth'
+import { formatTimestampForSQLInsert } from './lib/utils'
+
+const serverUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000'
 
 declare module 'next-auth' {
   interface Session {
@@ -28,7 +31,6 @@ const AlbyProvider = {
     // You can use the tokens, in case you want to fetch more profile information
     // For example several OAuth providers do not return email by default.
     // Depending on your provider, will have tokens like `access_token`, `id_token` and or `refresh_token`
-    console.log('PROFILE:', profile)
     return {
       id: profile.identifier,
       email: profile.email,
@@ -46,26 +48,13 @@ export const {
 } = NextAuth({
   providers: [AlbyProvider],
   callbacks: {
-    // jwt({ token, account }) {
-    //   if (account) {
-    //     token.access_token = account.access_token
-    //     token.refresh_token = account.refresh_token
-    //   }
-    //   // token.id = 1
-    //   // token.user_id = 'testttt'
-    //   // console.log('Returning jwt token:', token)
-    //   // console.log('in jwt, account is', account)
-    //   return token
-    // },
-    // authorized({ auth }) {
-    //   console.log('auth:', auth)
-    //   console.log('returnin', !!auth?.user)
-    //   return !!auth?.user // this ensures there is a logged in user for -every- request
-    // },
-    async jwt({ token, account, profile, trigger }) {
+    async jwt({ token, account, profile }) {
+      const MINUTES_BEFORE_EXPIRY = 20
+      const timeForExpiry = token.expires_at - 60000 * MINUTES_BEFORE_EXPIRY
+      const tokenExpiresSoon = Date.now() > timeForExpiry
+
       // Persist the OAuth access_token to the token right after signin
       if (account) {
-        const serverUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000'
         await fetch(`${serverUrl}/api/save-token`, {
           method: 'POST',
           headers: {
@@ -73,12 +62,12 @@ export const {
           },
           body: JSON.stringify({
             token: account.access_token,
-            refresh_token: account.refresh_token
+            refresh_token: account.refresh_token,
+            expires_at: formatTimestampForSQLInsert(account.expires_at * 1000)
           })
         })
           .then(response => response.json())
           .then(data => {
-            console.log('Did what?', data)
             token.user_id = data.userId
           })
 
@@ -94,8 +83,38 @@ export const {
         token.access_token = account.access_token
         token.refresh_token = account.refresh_token
         token.lightning_address = profile.lightning_address
+        token.expires_at = account.expires_at
+
+        return token
+      } else if (!tokenExpiresSoon) {
+        return token
+      } else {
+        try {
+          const response = await fetch(`${serverUrl}/api/refresh-token`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              user_id: token.user_id,
+              refresh_token: token.refresh_token
+            })
+          })
+
+          const tokens = await response.json()
+
+          return {
+            ...token, // Keep the previous token properties
+            access_token: tokens.access_token,
+            expires_at: tokens.expires_at,
+            refresh_token: tokens.refresh_token
+          }
+        } catch (error) {
+          console.error('Error refreshing access token', error)
+          // The error property will be used client-side to handle the refresh token error
+          return { error: 'RefreshAccessTokenError' as const }
+        }
       }
-      return token
     },
     async session({ session, token, user }) {
       if (token) {
@@ -111,7 +130,7 @@ export const {
     }
   },
   session: {
-    maxAge: 60 * 60 * 2
+    maxAge: 60 * 60 * 24
   },
   pages: {
     signIn: '/login'
