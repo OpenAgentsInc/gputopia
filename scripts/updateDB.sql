@@ -1,0 +1,2 @@
+ALTER TABLE access_tokens
+ADD COLUMN expires_at TIMESTAMP NULL DEFAULT NULL;

@@ -9,8 +9,8 @@ const withMDX = nextMDX({
   options: {
     remarkPlugins,
     rehypePlugins,
-    recmaPlugins,
-  },
+    recmaPlugins
+  }
 })
 
 /** @type {import('next').NextConfig} */
@@ -18,9 +18,9 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: "/intro",
-        destination: "/blog/intro",
-        permanent: true,
+        source: '/intro',
+        destination: '/blog/intro',
+        permanent: true
       }
     ]
   },
@@ -34,18 +34,19 @@ const nextConfig = {
         // by next.js will be dropped. Doesn't make much sense, but how it is
         fs: false, // the solution
         module: false,
-        perf_hooks: false,
-      };
+        perf_hooks: false
+      }
     }
     return config
   },
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'mdx'],
+  //reactStrictMode: false,
   typescript: {
     // !! WARN !!
     // Dangerously allow production builds to successfully complete even if
     // your project has type errors.
     // !! WARN !!
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: true
   }
 }
 
