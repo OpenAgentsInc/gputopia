@@ -1,7 +1,7 @@
-import { type Config } from "tailwindcss"
-import headlessuiPlugin from "@headlessui/tailwindcss"
-import typographyPlugin from "@tailwindcss/typography"
-import typographyStyles from "./typography"
+import { type Config } from 'tailwindcss'
+import headlessuiPlugin from '@headlessui/tailwindcss'
+import typographyPlugin from '@tailwindcss/typography'
+import typographyStyles from './typography'
 
 export default {
   content: ['./src/**/*.{js,mjs,jsx,ts,tsx,mdx}'],
@@ -21,61 +21,61 @@ export default {
       '6xl': ['3.75rem', { lineHeight: '1' }],
       '7xl': ['4.5rem', { lineHeight: '1' }],
       '8xl': ['6rem', { lineHeight: '1' }],
-      '9xl': ['8rem', { lineHeight: '1' }],
+      '9xl': ['8rem', { lineHeight: '1' }]
     },
     typography: typographyStyles,
     extend: {
       boxShadow: {
-        glow: '0 0 4px rgb(0 0 0 / 0.1)',
+        glow: '0 0 4px rgb(0 0 0 / 0.1)'
       },
       maxWidth: {
         lg: '33rem',
         '2xl': '40rem',
         '3xl': '50rem',
-        '5xl': '66rem',
+        '5xl': '66rem'
       },
       opacity: {
         1: '0.01',
         2.5: '0.025',
         7.5: '0.075',
-        15: '0.15',
+        15: '0.15'
       },
       colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))'
         },
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))'
         },
         destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))'
         },
         muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))'
         },
         accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))'
         },
         popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
+          DEFAULT: 'hsl(var(--popover))',
+          foreground: 'hsl(var(--popover-foreground))'
         },
         card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))'
+        }
       }
-    },
+    }
   },
-  plugins: [typographyPlugin, headlessuiPlugin],
+  plugins: [typographyPlugin, headlessuiPlugin]
 } satisfies Config

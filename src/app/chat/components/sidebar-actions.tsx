@@ -25,20 +25,10 @@ import {
   DialogHeader,
   DialogTitle
 } from '@/components/ui/dialog'
-import {
-  IconShare,
-  IconSpinner,
-  IconTrash,
-  IconUsers
-} from '@/components/ui/icons'
+import { IconShare, IconSpinner, IconTrash, IconUsers } from '@/components/ui/icons'
 import Link from 'next/link'
 import { badgeVariants } from '@/components/ui/badge'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger
-} from '@/components/ui/tooltip'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
 interface SidebarActionsProps {
   chat: Chat
@@ -46,11 +36,7 @@ interface SidebarActionsProps {
   shareChat: (chat: Chat) => ServerActionResult<Chat>
 }
 
-export function SidebarActions({
-  chat,
-  removeChat,
-  shareChat
-}: SidebarActionsProps) {
+export function SidebarActions({ chat, removeChat, shareChat }: SidebarActionsProps) {
   const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false)
   const [shareDialogOpen, setShareDialogOpen] = React.useState(false)
   const [isRemovePending, startRemoveTransition] = React.useTransition()
@@ -117,9 +103,7 @@ export function SidebarActions({
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Share link to chat</DialogTitle>
-            <DialogDescription>
-              Anyone with the URL will be able to view the shared chat.
-            </DialogDescription>
+            <DialogDescription>Anyone with the URL will be able to view the shared chat.</DialogDescription>
           </DialogHeader>
           <div className="space-y-1 rounded-md border p-4 text-sm">
             <div className="font-medium">{chat.title}</div>
@@ -131,10 +115,7 @@ export function SidebarActions({
             {chat.sharePath && (
               <Link
                 href={chat.sharePath}
-                className={cn(
-                  badgeVariants({ variant: 'secondary' }),
-                  'mr-auto'
-                )}
+                className={cn(badgeVariants({ variant: 'secondary' }), 'mr-auto')}
                 target="_blank"
               >
                 <IconUsers className="mr-2" />
@@ -179,14 +160,11 @@ export function SidebarActions({
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This will permanently delete your chat message and remove your
-              data from our servers.
+              This will permanently delete your chat message and remove your data from our servers.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={isRemovePending}>
-              Cancel
-            </AlertDialogCancel>
+            <AlertDialogCancel disabled={isRemovePending}>Cancel</AlertDialogCancel>
             <AlertDialogAction
               disabled={isRemovePending}
               onClick={event => {
@@ -204,7 +182,7 @@ export function SidebarActions({
 
                   setDeleteDialogOpen(false)
                   router.refresh()
-                  router.push('/')
+                  router.push('/chat')
                   toast.success('Chat deleted')
                 })
               }}

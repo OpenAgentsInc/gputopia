@@ -14,7 +14,7 @@ export async function grabStripeCustomerId() {
     throw new Error('Unauthorized')
   }
 
-  const userId = session.user.user_id
+  const userId = session.user.id
   // if userId is not a number, return error
   if (typeof userId !== 'number') {
     throw new Error('Unauthorized')

@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ ok: false, error: 'Invalid token' })
     }
 
-    const userId = results[0].user_id
+    const userId = results[0].id
     const [userResults] = await connection.query('SELECT * FROM users WHERE id = ?', [userId])
 
     connection.end()

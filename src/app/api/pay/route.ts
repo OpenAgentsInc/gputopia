@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
   const expires_at = json.expires_at
   const amount = json.amount
 
-  const userId = session.user.user_id
+  const userId = session.user.id
 
   const connection = await mysql.createConnection(process.env.DATABASE_URL as string)
 

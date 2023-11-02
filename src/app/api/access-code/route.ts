@@ -16,7 +16,7 @@ export async function GET() {
     })
   }
 
-  const userId = session?.user.user_id
+  const userId = session?.user.id
 
   const connection = mysql.createConnection(process.env.DATABASE_URL as string)
   return new Promise((resolve, reject) => {
@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
     })
   }
 
-  const userId = session?.user.user_id
+  const userId = session?.user.id
 
   const json = await request.json()
   const connection = mysql.createConnection(process.env.DATABASE_URL as string)

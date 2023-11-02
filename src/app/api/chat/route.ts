@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid'
 import { NextRequest, NextResponse } from 'next/server'
 import { Configuration, OpenAIApi } from 'openai-edge'
 import { kv } from '@vercel/kv'
+import { auth } from '@/auth'
 
 export const runtime = 'edge'
 
@@ -23,6 +24,7 @@ export async function POST(req: NextRequest) {
       status: 401
     })
   }
+  const userId = session.user.id
 
   const json = await req.json()
   const { messages } = json
@@ -60,17 +62,6 @@ export async function POST(req: NextRequest) {
         member: `chat:${id}`
       })
     }
-    // async onCompletion(completion) {
-    //   console.log("Successful_completion:", completion)
-    //   const createdAt = Date.now()
-    //   const id = nanoid()
-
-    //   await kv.zadd(`user:chat:${userId}`, {
-    //     score: createdAt,
-    //     member: `chat:${id}`
-    //   })
-    //   console.log(`Created chat: ${id} for user: ${userId}`)
-    // }
   })
 
   return new StreamingTextResponse(stream)

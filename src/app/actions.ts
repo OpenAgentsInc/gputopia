@@ -1,36 +1,28 @@
 'use server'
 
-import { revalidatePath } from "next/cache"
-import { redirect } from "next/navigation"
-import { kv } from "@vercel/kv"
+import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
+import { kv } from '@vercel/kv'
 
-import type { Chat } from "@/lib/types"
-// import { auth } from '@/auth'
-
-const auth: any = () => { }
+import type { Chat } from '@/lib/types'
+import { auth } from '@/auth'
 
 export async function getChats(userId?: string | null) {
   if (!userId) {
-    console.log("No userId, returning empty array")
     return []
   }
-
-  // console.log("lets try the kv thing")
 
   try {
     const pipeline = kv.pipeline()
     const chats: string[] = await kv.zrange(`user:chat:${userId}`, 0, -1, {
       rev: true
     })
-    // console.log('what')
 
     for (const chat of chats) {
       pipeline.hgetall(chat)
     }
 
-    // console.log('here')
     const results = await pipeline.exec() // hanging
-    // console.log("Returning getChats results:", results)
 
     return results as Chat[]
   } catch (error) {
@@ -41,9 +33,7 @@ export async function getChats(userId?: string | null) {
 export async function getChat(id: string, userId: string) {
   const chat = await kv.hgetall<Chat>(`chat:${id}`)
 
-  // console.log("i found chat", chat)
-
-  if (!chat || (userId && chat.userId !== userId)) {
+  if (!chat || (userId && chat.userId != userId)) {
     return null
   }
 
@@ -53,13 +43,36 @@ export async function getChat(id: string, userId: string) {
 export async function removeChat({ id, path }: { id: string; path: string }) {
   const session = await auth()
 
-  if (!session) {
+  if (!session?.user) {
     return {
       error: 'Unauthorized'
     }
   }
 
   const uid = await kv.hget<string>(`chat:${id}`, 'userId')
+
+  if (uid !== session?.user?.id) {
+    return {
+      error: 'Unauthorized'
+    }
+  }
+
+  await kv.del(`chat:${id}`)
+  await kv.zrem(`user:chat:${session.user.id}`, `chat:${id}`)
+
+  revalidatePath('/')
+  return revalidatePath(path)
+}
+
+export async function addChat({ content, path }: { content: string; path: string }) {
+  const session = await auth()
+  if (!session) {
+    return {
+      error: 'Unauthorized'
+    }
+  }
+
+  const uid = await kv.append(`chat:${content}`, 'userId')
 
   if (uid !== session?.user?.id) {
     return {

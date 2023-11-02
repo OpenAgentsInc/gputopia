@@ -12,7 +12,7 @@ export async function GET() {
       status: 401
     })
   }
-  const userId = session.user.user_id
+  const userId = session.user.id
   // if userId is not a number, return error
   if (typeof userId !== 'number') {
     return new NextResponse('Unauthorized', {
