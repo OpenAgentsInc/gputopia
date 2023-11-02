@@ -15,7 +15,6 @@ export const SidebarChat = async () => {
         <SidebarList userId={session?.user?.user_id} />
       </React.Suspense>
       <SidebarFooter>
-        {/* <ThemeToggle /> */}
         <ClearHistory clearChats={clearChats} />
       </SidebarFooter>
     </Sidebar>

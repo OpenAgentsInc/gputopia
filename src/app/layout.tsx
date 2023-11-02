@@ -25,10 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <WebgpuChecker />
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <TopNav />
-            <div className="flex h-screen mt-16">
-              <SidebarChat />
-              <main className="flex-1 overflow-auto">{children}</main>
-            </div>
+            <main className="flex flex-1 overflow-auto mt-16">{children}</main>
           </ThemeProvider>
           <Fathom />
         </NextAuthProvider>
