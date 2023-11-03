@@ -4,8 +4,6 @@ import { nanoid } from '@/lib/utils'
 import { redirect } from 'next/navigation'
 import { getChats } from '../actions'
 
-export const runtime = 'edge'
-
 export default async function IndexPage() {
   const id = nanoid()
   const session = await auth()
