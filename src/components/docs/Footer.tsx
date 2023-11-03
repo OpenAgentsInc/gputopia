@@ -1,14 +1,14 @@
 'use client'
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { Button } from "@/components/docs/Button"
-import { navigation } from "@/components/docs/Navigation"
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { Button } from '@/components/docs/Button'
+import { navigation } from '@/components/docs/Navigation'
 
 function PageLink({
   label,
   page,
-  previous = false,
+  previous = false
 }: {
   label: string
   page: { href: string; title: string }
@@ -38,8 +38,8 @@ function PageLink({
 
 function PageNavigation() {
   let pathname = usePathname()
-  let allPages = navigation.flatMap((group) => group.links)
-  let currentPageIndex = allPages.findIndex((page) => page.href === pathname)
+  let allPages = navigation.flatMap(group => group.links)
+  let currentPageIndex = allPages.findIndex(page => page.href === pathname)
 
   if (currentPageIndex === -1) {
     return null
@@ -99,7 +99,7 @@ function DiscordIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
 function SocialLink({
   href,
   icon: Icon,
-  children,
+  children
 }: {
   href: string
   icon: React.ComponentType<{ className?: string }>

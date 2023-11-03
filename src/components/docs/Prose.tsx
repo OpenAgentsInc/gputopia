@@ -1,4 +1,4 @@
-import clsx from "clsx"
+import clsx from 'clsx'
 
 export function Prose<T extends React.ElementType = 'div'>({
   as,
@@ -10,10 +10,5 @@ export function Prose<T extends React.ElementType = 'div'>({
 }) {
   let Component = as ?? 'div'
 
-  return (
-    <Component
-      className={clsx(className, 'prose dark:prose-invert')}
-      {...props}
-    />
-  )
+  return <Component className={clsx(className, 'prose dark:prose-invert')} {...props} />
 }

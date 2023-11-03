@@ -1,0 +1,56 @@
+import { Button } from '@/components/ui/button'
+import { Guides } from '@/components/docs/Guides'
+import { Resources } from '@/components/docs/Resources'
+import { HeroPattern } from '@/components/docs/HeroPattern'
+import { ExternalLink, TypographyH1 as H1 } from '@/components/ui/typography'
+
+export const article = {
+  author: 'GPUtopia',
+  date: '2023-10-18',
+  title: 'Accelerating Open AI',
+  description: 'We increase our bounty prize pool to 4 BTC (~$110,000 USD).'
+}
+
+export const metadata = {
+  title: article.title,
+  description: article.description
+}
+
+<time dateTime="2023-10-18" className="order-first flex items-center text-base text-zinc-500">
+  <span className="h-4 w-0.5 rounded-full bg-zinc-500"></span>
+  <span className="ml-3">October 18, 2023</span>
+</time>
+
+<H1 className="mt-4 mb-8">Accelerating Open AI</H1>
+
+### We increase our bounty prize pool to 4 BTC (~$110,000 USD). {{ class: "text-zinc-500 text-2xl" }}
+
+![Bounties](/images/bounties4btc.png)
+
+Previously we [announced](/blog/opening) 1 BTC of bounties to build truly open AI.
+
+We are excited to increase the total prize pool to 4 BTC (~$110,000 USD) &mdash; and hope to distribute all bounties as quickly as possible.
+
+<div className="-mt-12 text-center flex flex-col justify-center items-center">
+  ![4 BTC prizes](/images/4btc.png)
+</div>
+
+<div className="-mt-12" />
+
+Bounties will be discussed in our <ExternalLink className="text-cyan-500" href="https://discord.gg/EghVD49u">Discord</ExternalLink> server, sorted by category:
+
+![Bounties](/images/bounties.png)
+
+Read our [bounties doc](/docs/bounties) for details on how they'll be distributed.
+
+Anything that accelerates truly open AI and the success of our [sellers of GPU compute](/blog/intro), we want to fund with bitcoin.
+
+Jump into our Discord, introduce yourself, and let's build the open future.
+
+<div className="mt-8 w-full">
+  <a href="https://discord.gg/EghVD49u" className="block w-full">
+    <Button size="lg" variant="outline" arrow="right">
+      <span className="text-white">Join the Discord</span>
+    </Button>
+  </a>
+</div>

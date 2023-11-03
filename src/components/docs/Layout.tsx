@@ -1,19 +1,17 @@
 'use client'
 
-import { motion } from "framer-motion"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { Footer } from "@/components/docs/Footer"
-import { Header } from "@/components/docs/Header"
-import { Logo } from "@/components/docs/Logo"
-import { Navigation } from "@/components/docs/Navigation"
-import {
-    Section, SectionProvider, type
-} from "@/components/docs/SectionProvider"
+import { motion } from 'framer-motion'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { Footer } from '@/components/docs/Footer'
+import { Header } from '@/components/docs/Header'
+import { Logo } from '@/components/docs/Logo'
+import { Navigation } from '@/components/docs/Navigation'
+import { Section, SectionProvider, type } from '@/components/docs/SectionProvider'
 
 export function Layout({
   children,
-  allSections,
+  allSections
 }: {
   children: React.ReactNode
   allSections: Record<string, Array<Section>>

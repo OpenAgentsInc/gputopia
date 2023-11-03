@@ -1,15 +1,15 @@
 'use client'
 
-import clsx from "clsx"
-import { AnimatePresence, motion, useIsPresent } from "framer-motion"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { useRef } from "react"
-import { Button } from "@/components/docs/Button"
-import { useIsInsideMobileNavigation } from "@/components/docs/MobileNavigation"
-import { useSectionStore } from "@/components/docs/SectionProvider"
-import { Tag } from "@/components/docs/Tag"
-import { remToPx } from "@/lib/remToPx"
+import clsx from 'clsx'
+import { AnimatePresence, motion, useIsPresent } from 'framer-motion'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { useRef } from 'react'
+import { Button } from '@/components/docs/Button'
+import { useIsInsideMobileNavigation } from '@/components/docs/MobileNavigation'
+import { useSectionStore } from '@/components/docs/SectionProvider'
+import { Tag } from '@/components/docs/Tag'
+import { remToPx } from '@/lib/remToPx'
 
 interface NavGroup {
   title: string
@@ -24,13 +24,7 @@ function useInitialValue<T>(value: T, condition = true) {
   return condition ? initialValue : value
 }
 
-function TopLevelNavItem({
-  href,
-  children,
-}: {
-  href: string
-  children: React.ReactNode
-}) {
+function TopLevelNavItem({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <li className="md:hidden">
       <Link
@@ -48,7 +42,7 @@ function NavLink({
   children,
   tag,
   active = false,
-  isAnchorLink = false,
+  isAnchorLink = false
 }: {
   href: string
   children: React.ReactNode
@@ -65,7 +59,7 @@ function NavLink({
         isAnchorLink ? 'pl-7' : 'pl-4',
         active
           ? 'text-zinc-900 dark:text-white'
-          : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white',
+          : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
       )}
     >
       <span className="truncate">{children}</span>
@@ -78,35 +72,21 @@ function NavLink({
   )
 }
 
-function VisibleSectionHighlight({
-  group,
-  pathname,
-}: {
-  group: NavGroup
-  pathname: string
-}) {
+function VisibleSectionHighlight({ group, pathname }: { group: NavGroup; pathname: string }) {
   let [sections, visibleSections] = useInitialValue(
-    [
-      useSectionStore((s) => s.sections),
-      useSectionStore((s) => s.visibleSections),
-    ],
-    useIsInsideMobileNavigation(),
+    [useSectionStore(s => s.sections), useSectionStore(s => s.visibleSections)],
+    useIsInsideMobileNavigation()
   )
 
   let isPresent = useIsPresent()
   let firstVisibleSectionIndex = Math.max(
     0,
-    [{ id: '_top' }, ...sections].findIndex(
-      (section) => section.id === visibleSections[0],
-    ),
+    [{ id: '_top' }, ...sections].findIndex(section => section.id === visibleSections[0])
   )
   let itemHeight = remToPx(2)
-  let height = isPresent
-    ? Math.max(1, visibleSections.length) * itemHeight
-    : itemHeight
+  let height = isPresent ? Math.max(1, visibleSections.length) * itemHeight : itemHeight
   let top =
-    group.links.findIndex((link) => link.href === pathname) * itemHeight +
-    firstVisibleSectionIndex * itemHeight
+    group.links.findIndex(link => link.href === pathname) * itemHeight + firstVisibleSectionIndex * itemHeight
 
   return (
     <motion.div
@@ -120,16 +100,10 @@ function VisibleSectionHighlight({
   )
 }
 
-function ActivePageMarker({
-  group,
-  pathname,
-}: {
-  group: NavGroup
-  pathname: string
-}) {
+function ActivePageMarker({ group, pathname }: { group: NavGroup; pathname: string }) {
   let itemHeight = remToPx(2)
   let offset = remToPx(0.25)
-  let activePageIndex = group.links.findIndex((link) => link.href === pathname)
+  let activePageIndex = group.links.findIndex(link => link.href === pathname)
   let top = offset + activePageIndex * itemHeight
 
   return (
@@ -144,50 +118,33 @@ function ActivePageMarker({
   )
 }
 
-function NavigationGroup({
-  group,
-  className,
-}: {
-  group: NavGroup
-  className?: string
-}) {
+function NavigationGroup({ group, className }: { group: NavGroup; className?: string }) {
   // If this is the mobile navigation then we always render the initial
   // state, so that the state does not change during the close animation.
   // The state will still update when we re-open (re-render) the navigation.
   let isInsideMobileNavigation = useIsInsideMobileNavigation()
   let [pathname, sections] = useInitialValue(
-    [usePathname(), useSectionStore((s) => s.sections)],
-    isInsideMobileNavigation,
+    [usePathname(), useSectionStore(s => s.sections)],
+    isInsideMobileNavigation
   )
 
-  let isActiveGroup =
-    group.links.findIndex((link) => link.href === pathname) !== -1
+  let isActiveGroup = group.links.findIndex(link => link.href === pathname) !== -1
 
   return (
     <li className={clsx('relative mt-6', className)}>
-      <motion.h2
-        layout="position"
-        className="text-xs font-semibold text-zinc-900 dark:text-white"
-      >
+      <motion.h2 layout="position" className="text-xs font-semibold text-zinc-900 dark:text-white">
         {group.title}
       </motion.h2>
       <div className="relative mt-3 pl-2">
         <AnimatePresence initial={!isInsideMobileNavigation}>
-          {isActiveGroup && (
-            <VisibleSectionHighlight group={group} pathname={pathname} />
-          )}
+          {isActiveGroup && <VisibleSectionHighlight group={group} pathname={pathname} />}
         </AnimatePresence>
-        <motion.div
-          layout
-          className="absolute inset-y-0 left-2 w-px bg-zinc-900/10 dark:bg-white/5"
-        />
+        <motion.div layout className="absolute inset-y-0 left-2 w-px bg-zinc-900/10 dark:bg-white/5" />
         <AnimatePresence initial={false}>
-          {isActiveGroup && (
-            <ActivePageMarker group={group} pathname={pathname} />
-          )}
+          {isActiveGroup && <ActivePageMarker group={group} pathname={pathname} />}
         </AnimatePresence>
         <ul role="list" className="border-l border-transparent">
-          {group.links.map((link) => (
+          {group.links.map(link => (
             <motion.li key={link.href} layout="position" className="relative">
               <NavLink href={link.href} active={link.href === pathname}>
                 {link.title}
@@ -199,20 +156,16 @@ function NavigationGroup({
                     initial={{ opacity: 0 }}
                     animate={{
                       opacity: 1,
-                      transition: { delay: 0.1 },
+                      transition: { delay: 0.1 }
                     }}
                     exit={{
                       opacity: 0,
-                      transition: { duration: 0.15 },
+                      transition: { duration: 0.15 }
                     }}
                   >
-                    {sections.map((section) => (
+                    {sections.map(section => (
                       <li key={section.id}>
-                        <NavLink
-                          href={`${link.href}#${section.id}`}
-                          tag={section.tag}
-                          isAnchorLink
-                        >
+                        <NavLink href={`${link.href}#${section.id}`} tag={section.tag} isAnchorLink>
                           {section.title}
                         </NavLink>
                       </li>
@@ -230,7 +183,7 @@ function NavigationGroup({
 
 export const navigation: Array<NavGroup> = [
   {
-    title: "",
+    title: '',
     links: [
       { title: 'Introduction', href: '/docs' },
       { title: 'FAQ', href: '/docs/faq' },
@@ -238,9 +191,9 @@ export const navigation: Array<NavGroup> = [
       { title: 'Selling Compute', href: '/docs/selling' },
       { title: 'Bounties', href: '/docs/bounties' },
       { title: 'Open Source', href: '/docs/opensource' },
-      { title: 'Custom Deployments', href: '/docs/custom-deployments' },
-    ],
-  },
+      { title: 'Custom Deployments', href: '/docs/custom-deployments' }
+    ]
+  }
 ]
 
 export function Navigation(props: React.ComponentPropsWithoutRef<'nav'>) {
@@ -251,11 +204,7 @@ export function Navigation(props: React.ComponentPropsWithoutRef<'nav'>) {
         <TopLevelNavItem href="#">Documentation</TopLevelNavItem>
         <TopLevelNavItem href="#">Support</TopLevelNavItem>
         {navigation.map((group, groupIndex) => (
-          <NavigationGroup
-            key={group.title}
-            group={group}
-            className={groupIndex === 0 ? 'md:mt-0' : ''}
-          />
+          <NavigationGroup key={group.title} group={group} className={groupIndex === 0 ? 'md:mt-0' : ''} />
         ))}
         <li className="sticky bottom-0 z-10 mt-6 min-[416px]:hidden">
           <Button href="#" variant="filled" className="w-full">

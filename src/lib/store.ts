@@ -1,23 +1,23 @@
-import { create } from "zustand"
-import { AlbyUser } from "./useAlby"
+import { create } from 'zustand'
+import { AlbyUser } from './useAlby'
 
 type Store = {
-  user: AlbyUser | null;
-  onlineMembers: number;
-  balance: number;
-  payments: any[];
-  totalSatsEarned: number;
-  modelLoadPercentage: number;
-  lastMessage: string;
-  increment: () => void;
-  decrement: () => void;
-  modelLoaded: boolean;
-  setCount: (count: number) => void;
-  showWebgpuWarning: boolean;
-  busyInferencing: boolean;
-};
+  user: AlbyUser | null
+  onlineMembers: number
+  balance: number
+  payments: any[]
+  totalSatsEarned: number
+  modelLoadPercentage: number
+  lastMessage: string
+  increment: () => void
+  decrement: () => void
+  modelLoaded: boolean
+  setCount: (count: number) => void
+  showWebgpuWarning: boolean
+  busyInferencing: boolean
+}
 
-export const useStore = create<Store>((set) => ({
+export const useStore = create<Store>(set => ({
   user: null,
   busyInferencing: false,
   modelLoaded: false,
@@ -26,9 +26,9 @@ export const useStore = create<Store>((set) => ({
   onlineMembers: 0,
   totalSatsEarned: 0,
   modelLoadPercentage: 0,
-  lastMessage: "",
+  lastMessage: '',
   showWebgpuWarning: false,
-  increment: () => set((state) => ({ onlineMembers: state.onlineMembers + 1 })),
-  decrement: () => set((state) => ({ onlineMembers: state.onlineMembers - 1 })),
-  setCount: (count) => set(() => ({ onlineMembers: count })),
-}));
+  increment: () => set(state => ({ onlineMembers: state.onlineMembers + 1 })),
+  decrement: () => set(state => ({ onlineMembers: state.onlineMembers - 1 })),
+  setCount: count => set(() => ({ onlineMembers: count }))
+}))

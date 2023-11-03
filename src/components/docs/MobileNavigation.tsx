@@ -1,24 +1,16 @@
 'use client'
 
-import { motion } from "framer-motion"
-import { usePathname, useSearchParams } from "next/navigation"
-import {
-    createContext, Fragment, Suspense, useContext, useEffect, useRef
-} from "react"
-import { create } from "zustand"
-import { Header } from "@/components/docs/Header"
-import { Navigation } from "@/components/docs/Navigation"
-import { Dialog, Transition } from "@headlessui/react"
+import { motion } from 'framer-motion'
+import { usePathname, useSearchParams } from 'next/navigation'
+import { createContext, Fragment, Suspense, useContext, useEffect, useRef } from 'react'
+import { create } from 'zustand'
+import { Header } from '@/components/docs/Header'
+import { Navigation } from '@/components/docs/Navigation'
+import { Dialog, Transition } from '@headlessui/react'
 
 function MenuIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
-    <svg
-      viewBox="0 0 10 9"
-      fill="none"
-      strokeLinecap="round"
-      aria-hidden="true"
-      {...props}
-    >
+    <svg viewBox="0 0 10 9" fill="none" strokeLinecap="round" aria-hidden="true" {...props}>
       <path d="M.5 1h9M.5 8h9M.5 4.5h9" />
     </svg>
   )
@@ -26,13 +18,7 @@ function MenuIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
 
 function XIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
-    <svg
-      viewBox="0 0 10 9"
-      fill="none"
-      strokeLinecap="round"
-      aria-hidden="true"
-      {...props}
-    >
+    <svg viewBox="0 0 10 9" fill="none" strokeLinecap="round" aria-hidden="true" {...props}>
       <path d="m1.5 1 7 7M8.5 1l-7 7" />
     </svg>
   )
@@ -40,13 +26,7 @@ function XIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
 
 const IsInsideMobileNavigationContext = createContext(false)
 
-function MobileNavigationDialog({
-  isOpen,
-  close,
-}: {
-  isOpen: boolean
-  close: () => void
-}) {
+function MobileNavigationDialog({ isOpen, close }: { isOpen: boolean; close: () => void }) {
   let pathname = usePathname()
   let searchParams = useSearchParams()
   let initialPathname = useRef(pathname).current
@@ -67,7 +47,7 @@ function MobileNavigationDialog({
     if (
       link &&
       link.pathname + link.search + link.hash ===
-      window.location.pathname + window.location.search + window.location.hash
+        window.location.pathname + window.location.search + window.location.hash
     ) {
       close()
     }
@@ -75,11 +55,7 @@ function MobileNavigationDialog({
 
   return (
     <Transition.Root show={isOpen} as={Fragment}>
-      <Dialog
-        onClickCapture={onClickDialog}
-        onClose={close}
-        className="fixed inset-0 z-50 lg:hidden"
-      >
+      <Dialog onClickCapture={onClickDialog} onClose={close} className="fixed inset-0 z-50 lg:hidden">
         <Transition.Child
           as={Fragment}
           enter="duration-300 ease-out"
@@ -136,11 +112,11 @@ export const useMobileNavigationStore = create<{
   open: () => void
   close: () => void
   toggle: () => void
-}>()((set) => ({
+}>()(set => ({
   isOpen: false,
   open: () => set({ isOpen: true }),
   close: () => set({ isOpen: false }),
-  toggle: () => set((state) => ({ isOpen: !state.isOpen })),
+  toggle: () => set(state => ({ isOpen: !state.isOpen }))
 }))
 
 export function MobileNavigation() {

@@ -4,15 +4,19 @@ import { Resources } from '@/components/docs/Resources'
 import { HeroPattern } from '@/components/docs/HeroPattern'
 import { ExternalLink, TypographyH1 as H1 } from '@/components/ui/typography'
 
-export const metadata = {
+export const article = {
+  author: 'GPUtopia',
+  date: '2023-10-03',
   title: 'Opening AI',
   description: 'We are building truly open AI - and we need your help.'
 }
 
-<time
-  dateTime="2023-10-03"
-  className="order-first flex items-center text-base text-zinc-500"
->
+export const metadata = {
+  title: article.title,
+  description: article.description
+}
+
+<time dateTime="2023-10-03" className="order-first flex items-center text-base text-zinc-500">
   <span className="h-4 w-0.5 rounded-full bg-zinc-500"></span>
   <span className="ml-3">October 3, 2023</span>
 </time>
@@ -57,7 +61,7 @@ We hope to distribute all bounties in the next two weeks, then immediately begin
 
 We've got 2+ Bitcoin for bounties ready to go. {{ className: '-mt-4 mb-6 italic text-sm text-center opacity-75' }}
 
-We will organize work on these bounties in the <ExternalLink href="https://github.com/ArcadeLabsInc/gputopia">GPUtopia repo on GitHub</ExternalLink> and our new <ExternalLink href="https://discord.gg/snxJSJDk">community Discord server</ExternalLink> you are welcome to join.
+We will organize work on these bounties in the <ExternalLink href="https://github.com/ArcadeLabsInc/gputopia">GPUtopia repo on GitHub</ExternalLink> and our new <ExternalLink href="https://discord.gg/EghVD49u">community Discord server</ExternalLink> you are welcome to join.
 
 ## The first goal
 
@@ -65,7 +69,7 @@ We begin with a relentless focus on one goal:
 
 **_Within the next 30 days, 150 of our GPU sellers will achieve a minimum monthly profit of $500 each from buyers on the GPUtopia marketplace_.**
 
-Anything you can do to help us toward that goal, please <ExternalLink href="https://discord.gg/snxJSJDk">join our Discord</ExternalLink> and get started.
+Anything you can do to help us toward that goal, please <ExternalLink href="https://discord.gg/EghVD49u">join our Discord</ExternalLink> and get started.
 
 ## Looking forward
 
@@ -81,15 +85,14 @@ Here are some directions we’re excited to explore:
 - Bringing AI to the edge with wearable hardware connected to our GPU mesh
 - Doing all of the above in an open and decentralized marketplace accessible to all people
 
-<ExternalLink href="https://hivemind.vc/ai/">Actually open AI</ExternalLink> must
-win.
+<ExternalLink href="https://hivemind.vc/ai/">Actually open AI</ExternalLink> must win.
 
 Whether it does &mdash; and how soon &mdash; is up to all of us.
 
 **_Let’s get started._**
 
 <div className="mt-8 w-full">
-  <a href="https://discord.gg/snxJSJDk" className="block w-full">
+  <a href="https://discord.gg/EghVD49u" className="block w-full">
     <Button size="lg" variant="outline" arrow="right">
       <span className="text-white">Join the Discord</span>
     </Button>
@@ -97,10 +100,7 @@ Whether it does &mdash; and how soon &mdash; is up to all of us.
 </div>
 
 <div className="mt-12 text-xs opacity-75 italic">
-  Next post: [Transcript: Thriller Bitcoin interviews Christopher
-  David](/blog/thriller)
+  Next post: [Transcript: Thriller Bitcoin interviews Christopher David](/blog/thriller)
 </div>
 
-<div className="mt-12 text-xs opacity-75 italic">
-  Previous post: [Toward an Open GPU Mesh](/blog/intro)
-</div>
+<div className="mt-12 text-xs opacity-75 italic">Previous post: [Toward an Open GPU Mesh](/blog/intro)</div>

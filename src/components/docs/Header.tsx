@@ -1,21 +1,18 @@
-import clsx from "clsx"
-import { motion, useScroll, useTransform } from "framer-motion"
-import Link from "next/link"
-import { forwardRef } from "react"
-import { Button } from "@/components/docs/Button"
-import { Logo } from "@/components/docs/Logo"
+import clsx from 'clsx'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import Link from 'next/link'
+import { forwardRef } from 'react'
+import { Button } from '@/components/docs/Button'
+import { Logo } from '@/components/docs/Logo'
 import {
-    MobileNavigation, useIsInsideMobileNavigation, useMobileNavigationStore
-} from "@/components/docs/MobileNavigation"
+  MobileNavigation,
+  useIsInsideMobileNavigation,
+  useMobileNavigationStore
+} from '@/components/docs/MobileNavigation'
 // import { MobileSearch } from "@/components/docs/Search"
-import { ThemeToggle } from "@/components/docs/ThemeToggle"
+import { ThemeToggle } from '@/components/docs/ThemeToggle'
 
-function TopLevelNavItem({
-  href,
-  children, }: {
-    href: string
-    children: React.ReactNode
-  }) {
+function TopLevelNavItem({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <li>
       <Link
@@ -28,10 +25,10 @@ function TopLevelNavItem({
   )
 }
 
-export const Header = forwardRef<
-  React.ElementRef<'div'>,
-  { className?: string }
->(function Header({ className }, ref) {
+export const Header = forwardRef<React.ElementRef<'div'>, { className?: string }>(function Header(
+  { className },
+  ref
+) {
   let { isOpen: mobileNavIsOpen } = useMobileNavigationStore()
   let isInsideMobileNavigation = useIsInsideMobileNavigation()
 
@@ -45,24 +42,22 @@ export const Header = forwardRef<
       className={clsx(
         className,
         'fixed inset-x-0 top-0 z-50 flex h-14 items-center justify-between gap-12 px-4 transition sm:px-6 lg:left-72 lg:z-30 lg:px-8 xl:left-80',
-        !isInsideMobileNavigation &&
-        'backdrop-blur-sm dark:backdrop-blur lg:left-72 xl:left-80',
+        !isInsideMobileNavigation && 'backdrop-blur-sm dark:backdrop-blur lg:left-72 xl:left-80',
         isInsideMobileNavigation
           ? 'bg-white dark:bg-zinc-900'
-          : 'bg-white/[var(--bg-opacity-light)] dark:bg-zinc-900/[var(--bg-opacity-dark)]',
+          : 'bg-white/[var(--bg-opacity-light)] dark:bg-zinc-900/[var(--bg-opacity-dark)]'
       )}
       style={
         {
           '--bg-opacity-light': bgOpacityLight,
-          '--bg-opacity-dark': bgOpacityDark,
+          '--bg-opacity-dark': bgOpacityDark
         } as React.CSSProperties
       }
     >
       <div
         className={clsx(
           'absolute inset-x-0 top-full h-px transition',
-          (isInsideMobileNavigation || !mobileNavIsOpen) &&
-          'bg-zinc-900/7.5 dark:bg-white/7.5',
+          (isInsideMobileNavigation || !mobileNavIsOpen) && 'bg-zinc-900/7.5 dark:bg-white/7.5'
         )}
       />
       {/* <Search /> */}

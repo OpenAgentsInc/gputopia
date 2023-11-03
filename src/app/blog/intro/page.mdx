@@ -1,22 +1,21 @@
-import {
-  ExternalLink,
-  TypographyH1 as H1,
-  TypographyH2 as H2
-} from '@/components/ui/typography'
+import { ExternalLink, TypographyH1 as H1, TypographyH2 as H2 } from '@/components/ui/typography'
 import { Guides } from '@/components/docs/Guides'
 import { Resources } from '@/components/docs/Resources'
 import { HeroPattern } from '@/components/docs/HeroPattern'
 
-export const metadata = {
+export const article = {
+  author: 'GPUtopia',
+  date: '2023-09-12',
   title: 'Toward an Open GPU Mesh',
-  description:
-    'The GPU arms race has begun. What if we could level the playing field?'
+  description: 'The GPU arms race has begun. What if we could level the playing field?'
 }
 
-<time
-  dateTime="2023-09-12"
-  className="order-first flex items-center text-base text-zinc-500"
->
+export const metadata = {
+  title: article.title,
+  description: article.description
+}
+
+<time dateTime="2023-09-12" className="order-first flex items-center text-base text-zinc-500">
   <span className="h-4 w-0.5 rounded-full bg-zinc-500"></span>
   <span className="ml-3">September 12, 2023</span>
 </time>
@@ -65,6 +64,4 @@ Over the coming weeks and months, we will rapidly add support for more devices a
 
 **_See you in GPUtopia!_**
 
-<div className="mt-12 text-xs opacity-75 italic">
-  Next post: [Opening AI](/blog/opening)
-</div>
+<div className="mt-12 text-xs opacity-75 italic">Next post: [Opening AI](/blog/opening)</div>

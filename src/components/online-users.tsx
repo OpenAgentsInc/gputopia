@@ -1,11 +1,11 @@
-import {
-    Tooltip, TooltipContent, TooltipProvider, TooltipTrigger
-} from "@/components/ui/tooltip"
-import { useStore } from "@/lib/store"
-import { PersonIcon } from "@radix-ui/react-icons"
+'use client'
+
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { useStore } from '@/lib/store'
+import { PersonIcon } from '@radix-ui/react-icons'
 
 export const OnlineUsers = () => {
-  const onlineMembers = useStore((state) => state.onlineMembers)
+  const onlineMembers = useStore(state => state.onlineMembers)
   if (onlineMembers <= 0) return <></>
   return (
     <TooltipProvider>

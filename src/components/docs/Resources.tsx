@@ -1,25 +1,20 @@
 'use client'
 
-import {
-    motion, type MotionValue, useMotionTemplate, useMotionValue
-} from "framer-motion"
-import Link from "next/link"
-import { GridPattern } from "@/components/docs/GridPattern"
-import { Heading } from "@/components/docs/Heading"
-import { ChatBubbleIcon } from "@/components/docs/icons/ChatBubbleIcon"
-import { EnvelopeIcon } from "@/components/docs/icons/EnvelopeIcon"
-import { UserIcon } from "@/components/docs/icons/UserIcon"
-import { UsersIcon } from "@/components/docs/icons/UsersIcon"
+import { motion, type MotionValue, useMotionTemplate, useMotionValue } from 'framer-motion'
+import Link from 'next/link'
+import { GridPattern } from '@/components/docs/GridPattern'
+import { Heading } from '@/components/docs/Heading'
+import { ChatBubbleIcon } from '@/components/docs/icons/ChatBubbleIcon'
+import { EnvelopeIcon } from '@/components/docs/icons/EnvelopeIcon'
+import { UserIcon } from '@/components/docs/icons/UserIcon'
+import { UsersIcon } from '@/components/docs/icons/UsersIcon'
 
 interface Resource {
   href: string
   name: string
   description: string
   icon: React.ComponentType<{ className?: string }>
-  pattern: Omit<
-    React.ComponentPropsWithoutRef<typeof GridPattern>,
-    'width' | 'height' | 'x'
-  >
+  pattern: Omit<React.ComponentPropsWithoutRef<typeof GridPattern>, 'width' | 'height' | 'x'>
 }
 
 const resources: Array<Resource> = [
@@ -33,9 +28,9 @@ const resources: Array<Resource> = [
       y: 16,
       squares: [
         [0, 1],
-        [1, 3],
-      ],
-    },
+        [1, 3]
+      ]
+    }
   },
   {
     href: '/conversations',
@@ -47,9 +42,9 @@ const resources: Array<Resource> = [
       y: -6,
       squares: [
         [-1, 2],
-        [1, 3],
-      ],
-    },
+        [1, 3]
+      ]
+    }
   },
   {
     href: '/messages',
@@ -61,21 +56,20 @@ const resources: Array<Resource> = [
       y: 32,
       squares: [
         [0, 2],
-        [1, 4],
-      ],
-    },
+        [1, 4]
+      ]
+    }
   },
   {
     href: '/groups',
     name: 'Groups',
-    description:
-      'Learn about the group model and how to create, retrieve, update, delete, and list groups.',
+    description: 'Learn about the group model and how to create, retrieve, update, delete, and list groups.',
     icon: UsersIcon,
     pattern: {
       y: 22,
-      squares: [[0, 1]],
-    },
-  },
+      squares: [[0, 1]]
+    }
+  }
 ]
 
 function ResourceIcon({ icon: Icon }: { icon: Resource['icon'] }) {
@@ -132,11 +126,7 @@ function Resource({ resource }: { resource: Resource }) {
   let mouseX = useMotionValue(0)
   let mouseY = useMotionValue(0)
 
-  function onMouseMove({
-    currentTarget,
-    clientX,
-    clientY,
-  }: React.MouseEvent<HTMLDivElement>) {
+  function onMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent<HTMLDivElement>) {
     let { left, top } = currentTarget.getBoundingClientRect()
     mouseX.set(clientX - left)
     mouseY.set(clientY - top)
@@ -158,9 +148,7 @@ function Resource({ resource }: { resource: Resource }) {
             {resource.name}
           </Link>
         </h3>
-        <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-          {resource.description}
-        </p>
+        <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">{resource.description}</p>
       </div>
     </div>
   )
@@ -173,7 +161,7 @@ export function Resources() {
         Resources
       </Heading>
       <div className="not-prose mt-4 grid grid-cols-1 gap-8 border-t border-zinc-900/5 pt-10 dark:border-white/5 sm:grid-cols-2 xl:grid-cols-4">
-        {resources.map((resource) => (
+        {resources.map(resource => (
           <Resource key={resource.href} resource={resource} />
         ))}
       </div>

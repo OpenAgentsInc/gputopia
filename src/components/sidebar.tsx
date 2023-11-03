@@ -1,31 +1,31 @@
 'use client'
-
-import * as React from "react"
-import { Button } from "@/components/ui/button"
-import { IconSidebar } from "@/components/ui/icons"
-import {
-    Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger
-} from "@/components/ui/sheet"
+import * as React from 'react'
+import { IconSidebar } from '@/components/ui/icons'
+import { Dispatch, SetStateAction } from 'react'
+import { SidebarList } from './sidebar-list'
+import { Chat } from '@/lib/types'
+import { SidebarFooter } from './sidebar-footer'
+import { ClearHistory } from './clear-history'
+import { clearChats } from '@/app/actions'
 
 export interface SidebarProps {
-  children?: React.ReactNode
+  show: boolean
+  setShow: Dispatch<SetStateAction<boolean>>
+  chats: Chat[]
 }
 
-export function Sidebar({ children }: SidebarProps) {
+export function Sidebar({ show, setShow, chats }: SidebarProps) {
   return (
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button variant="ghost" className="-ml-2 h-9 w-9 p-0">
-          <IconSidebar className="h-6 w-6" />
-          <span className="sr-only">Toggle Sidebar</span>
-        </Button>
-      </SheetTrigger>
-      <SheetContent side="left" className="mt-[65px] inset-y-0 flex h-auto w-[300px] flex-col p-0">
-        <SheetHeader className="p-4">
-          <SheetTitle className="text-sm">Chat History</SheetTitle>
-        </SheetHeader>
-        {children}
-      </SheetContent>
-    </Sheet >
+    <div
+      className={`border shadow h-[calc(100vh-64px)] border-r relative transition-all ${
+        show ? 'w-64 lg:w-96' : 'w-0'
+      }`}
+    >
+      <button className="ml-10 h-9 w-9 p-0 my-4" onClick={() => setShow(!show)}>
+        <IconSidebar className="h-6 w-6" />
+        <span className="sr-only">Toggle Sidebar</span>
+      </button>
+      <SidebarList chats={chats} />
+    </div>
   )
 }

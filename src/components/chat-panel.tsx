@@ -1,36 +1,22 @@
-import { type, UseChatHelpers } from "ai/react"
-import { ButtonScrollToBottom } from "@/components/button-scroll-to-bottom"
-import { FooterText } from "@/components/footer"
-import { PromptForm } from "@/components/prompt-form"
-import { Button } from "@/components/ui/button"
-import { IconRefresh, IconStop } from "@/components/ui/icons"
-import { updateBalances } from "@/lib/update-balances"
+import { UseChatHelpers } from 'ai/react'
+import { ButtonScrollToBottom } from '@/components/button-scroll-to-bottom'
+import { FooterText } from '@/components/footer'
+import { PromptForm } from '@/components/prompt-form'
+import { Button } from '@/components/ui/button'
+import { IconRefresh, IconStop } from '@/components/ui/icons'
+import { updateBalances } from '@/lib/update-balances'
 
 export interface ChatPanelProps
   extends Pick<
     UseChatHelpers,
-    | 'append'
-    | 'isLoading'
-    | 'reload'
-    | 'messages'
-    | 'stop'
-    | 'input'
-    | 'setInput'
+    'append' | 'isLoading' | 'reload' | 'messages' | 'stop' | 'input' | 'setInput'
   > {
   id?: string
 }
 
-export function ChatPanel({
-  id,
-  isLoading,
-  stop,
-  append,
-  reload,
-  input,
-  setInput,
-}: ChatPanelProps) {
+export function ChatPanel({ id, isLoading, stop, append, reload, input, setInput }: ChatPanelProps) {
   return (
-    <div className="fixed inset-x-0 bottom-0 bg-gradient-to-b from-muted/10 from-10% to-muted/30 to-50%">
+    <div>
       <ButtonScrollToBottom />
       <div className="mx-auto sm:max-w-2xl sm:px-4">
         {/* <div className="flex h-10 items-center justify-center">

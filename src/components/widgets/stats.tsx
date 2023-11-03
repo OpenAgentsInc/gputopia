@@ -1,15 +1,17 @@
-import { useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
-import { useMachineId } from "@/lib/hooks/use-machine-id"
-import { useStore } from "@/lib/store"
-import { AlbyUser } from "@/lib/useAlby"
-import { initModel } from "@/lib/webllm"
-import { withdraw } from "@/lib/withdraw"
+import { useSearchParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Progress } from '@/components/ui/progress'
+import { useMachineId } from '@/lib/hooks/use-machine-id'
+import { useStore } from '@/lib/store'
+import { AlbyUser } from '@/lib/useAlby'
+import { initModel } from '@/lib/webllm'
+import { withdraw } from '@/lib/withdraw'
+import { useSession } from 'next-auth/react'
 
 export const Stats = () => {
+  const { data: session, status } = useSession()
   const onlineCount = useStore(state => state.onlineMembers)
   const totalSatsEarned = useStore(state => state.totalSatsEarned)
   const modelLoadPercentage = useStore(state => state.modelLoadPercentage)
@@ -22,9 +24,9 @@ export const Stats = () => {
   const [withdrawLoading, setWithdrawLoading] = useState(false)
 
   const searchParams = useSearchParams()
-  const debug = !!searchParams.get("debug")
+  const debug = !!searchParams.get('debug')
 
-  const userId = window.sessionStorage.getItem("user_id") as string
+  const userId = session?.user?.user_id
 
   const goWithdraw = async () => {
     if (balance === 0) {
@@ -32,7 +34,7 @@ export const Stats = () => {
       return
     }
     setWithdrawLoading(true)
-    await withdraw()
+    await withdraw(session.access_token)
     setWithdrawLoading(false)
   }
 
@@ -44,21 +46,20 @@ export const Stats = () => {
     //   setModelLoaded(true)
     // });
 
-    fetch("/api/balance", {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: user.email }),
-    }).then((res) => {
-      if (res.ok) {
-        return res.json()
-      }
-    }).then((json) => {
-      if (json.totalSatsEarned) {
-        useStore.setState({ balance: json.balance, totalSatsEarned: json.totalSatsEarned })
-      }
-    }).catch((error) => {
-      console.log(error);
-    })
+    fetch('/api/balance')
+      .then(res => {
+        if (res.ok) {
+          return res.json()
+        }
+      })
+      .then(json => {
+        if (json.totalSatsEarned) {
+          useStore.setState({ balance: json.balance, totalSatsEarned: json.totalSatsEarned })
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }, [user?.email])
 
   return (
@@ -81,33 +82,37 @@ export const Stats = () => {
           </svg>
         </CardHeader>
         <CardContent>
-          {modelLoaded ? <div className="mt-3 flex flex-row items-center">
-            <div className="loader"></div>
-            <span className="pl-3 text-lg font-bold">Listening for jobs...</span>
-          </div>
-            : (
-              <div className="h-12 flex items-center">
-                {modelLoading ? (
-                  <div className="w-full flex flex-row items-center">
-                    <div id="perc" className="text-lg w-10 text-right font-mono"></div>
-                    <Progress value={modelLoadPercentage} className="mx-4 w-[60%]" />
-                  </div>
-                ) :
-                  <Button className="mt-1" onClick={() => {
+          {modelLoaded ? (
+            <div className="mt-3 flex flex-row items-center">
+              <div className="loader"></div>
+              <span className="pl-3 text-lg font-bold">Listening for jobs...</span>
+            </div>
+          ) : (
+            <div className="h-12 flex items-center">
+              {modelLoading ? (
+                <div className="w-full flex flex-row items-center">
+                  <div id="perc" className="text-lg w-10 text-right font-mono"></div>
+                  <Progress value={modelLoadPercentage} className="mx-4 w-[60%]" />
+                </div>
+              ) : (
+                <Button
+                  className="mt-1"
+                  onClick={() => {
                     setModelLoading(true)
                     initModel(user.lightning_address, userId, debug, machineId)
-                  }}>Load model</Button>}
-              </div>
-            )}
-
+                  }}
+                >
+                  Load model
+                </Button>
+              )}
+            </div>
+          )}
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="mb-2 text-sm font-medium text-muted-foreground">
-            Sats Balance
-          </CardTitle>
+          <CardTitle className="mb-2 text-sm font-medium text-muted-foreground">Sats Balance</CardTitle>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -136,9 +141,7 @@ export const Stats = () => {
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="mb-2 text-sm font-medium text-muted-foreground">
-            Total Sats Earned
-          </CardTitle>
+          <CardTitle className="mb-2 text-sm font-medium text-muted-foreground">Total Sats Earned</CardTitle>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -151,7 +154,6 @@ export const Stats = () => {
           >
             <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
           </svg>
-
         </CardHeader>
         <CardContent>
           <div className="text-3xl font-bold">{totalSatsEarned}</div>
@@ -160,9 +162,7 @@ export const Stats = () => {
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="mb-2 text-sm font-medium text-muted-foreground">
-            Connected Users
-          </CardTitle>
+          <CardTitle className="mb-2 text-sm font-medium text-muted-foreground">Connected Users</CardTitle>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"

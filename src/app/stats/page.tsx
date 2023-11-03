@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import { useEffect } from "react"
-import { BackgroundImage } from "@/components/background-image"
+import { useEffect } from 'react'
+import { BackgroundImage } from '@/components/background-image'
 
 export default function Stats() {
   useEffect(() => {
