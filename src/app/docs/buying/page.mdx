@@ -27,10 +27,10 @@ Some codebases append the /v1 in code, so you may need to try just `https://quee
 - Use hugging face model names, or your own fine-tuned model name (for now)
 - Feel free to use a publicly available URL to any GGUF file for an inference model name instead (our workers will download/run it)
 - Use fastembed:BAAI/bge-base-en-v1.5 (or any other fastembed model) for very fast /v1/embeddings endpoint use
-- Use repo/model:filter format for any hugging face model.   
-   - A worker will load your model.   
-   - First time usage will be slow as the model propagates to different workers
-   - The more you use it, the faster it will get (will gain priority over time)
+- Use repo/model:filter format for any hugging face model.
+  - A worker will load your model.
+  - First time usage will be slow as the model propagates to different workers
+  - The more you use it, the faster it will get (will gain priority over time)
 - For example: TheBloke/zephyr-7B-beta-GGUF:Q5_K_M works fine, and is comparable, in many ways, to gpt3
 
 ## Python example code:
@@ -67,12 +67,12 @@ print(response.choices[0].message['content'].strip())
 const OpenAIApi = require('openai');
 
 const openai = new OpenAIApi({
-  key: 'YOUR_API_KEY',
-  endpoint: 'https://queenbee.gputopia.ai/v1'
+  apiKey: 'YOUR_API_KEY',
+  baseURL: 'https://queenbee.gputopia.ai/v1'
 });
 
 async function getCompletion() {
-  const response = await openai.complete({
+  const response = await openai.chat.completions.create({
     model: "TheBloke/vicuna-7B-v1.5-GGUF:Q4_K_M",
     messages: [
       {role: "system", content: "You are a helpful assistant."},
@@ -80,7 +80,7 @@ async function getCompletion() {
     ]
   });
 
-  console.log(response.data.choices[0].message.content.trim());
+  console.log(response.choices[0].message.content.trim());
 }
 
 getCompletion();
