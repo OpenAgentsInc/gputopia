@@ -12,6 +12,7 @@ import { ChatList } from './chat-list'
 import { useEffect, useState } from 'react'
 import { useStore } from '@/lib/store'
 import { Chat as IChat } from '../../../lib/types'
+import React from 'react'
 
 export interface ChatProps extends React.ComponentProps<'div'> {
   initialMessages?: Message[]
@@ -53,13 +54,18 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
     }
   }, [addChat, chats, isLoading, messages])
 
+  const containerRef = React.useRef(null)
+
   return (
     <>
-      <div className="mt-16 flex flex-row justify-center">
+      <div className="mt-16 flex flex-row justify-center right-panel">
         <SidebarChat />
 
-        <div className="justify-center self-center content-center center pl-[2rem] z-1 relative w-full ">
-          <div className={cn('pt-4 md:pt-10 mt-16 pb-40', className)}>
+        <div
+          className="flex flex-col relative pl-[2rem] z-1 w-full overflow-y-auto h-full"
+          ref={containerRef}
+        >
+          <div className={cn('flex-1 pt-4 md:pt-10 pb-4', className)}>
             {messages.length ? (
               <>
                 <ChatList messages={messages} />
@@ -79,6 +85,7 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
             messages={messages}
             input={input}
             setInput={setInput}
+            containerRef={containerRef}
           />
 
           <PreviewToken />

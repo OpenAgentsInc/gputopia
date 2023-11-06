@@ -13,6 +13,7 @@ export interface ChatPanelProps
     'append' | 'isLoading' | 'reload' | 'messages' | 'stop' | 'input' | 'setInput'
   > {
   id?: string
+  containerRef: React.RefObject<HTMLElement>
 }
 
 export function ChatPanel({
@@ -23,11 +24,12 @@ export function ChatPanel({
   reload,
   messages,
   input,
-  setInput
+  setInput,
+  containerRef
 }: ChatPanelProps) {
   return (
-    <div className="fixed inset-x-0 ml-[20rem] bottom-0 bg-gradient-to-b from-muted/10 from-10% to-muted/30 to-50% pb-4">
-      <ButtonScrollToBottom />
+    <div className="sticky bottom-0 bg-gradient-to-b from-muted/10 from-10% to-muted/30 to-50% pb-4">
+      <ButtonScrollToBottom containerRef={containerRef} />
       <div className="mx-auto sm:max-w-2xl sm:px-4">
         <div className="flex h-10 items-center justify-end">
           {isLoading ? (

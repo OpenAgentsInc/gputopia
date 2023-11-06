@@ -7,8 +7,12 @@ import { useAtBottom } from '@/lib/hooks/use-at-bottom'
 import { Button, type ButtonProps } from '@/components/ui/button'
 import { IconArrowDown } from '@/components/ui/icons'
 
-export function ButtonScrollToBottom({ className, ...props }: ButtonProps) {
-  const isAtBottom = useAtBottom()
+interface ButtonScrollToBottomProps extends ButtonProps {
+  containerRef: React.RefObject<HTMLElement>
+}
+
+export function ButtonScrollToBottom({ className, containerRef, ...props }: ButtonScrollToBottomProps) {
+  const isAtBottom = false //useAtBottom()
 
   return (
     <Button
@@ -19,12 +23,14 @@ export function ButtonScrollToBottom({ className, ...props }: ButtonProps) {
         isAtBottom ? 'opacity-0' : 'opacity-100',
         className
       )}
-      onClick={() =>
-        window.scrollTo({
-          top: document.body.offsetHeight,
-          behavior: 'smooth'
-        })
-      }
+      onClick={() => {
+        if (containerRef.current) {
+          containerRef.current.scrollTo({
+            top: 100000,
+            behavior: 'smooth'
+          })
+        }
+      }}
       {...props}
     >
       <IconArrowDown />
