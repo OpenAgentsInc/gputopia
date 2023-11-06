@@ -24,7 +24,7 @@ export function SidebarList({ userId }: SidebarListProps) {
   }, [userId])
 
   return (
-    <div className="flex-1 overflow-auto">
+    <div className="scrollbar-thin flex-col flex-1 transition-opacity duration-500 -mr-2 pr-2 overflow-hidden hover:overflow-y-auto z-40">
       {chats?.length ? (
         <div className="space-y-2 px-2">
           {chats.map(

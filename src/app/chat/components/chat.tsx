@@ -55,32 +55,35 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
 
   return (
     <>
-      <div className="mt-16">
+      <div className="mt-16 flex flex-row justify-center">
         <SidebarChat />
-      </div>
-      <div className={cn('pb-[200px] pt-4 md:pt-10', className)}>
-        {messages.length ? (
-          <>
-            <ChatList messages={messages} />
-            <ChatScrollAnchor trackVisibility={isLoading} />
-          </>
-        ) : (
-          <EmptyScreen />
-        )}
-      </div>
 
-      <ChatPanel
-        id={id}
-        isLoading={isLoading}
-        stop={stop}
-        append={append}
-        reload={reload}
-        messages={messages}
-        input={input}
-        setInput={setInput}
-      />
+        <div className="justify-center self-center content-center center pl-[2rem] z-1 relative w-full ">
+          <div className={cn('pt-4 md:pt-10 mt-16 pb-40', className)}>
+            {messages.length ? (
+              <>
+                <ChatList messages={messages} />
+                <ChatScrollAnchor trackVisibility={isLoading} />
+              </>
+            ) : (
+              <EmptyScreen />
+            )}
+          </div>
 
-      <PreviewToken />
+          <ChatPanel
+            id={id}
+            isLoading={isLoading}
+            stop={stop}
+            append={append}
+            reload={reload}
+            messages={messages}
+            input={input}
+            setInput={setInput}
+          />
+
+          <PreviewToken />
+        </div>
+      </div>
     </>
   )
 }
