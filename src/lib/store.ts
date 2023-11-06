@@ -1,11 +1,13 @@
 import { create } from 'zustand'
 import { AlbyUser } from './useAlby'
+import { Chat } from './types'
 
 type Store = {
   user: AlbyUser | null
   onlineMembers: number
   balance: number
   balanceUsd: number
+  chats: Chat[]
   payments: any[]
   totalSatsEarned: number
   modelLoadPercentage: number
@@ -14,6 +16,7 @@ type Store = {
   decrement: () => void
   modelLoaded: boolean
   setCount: (count: number) => void
+  addChat: (chat: Chat) => void
   showWebgpuWarning: boolean
   busyInferencing: boolean
   paymentMethods: any[]
@@ -25,6 +28,7 @@ export const useStore = create<Store>(set => ({
   modelLoaded: false,
   balance: 0,
   balanceUsd: 0,
+  chats: [],
   payments: [],
   onlineMembers: 0,
   totalSatsEarned: 0,
@@ -34,5 +38,10 @@ export const useStore = create<Store>(set => ({
   increment: () => set(state => ({ onlineMembers: state.onlineMembers + 1 })),
   decrement: () => set(state => ({ onlineMembers: state.onlineMembers - 1 })),
   setCount: count => set(() => ({ onlineMembers: count })),
+  addChat: (chat: Chat) => {
+    set(state => ({
+      chats: [{ ...chat }, ...state.chats]
+    }))
+  },
   paymentMethods: []
 }))

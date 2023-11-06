@@ -5,8 +5,8 @@ import { Chat } from '../components/chat'
 import { auth } from '@/auth'
 import { revalidatePath } from 'next/cache'
 
-export const runtime = 'edge'
-export const preferredRegion = 'home'
+//export const runtime = 'edge'
+//export const preferredRegion = 'home'
 
 export interface ChatPageProps {
   params: {

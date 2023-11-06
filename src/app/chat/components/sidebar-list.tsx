@@ -5,18 +5,19 @@ import { SidebarItem } from '@/app/chat/components/sidebar-item'
 import { SidebarActions } from './sidebar-actions'
 import { useEffect, useState } from 'react'
 import type { Chat } from '@/lib/types'
+import { useStore } from '@/lib/store'
 
 export interface SidebarListProps {
   userId?: string
 }
 
 export function SidebarList({ userId }: SidebarListProps) {
-  const [chats, setChats] = useState<Chat[]>([])
+  const chats = useStore(state => state.chats)
 
   useEffect(() => {
     async function initialData() {
       const chats = await getChats(userId)
-      setChats(chats)
+      useStore.setState({ chats: chats })
     }
 
     initialData()

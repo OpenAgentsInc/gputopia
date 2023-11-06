@@ -9,7 +9,9 @@ import { ChatScrollAnchor } from './chat-scroll-anchor'
 import { ChatPanel } from './chat-panel'
 import { PreviewToken } from './preview-token'
 import { ChatList } from './chat-list'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useStore } from '@/lib/store'
+import { Chat as IChat } from '../../../lib/types'
 
 export interface ChatProps extends React.ComponentProps<'div'> {
   initialMessages?: Message[]
@@ -17,6 +19,8 @@ export interface ChatProps extends React.ComponentProps<'div'> {
 }
 
 export function Chat({ id, initialMessages, className }: ChatProps) {
+  const chats = useStore(state => state.chats)
+  const addChat = useStore(state => state.addChat)
   const [previewToken, setPreviewToken] = useLocalStorage<string | null>('ai-token', null)
 
   const { messages, append, reload, stop, isLoading, input, setInput } = useChat({
@@ -32,6 +36,22 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
       }
     }
   })
+
+  useEffect(() => {
+    if (!isLoading && messages && messages[0] && messages[0].id && messages[1]) {
+      if (!chats.some(c => c.id === messages[0].id)) {
+        const newChat: IChat = {
+          path: '/chat/' + messages[0].id,
+          messages: messages,
+          id: messages[0].id,
+          title: messages[0].content as string,
+          userId: '',
+          createdAt: messages[0].createdAt as Date
+        }
+        addChat(newChat)
+      }
+    }
+  }, [addChat, chats, isLoading, messages])
 
   return (
     <>

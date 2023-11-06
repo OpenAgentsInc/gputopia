@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { IconRefresh, IconStop } from '@/components/ui/icons'
 import { updateBalances } from '@/lib/update-balances'
 import { PromptForm } from './prompt-form'
+import { revalidatePath } from 'next/cache'
 
 export interface ChatPanelProps
   extends Pick<
@@ -14,28 +15,29 @@ export interface ChatPanelProps
   id?: string
 }
 
-export function ChatPanel({ id, isLoading, stop, append, reload, messages, input, setInput }: ChatPanelProps) {
+export function ChatPanel({
+  id,
+  isLoading,
+  stop,
+  append,
+  reload,
+  messages,
+  input,
+  setInput
+}: ChatPanelProps) {
   return (
     <div className="fixed inset-x-0 bottom-0 bg-gradient-to-b from-muted/10 from-10% to-muted/30 to-50%">
       <ButtonScrollToBottom />
       <div className="mx-auto sm:max-w-2xl sm:px-4">
-         <div className="flex h-10 items-center justify-end">
+        <div className="flex h-10 items-center justify-end">
           {isLoading ? (
-            <Button
-              variant="outline"
-              onClick={() => stop()}
-              className="bg-background"
-            >
+            <Button variant="outline" onClick={() => stop()} className="bg-background">
               <IconStop className="mr-2" />
               Stop generating
             </Button>
           ) : (
             messages?.length > 0 && (
-              <Button
-                variant="outline"
-                onClick={() => reload()}
-                className="bg-background"
-              >
+              <Button variant="outline" onClick={() => reload()} className="bg-background">
                 <IconRefresh className="mr-2" />
                 Regenerate
               </Button>
@@ -50,6 +52,7 @@ export function ChatPanel({ id, isLoading, stop, append, reload, messages, input
                 content: value,
                 role: 'user'
               })
+
               // updateBalances()
             }}
             input={input}
