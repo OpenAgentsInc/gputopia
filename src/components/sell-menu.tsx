@@ -39,7 +39,7 @@ export function SellMenu() {
   const [modelLoaded, setModelLoaded] = useState(false)
 
   const user = useStore(state => state.user) as AlbyUser
-  const userId = session?.user?.user_id
+  const userId = session?.user?.id
   const machineId = useMachineId()
 
   const searchParams = useSearchParams()

@@ -26,7 +26,7 @@ export const Stats = () => {
   const searchParams = useSearchParams()
   const debug = !!searchParams.get('debug')
 
-  const userId = session?.user?.user_id
+  const userId = session?.user?.id
 
   const goWithdraw = async () => {
     if (balance === 0) {

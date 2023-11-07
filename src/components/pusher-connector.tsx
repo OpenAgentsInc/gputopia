@@ -13,11 +13,11 @@ export function PusherConnector() {
   useAlby()
 
   useEffect(() => {
-    let userId = session?.user.user_id
+    let userId = session?.user.id
     if (userId) {
       setUserId(userId)
     }
-  }, [session?.user.user_id])
+  }, [session?.user.id])
 
   useEffect(() => {
     if (!userId || userId === null) return

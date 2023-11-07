@@ -10,7 +10,7 @@ declare module 'next-auth' {
     refresh_token: string
     user: {
       avatar: string
-      user_id: string
+      id: string
       alby_id: string
       lightning_address: string
     } & DefaultSession['user']
@@ -68,7 +68,7 @@ export const {
         })
           .then(response => response.json())
           .then(data => {
-            token.user_id = data.userId
+            token.id = data.userId
           })
 
         await fetchUserFromAlby(account.access_token)
@@ -96,7 +96,7 @@ export const {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-              user_id: token.user_id,
+              user_id: token.id,
               refresh_token: token.refresh_token
             })
           })
@@ -118,12 +118,18 @@ export const {
     },
     async session({ session, token, user }) {
       if (token) {
-        session.access_token = token.access_token
-        session.refresh_token = token.refresh_token
-        session.user.avatar = token.avatar
-        session.user.user_id = token.user_id
-        session.user.alby_id = token.alby_id
-        session.user.lightning_address = token.lightning_address
+        return {
+          ...session,
+          access_token: token.access_token,
+          refresh_token: token.refresh_token,
+          user: {
+            ...session.user,
+            avatar: token.avatar,
+            id: token.id,
+            alby_id: token.alby_id,
+            lightning_address: token.lightning_address
+          }
+        }
       }
 
       return session

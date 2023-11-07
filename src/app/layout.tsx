@@ -25,7 +25,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <WebgpuChecker />
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <TopNav />
-            {children}
+            <div className="relative z-0 flex h-full w-full">
+              <main className="flex-1 overflow-auto">{children}</main>
+            </div>
           </ThemeProvider>
           <Fathom />
         </NextAuthProvider>

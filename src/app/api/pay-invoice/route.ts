@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
   const json = await request.json()
   const payment_request = json.payment_request
 
-  const userId = session.user.user_id
+  const userId = session.user.id
   if (!userId) {
     return new NextResponse('Unauthorized', {
       status: 401
