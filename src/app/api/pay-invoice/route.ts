@@ -59,17 +59,29 @@ export async function POST(request: NextRequest) {
     // Commit the transaction
     await connection.commit()
 
-    const payResponse = await fetch(`${process.env.LNBITS_BASE_URL}/payments`, {
+    const payResponse = await fetch(`https://api.getalby.com/payments/bolt11`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-Api-Key': process.env.LNBITS_API_KEY as string
+        Authorization: `Bearer ${process.env.ALBY_PAYMENT_KEY}`
       },
       body: JSON.stringify({
-        out: true,
-        bolt11: payment_request
+        invoice: payment_request
       })
     })
+    console.log('PAYRESPONSE:', payResponse)
+
+    // const payResponse = await fetch(`${process.env.LNBITS_BASE_URL}/payments`, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'X-Api-Key': process.env.LNBITS_API_KEY as string
+    //   },
+    //   body: JSON.stringify({
+    //     out: true,
+    //     bolt11: payment_request
+    //   })
+    // })
 
     // If payment is successful, update the payment record by setting invoice_status to settled
     if (payResponse.ok) {
@@ -77,6 +89,7 @@ export async function POST(request: NextRequest) {
         'UPDATE payments SET invoice_status = "settled" WHERE invoice_payment_hash = ?',
         [payment_hash]
       )
+      console.log('PAYRESPONSE SETTLED')
     }
   } catch (err: any) {
     await connection.rollback()
