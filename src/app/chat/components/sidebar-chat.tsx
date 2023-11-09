@@ -17,7 +17,7 @@ export const SidebarChat = () => {
   const userId = session?.user.id
 
   const bigScreen = useGreater('lg')
-  const [showSidebar, setShowSidebar] = React.useState(bigScreen)
+  const [showSidebar, setShowSidebar] = React.useState(true)
 
   useEffect(
     function () {

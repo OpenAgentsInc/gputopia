@@ -8,7 +8,7 @@ import { SidebarChat } from './sidebar-chat'
 import { ChatScrollAnchor } from './chat-scroll-anchor'
 import { ChatPanel } from './chat-panel'
 import { PreviewToken } from './preview-token'
-import { ChatList } from './chat-list'
+import { ChatList } from '@/components/chat-list'
 import { useEffect, useState } from 'react'
 import { useStore } from '@/lib/store'
 import { Chat as IChat } from '../../../lib/types'
@@ -41,13 +41,18 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
   useEffect(() => {
     if (!isLoading && messages && messages[0] && messages[0].id && messages[1]) {
       if (!chats.some(c => c.id === messages[0].id)) {
+        let createdAd = 0
+        if (messages[1].createdAt) {
+          createdAd = messages[1].createdAt.getTime()
+        }
+
         const newChat: IChat = {
           path: '/chat/' + messages[0].id,
           messages: messages,
           id: messages[0].id,
           title: messages[0].content as string,
           userId: '',
-          createdAt: messages[0].createdAt as Date
+          createdAt: createdAd
         }
         addChat(newChat)
       }
