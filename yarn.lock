@@ -940,6 +940,18 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
 
+"@react-hooks-library/core@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@react-hooks-library/core/-/core-0.5.1.tgz#b73f3e2b303c4f3b31c09a0f5ff20471c437a117"
+  integrity sha512-YVXPeopEuXb9UR/YCaRfRgsDi/2K7OahdI+XHqT7WX8l706f73egbsOpicNEYAI+pfvOjr5XblPGJV/LJMrL7Q==
+  dependencies:
+    "@react-hooks-library/shared" "0.5.1"
+
+"@react-hooks-library/shared@0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@react-hooks-library/shared/-/shared-0.5.1.tgz#6d900e7e9f77827819ebb1a1d865c8d6cb6f10de"
+  integrity sha512-pBX36Yh7dwIMQWx3m4zUCM7ytdTb+X+KAWE00ZOgBWSr7JRiRhRntFXIfdj0R/osQo4PdbDS4bf6SeodkUE/5Q==
+
 "@rgrove/parse-xml@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@rgrove/parse-xml/-/parse-xml-3.0.0.tgz#29d45eadeb6c9a701038cfb9fab2356a7bdc71d5"
