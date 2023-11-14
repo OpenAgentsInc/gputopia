@@ -1,7 +1,7 @@
 'use client'
 import { Message, useChat } from 'ai/react'
 import { toast } from 'react-hot-toast'
-import { EmptyScreen } from '@/components/empty-screen'
+import { EmptyScreen } from '@/app/chat/components/empty-screen'
 import { useLocalStorage } from '@/lib/hooks/use-local-storage'
 import { cn } from '@/lib/utils'
 import { SidebarChat } from './sidebar-chat'
@@ -9,7 +9,7 @@ import { ChatScrollAnchor } from './chat-scroll-anchor'
 import { ChatPanel } from './chat-panel'
 import { PreviewToken } from './preview-token'
 import { ChatList } from '@/components/chat-list'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useStore } from '@/lib/store'
 import { Chat as IChat } from '../../../lib/types'
 import React from 'react'
@@ -21,6 +21,7 @@ export interface ChatProps extends React.ComponentProps<'div'> {
 
 export function Chat({ id, initialMessages, className }: ChatProps) {
   const chats = useStore(state => state.chats)
+  const selectedModel = useStore(state => state.selectedModel)
   const addChat = useStore(state => state.addChat)
   const [previewToken, setPreviewToken] = useLocalStorage<string | null>('ai-token', null)
 
@@ -29,7 +30,8 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
     id,
     body: {
       id,
-      previewToken
+      previewToken,
+      selectedModel: selectedModel.name
     },
     onResponse(response) {
       if (response.status === 401) {

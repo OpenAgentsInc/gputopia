@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { AlbyUser } from './useAlby'
 import { Chat } from './types'
+import { ChatModel, defaultModel } from './chat'
 
 type Store = {
   user: AlbyUser | null
@@ -8,6 +9,7 @@ type Store = {
   balance: number
   balanceUsd: number
   chats: Chat[]
+  selectedModel: ChatModel
   payments: any[]
   totalSatsEarned: number
   modelLoadPercentage: number
@@ -29,6 +31,7 @@ export const useStore = create<Store>(set => ({
   balance: 0,
   balanceUsd: 0,
   chats: [],
+  selectedModel: defaultModel,
   payments: [],
   onlineMembers: 0,
   totalSatsEarned: 0,
