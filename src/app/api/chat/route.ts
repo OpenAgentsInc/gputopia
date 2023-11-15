@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
   const { messages } = json
 
   const res = await openai.createChatCompletion({
-    model: 'vicuna-7B-q4',
+    model: json.selectedModel,
     messages,
     max_tokens: 500,
     stream: true

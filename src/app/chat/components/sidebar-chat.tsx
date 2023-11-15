@@ -17,7 +17,7 @@ export const SidebarChat = () => {
   const userId = session?.user.id
 
   const bigScreen = useGreater('lg')
-  const [showSidebar, setShowSidebar] = React.useState(bigScreen)
+  const [showSidebar, setShowSidebar] = React.useState(true)
 
   useEffect(
     function () {
@@ -50,7 +50,7 @@ export const SidebarChat = () => {
           >
             <div className="p-4 flex flex-col h-full w-full scroll ">
               <div className="mb-1 flex flex-row gap-2">
-                <Link href="/chat" className="w-[15rem] overflow-hidden">
+                <Link href="/chat" prefetch={false} className="w-[15rem] overflow-hidden">
                   <span className="flex px-3 min-h-[44px] items-center gap-3 text-[15px] rounded-md border">
                     <IconPlus className="h-5 w-5" />
                     New Chat
