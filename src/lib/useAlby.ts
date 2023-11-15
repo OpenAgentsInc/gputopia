@@ -45,9 +45,9 @@ function fetchUserData(session: Session, setUser: any, logout: any) {
       setUser(res)
 
       if (res.status === 401) {
-        alert(
-          'Your Alby session has expired, so withdrawals will not work until you log out and log in again'
-        )
+        // alert(
+        //   'Your Alby session has expired, so withdrawals will not work until you log out and log in again'
+        // )
         // signOut()
         // logout()
         return
